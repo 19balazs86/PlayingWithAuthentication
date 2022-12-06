@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyGenRSA", "KeyGenRSA\KeyGenRSA.csproj", "{45004338-8274-40E5-AD2B-370468CF8B06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiJWT", "ApiJWT\ApiJWT.csproj", "{D3AB1D6A-4966-4D0C-9A5A-D7B649D92EF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8C1C8B11-FC1D-4E44-85EB-C49B89A5A5EC}"
+	ProjectSection(SolutionItems) = preProject
+		postman_collection.json = postman_collection.json
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45004338-8274-40E5-AD2B-370468CF8B06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45004338-8274-40E5-AD2B-370468CF8B06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45004338-8274-40E5-AD2B-370468CF8B06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45004338-8274-40E5-AD2B-370468CF8B06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3AB1D6A-4966-4D0C-9A5A-D7B649D92EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3AB1D6A-4966-4D0C-9A5A-D7B649D92EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3AB1D6A-4966-4D0C-9A5A-D7B649D92EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3AB1D6A-4966-4D0C-9A5A-D7B649D92EF5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A168B3DB-500C-47D6-BA61-E19DD5BA9BBC}
+	EndGlobalSection
+EndGlobal
