@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Text.Json.Serialization;
 
-namespace ApiJWT.Model
+namespace ApiJWT
 {
     public sealed class UserModel
     {
@@ -53,7 +53,7 @@ namespace ApiJWT.Model
                 new Claim(ClaimTypes.Name, Name),
                 new Claim(JwtRegisteredClaimNames.Jti, JwtId),
 
-                new Claim(ClaimTypes.Role, "Default")
+                new Claim(ClaimTypes.Role, "DefaultRole")
             };
 
             claims.AddRange(Roles.Select(r => new Claim(ClaimTypes.Role, r)));

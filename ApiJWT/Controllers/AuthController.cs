@@ -1,4 +1,3 @@
-using ApiJWT.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,18 +13,23 @@ namespace ApiJWT.Controllers
         [HttpPost("Login")]
         public ActionResult<AuthToken> Login(LoginRequest loginModel)
         {
-            if (loginModel.Name == "test" && loginModel.Password == "pass")
+            string? role = loginModel! switch
             {
-                var user = new UserModel(1, loginModel.Name, new string[] { loginModel.Role! });
+                { Name: "user",  Password: "user" }  => "UserRole",
+                { Name: "admin", Password: "admin" } => "AdminRole",
+                _ => null
+            };
 
-                string refreshTokenKey = RefreshTokenRepository.CreateRefreshToken(user.JwtId);
+            if (role is null)
+                return Unauthorized();
 
-                string token = AuthHelper.CreateToken(user.ToClaims());
+            var user = new UserModel(1, loginModel.Name, new string[] { role });
 
-                return Ok(new AuthToken(token, refreshTokenKey));
-            }
+            string refreshTokenKey = RefreshTokenRepository.CreateRefreshToken(user.JwtId);
 
-            return Unauthorized();
+            string token = AuthHelper.CreateToken(user.ToClaims());
+
+            return Ok(new AuthToken(token, refreshTokenKey));
         }
 
         [HttpGet]
@@ -34,8 +38,8 @@ namespace ApiJWT.Controllers
             return new UserModel(User.Claims);
         }
 
-        //[Authorize(Roles = "Admin")] // This can be used too.
-        [Authorize(Policy = "Admin")]
+        //[Authorize(Roles = "AdminRole")] // This can be used too.
+        [Authorize(Policy = "AdminPolicy")]
         [HttpGet("Admin")]
         public UserModel GetAdmin() => new UserModel(User.Claims);
 
@@ -82,6 +86,7 @@ namespace ApiJWT.Controllers
         }
     }
 
+    public record LoginRequest(string Name, string Password);
     public record ValidateToken(string Token);
     public record AuthToken(string Token, string RefreshToken);
 }

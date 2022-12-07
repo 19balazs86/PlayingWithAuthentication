@@ -74,7 +74,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"Name\": \"test\",\r\n  \"Password\": \"pass\",\r\n  \"Role\": \"User\"\r\n}"
+					"raw": "{\r\n  \"Name\": \"user\",\r\n  \"Password\": \"user\"\r\n}"
 				},
 				"url": {
 					"raw": "https://localhost:5000/Auth/Login",

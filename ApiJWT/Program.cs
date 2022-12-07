@@ -28,7 +28,7 @@ namespace ApiJWT
             services.AddAuthorization(options =>
             {
                 // Add policy for Admin role.
-                options.AddPolicy("Admin", new AuthorizationPolicyBuilder().RequireRole("Admin").Build());
+                options.AddPolicy("AdminPolicy", new AuthorizationPolicyBuilder().RequireRole("AdminRole").Build());
 
                 // -> https://andrewlock.net/setting-global-authorization-policies-using-the-defaultpolicy-and-the-fallbackpolicy-in-aspnet-core-3
                 // -> https://docs.microsoft.com/en-ie/aspnet/core/migration/22-to-30?view=aspnetcore-3.0&tabs=visual-studio#authorization
