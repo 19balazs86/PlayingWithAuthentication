@@ -1,33 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using System.Net.Http.Headers;
-
-namespace ApiCookieAuth
+﻿namespace ApiCookieAuth
 {
-    public sealed class ApiJwtClientAuthHandler : DelegatingHandler
-    {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public ApiJwtClientAuthHandler(IHttpContextAccessor httpContextAccessor)
-        {
-            _httpContextAccessor = httpContextAccessor;
-        }
-
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            HttpContext httpContext = _httpContextAccessor.HttpContext
-                ?? throw new ArgumentNullException("HttpContext");
-
-            if (httpContext.User.Identity?.IsAuthenticated == true)
-            {
-                string token = await _httpContextAccessor.HttpContext?.GetTokenAsync(ApiJwtClient.AccessTokenName);
-
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            }
-
-            return await base.SendAsync(request, cancellationToken);
-        }
-    }
-
     public sealed class ApiJwtClient : IApiJwtClient
     {
         public const string AccessTokenName = "access_token";
@@ -39,7 +11,7 @@ namespace ApiCookieAuth
             _httpClient = httpClient;
         }
 
-        public async Task<AuthToken> GetAuthTokenAsync(LoginRequest loginRequest)
+        public async Task<AuthToken> Login(LoginRequest loginRequest)
         {
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/Auth/Login", loginRequest);
 
@@ -49,7 +21,7 @@ namespace ApiCookieAuth
             return await response.Content.ReadFromJsonAsync<AuthToken>();
         }
 
-        public async Task<UserModel> GetUserModelAsync()
+        public async Task<UserModel> GetUserModel()
         {
             HttpResponseMessage response = await _httpClient.GetAsync("/Auth");
 
@@ -62,7 +34,7 @@ namespace ApiCookieAuth
 
     public interface IApiJwtClient
     {
-        Task<AuthToken> GetAuthTokenAsync(LoginRequest loginRequest);
-        Task<UserModel> GetUserModelAsync();
+        Task<AuthToken> Login(LoginRequest loginRequest);
+        Task<UserModel> GetUserModel();
     }
 }
