@@ -47,6 +47,20 @@
 		},
 		{
 			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"pm.globals.set(\"JwtToken\", jsonData.token);\r",
+							"pm.globals.set(\"RefreshToken\", jsonData.RefreshToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -92,7 +106,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"Token\":\"\" }",
+					"raw": "{ \"Token\":\"{{JwtToken}}\" }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -113,6 +127,43 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Refresh token",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Token\":\"{{JwtToken}}\",\r\n    \"RefreshToken\":\"{{RefreshToken}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5000/Auth/RefreshToken",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"Auth",
+						"RefreshToken"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
@@ -120,7 +171,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "",
+				"value": "{{JwtToken}}",
 				"type": "string"
 			}
 		]

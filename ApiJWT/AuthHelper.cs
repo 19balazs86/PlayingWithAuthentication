@@ -51,7 +51,8 @@ namespace ApiJWT
         {
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
+                .AddJwtBearer(options =>
+                {
                     options.TokenValidationParameters = _tokenValidationParameters;
                     options.Events = new JwtBearerEvents
                     {
@@ -84,19 +85,50 @@ namespace ApiJWT
             return tokenHandler.WriteToken(token);
         }
 
-        public static bool TryValidateToken(string token, out ClaimsPrincipal claimsPrincipal)
+        public static bool TryValidateToken(string token, out ClaimsPrincipal claimsPrincipal, out string? invalidReason)
         {
+            return tryValidateToken(token, _tokenValidationParameters, out claimsPrincipal, out _, out invalidReason);
+        }
+
+        public static bool TryValidateExpiredToken(string token, out JwtSecurityToken? jwtSecurityToken, out string? invalidReason)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer           = false,
+                ValidateAudience         = false,
+                ValidateLifetime         = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey         = _securityKey
+            };
+
+            return tryValidateToken(token, tokenValidationParameters, out _, out jwtSecurityToken, out invalidReason);
+        }
+
+        private static bool tryValidateToken(
+            string token,
+            TokenValidationParameters tokenValidationParameters,
+            out ClaimsPrincipal claimsPrincipal,
+            out JwtSecurityToken? jwtSecurityToken,
+            out string? invalidReason)
+        {
+            invalidReason    = null;
+            jwtSecurityToken = null;
+
             var tokenHandler = new JwtSecurityTokenHandler();
 
             try
             {
-                claimsPrincipal = tokenHandler.ValidateToken(token, _tokenValidationParameters, out var securityToken);
+                claimsPrincipal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
+
+                jwtSecurityToken = securityToken as JwtSecurityToken;
 
                 return true;
             }
-            catch (Exception) // The exception can be: SecurityTokenExpiredException, SecurityTokenValidationException
+            catch (Exception ex) // The exception can be: SecurityTokenExpiredException, SecurityTokenValidationException
             {
                 claimsPrincipal = new ClaimsPrincipal();
+
+                invalidReason = ex.Message;
 
                 return false;
             }

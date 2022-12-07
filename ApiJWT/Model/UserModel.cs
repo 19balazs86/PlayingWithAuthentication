@@ -1,9 +1,13 @@
-﻿using System.Security.Claims;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text.Json.Serialization;
 
 namespace ApiJWT.Model
 {
-    public class UserModel
+    public sealed class UserModel
     {
+        [JsonIgnore]
+        public string JwtId { get; set; } = Guid.NewGuid().ToString();
         public int Id { get; private set; } = 0;
         public string Name { get; private set; } = string.Empty;
         public IEnumerable<string> Roles { get; private set; } = Enumerable.Empty<string>();
@@ -29,6 +33,9 @@ namespace ApiJWT.Model
                     case ClaimTypes.Name:
                         Name = claim.Value;
                         break;
+                    case JwtRegisteredClaimNames.Jti:
+                        JwtId = claim.Value;
+                        break;
                     case ClaimTypes.Role:
                         roles.Add(claim.Value);
                         break;
@@ -42,8 +49,11 @@ namespace ApiJWT.Model
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
-                new Claim(ClaimTypes.Name, Name)
+                new Claim(ClaimTypes.NameIdentifier, Id.ToString()), // JwtRegisteredClaimNames.Sub
+                new Claim(ClaimTypes.Name, Name),
+                new Claim(JwtRegisteredClaimNames.Jti, JwtId),
+
+                new Claim(ClaimTypes.Role, "Default")
             };
 
             claims.AddRange(Roles.Select(r => new Claim(ClaimTypes.Role, r)));
