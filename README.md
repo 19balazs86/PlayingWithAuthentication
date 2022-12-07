@@ -3,9 +3,7 @@
 ###### Project: KeyGenRSA
 
 - Console application to generate private and public RSA pem file.
-
 - Private key is used in the ApiJWT project to sign and validate JWT.
-
 - Public key can be used for validation of JWT in other server.
 
 ###### Project: ApiJWT
@@ -18,7 +16,7 @@
 
 - Implements a cookie authentication. Calling ApiJWT service to get a token and store it in AuthenticationProperties for later usage.
 
-##### Other resources
+##### Resources
 - [JWT Authentication Tutorial](https://youtu.be/8FvN5bhVYxY) *(33 min)* | [Raw Coding](https://www.youtube.com/@RawCoding/videos) YouTube channel contains deep dive videos about authentication topic
 - [Signing JWT with RSA](https://vmsdurano.com/-net-core-3-1-signing-jwt-with-rsa/) *(ProudMonkey)*
 - [Protect your API with API Keys](https://josefottosson.se/asp-net-core-protect-your-api-with-api-keys/) *(Josef)*
