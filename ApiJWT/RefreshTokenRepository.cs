@@ -3,21 +3,35 @@
     // For simplicity
     public static class RefreshTokenRepository
     {
-        public static Dictionary<string, RefreshToken> RefreshToken = new Dictionary<string, RefreshToken>();
+        private static readonly Dictionary<string, RefreshToken> _refreshToken = new Dictionary<string, RefreshToken>();
 
         public static string CreateRefreshToken(string jwtId)
         {
             var refreshToken = new RefreshToken
             {
-                Token      = generateRefreshToken(),
-                JwtId      = jwtId,
-                DateCreate = DateTime.UtcNow,
-                DateExpiry = DateTime.UtcNow.AddMonths(1)
+                Token        = generateRefreshToken(),
+                JwtId        = jwtId,
+                CreationDate = DateTime.UtcNow,
+                ExpiryDate   = DateTime.UtcNow.AddMonths(1)
             };
 
-            RefreshToken.Add(jwtId, refreshToken);
+            _refreshToken.Add(jwtId, refreshToken);
 
             return refreshToken.Token;
+        }
+
+        public static bool TryInvalidateRefreshToken(string jwtId, string refreshToken)
+        {
+            if (_refreshToken.TryGetValue(jwtId, out RefreshToken rToken) &&
+                rToken.Token.Equals(refreshToken) && rToken.IsValid && !rToken.IsUsed && rToken.ExpiryDate > DateTime.UtcNow)
+            {
+                rToken.IsValid = false;
+                rToken.IsUsed  = true;
+
+                return true;
+            }
+
+            return false;
         }
 
         private static string generateRefreshToken()
@@ -35,8 +49,8 @@
     {
         public required string Token { get; set; }
         public required string JwtId { get; set; }
-        public required DateTime DateCreate { get; set; }
-        public required DateTime DateExpiry { get; set; }
+        public required DateTime CreationDate { get; set; }
+        public required DateTime ExpiryDate { get; set; }
         public bool IsUsed { get; set; }
         public bool IsValid { get; set; } = true;
     }

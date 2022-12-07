@@ -64,14 +64,10 @@ namespace ApiJWT.Controllers
 
                 var user = new UserModel(jwtSecurityToken.Claims);
 
-                // user.JwtId == securityToken.Id
+                // user.JwtId == securityToken.Id // because of wtRegisteredClaimNames.Jti
 
-                if (RefreshTokenRepository.RefreshToken.TryGetValue(user.JwtId, out RefreshToken refreshToken) &&
-                    refreshToken.IsValid && !refreshToken.IsUsed && refreshToken.DateExpiry > DateTime.UtcNow)
+                if (RefreshTokenRepository.TryInvalidateRefreshToken(user.JwtId, tokenRequest.RefreshToken))
                 {
-                    refreshToken.IsValid = false;
-                    refreshToken.IsUsed  = true;
-
                     user.JwtId = Guid.NewGuid().ToString();
 
                     string refreshTokenKey = RefreshTokenRepository.CreateRefreshToken(user.JwtId);
