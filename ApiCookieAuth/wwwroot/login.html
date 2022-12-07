@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+    <script type="text/javascript">
+        function clickOnLogin() {
+            var postData = { Name: "user", Password: "user" };
+
+            var fetchParam = {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(postData)
+            }
+
+            fetch("/CallApi/Login", fetchParam)
+                .then((response) => {
+                    if (response.status == 200) {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const returnUrl = urlParams.get("ReturnUrl");
+
+                        window.location.href = returnUrl;
+                    }
+                });
+        }
+    </script>
+</head>
+<body>
+    <button onclick="clickOnLogin()">Login as User</button>
+</body>
+</html>

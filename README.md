@@ -14,6 +14,10 @@
 - Create SigningCredentials with symmetric and asymmetric security key using RSA or X509Certificate.
 - Apply a way to refresh the token.
 
+###### Project: ApiCookieAuth
+
+- Implements a cookie authentication. Calling ApiJWT service to get a token and store it in AuthenticationProperties for later usage.
+
 ##### Other resources
 - [JWT Authentication Tutorial](https://youtu.be/8FvN5bhVYxY) *(33 min)* | [Raw Coding](https://www.youtube.com/@RawCoding/videos) YouTube channel contains deep dive videos about authentication topic
 - [Signing JWT with RSA](https://vmsdurano.com/-net-core-3-1-signing-jwt-with-rsa/) *(ProudMonkey)*
