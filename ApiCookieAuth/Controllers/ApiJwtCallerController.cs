@@ -54,7 +54,12 @@ namespace ApiCookieAuth.Controllers
 
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-            var properties = new AuthenticationProperties();
+            var properties = new AuthenticationProperties
+            {
+                //IsPersistent = true, // It keeps the cookie on the client side, otherwise it is a session cookie
+                //ExpiresUtc = DateTime.UtcNow.AddDays(15), // Set by ExpireTimeSpan when AddCookie
+                RedirectUri = "/"
+            };
 
             var tokens = new[]
             {

@@ -13,7 +13,7 @@
 
         public async Task<AuthToken> Login(LoginRequest loginRequest)
         {
-            HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/Auth/Login", loginRequest);
+            using HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/Auth/Login", loginRequest);
 
             if (!response.IsSuccessStatusCode)
                 return null;
@@ -23,7 +23,7 @@
 
         public async Task<UserModel> GetUserModel()
         {
-            HttpResponseMessage response = await _httpClient.GetAsync("/Auth");
+            using HttpResponseMessage response = await _httpClient.GetAsync("/Auth");
 
             if (!response.IsSuccessStatusCode)
                 return null;

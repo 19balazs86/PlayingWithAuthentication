@@ -37,12 +37,13 @@ namespace ApiCookieAuth
                 {
                     options.LoginPath   = "/login.html";
                     options.Cookie.Name = "auth-cookie";
+                    //options.ExpireTimeSpan = TimeSpan.FromDays(15); // During HttpContext.SignIn the AuthenticationProperties needs to be set IsPersistent = true
                 });
 
 
             services.AddAuthorization();
 
-            services.AddSingleton<ApiJwtClientAuthHandler>();
+            services.AddTransient<ApiJwtClientAuthHandler>();
 
             services.AddHttpContextAccessor();
 

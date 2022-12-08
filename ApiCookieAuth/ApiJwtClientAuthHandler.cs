@@ -24,6 +24,9 @@ namespace ApiCookieAuth
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
 
+            // If the token is expired use the refresh token to obtain a new token.
+            // Use the httpContext.SignInAsync method to save it in the cookie on the client side.
+
             return await base.SendAsync(request, cancellationToken);
         }
     }

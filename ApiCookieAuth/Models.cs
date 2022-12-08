@@ -1,21 +1,21 @@
 ﻿namespace ApiCookieAuth
 {
-    public sealed class AuthToken
+    public sealed record AuthToken
     {
-        public string Token { get; set; }
-        public string RefreshToken { get; set; }
+        public string Token { get; init; }
+        public string RefreshToken { get; init; }
     }
 
-    public sealed class LoginRequest
+    public sealed record LoginRequest
     {
-        public string Name { get; set; }
-        public string Password { get; set; }
+        public string Name { get; init; }
+        public string Password { get; init; }
     }
 
-    public sealed class UserModel
+    public sealed record UserModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public IEnumerable<string> Roles { get; set; } = Enumerable.Empty<string>();
+        public int Id { get; init; }
+        public string Name { get; init; }
+        public IEnumerable<string> Roles { get; init; } = Enumerable.Empty<string>();
     }
 }

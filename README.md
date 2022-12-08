@@ -18,6 +18,7 @@
 
 ##### Resources
 - [JWT Authentication Tutorial](https://youtu.be/8FvN5bhVYxY) *(33 min)* | [Raw Coding](https://www.youtube.com/@RawCoding/videos) YouTube channel contains deep dive videos about authentication topic
+- [ASP.NET Core Cookie Authentication](https://youtu.be/hw2B6SZj8y8) *(46min, Raw Coding)*
 - [Signing JWT with RSA](https://vmsdurano.com/-net-core-3-1-signing-jwt-with-rsa/) *(ProudMonkey)*
 - [Protect your API with API Keys](https://josefottosson.se/asp-net-core-protect-your-api-with-api-keys/) *(Josef)*
 - [Certificate Authentication](https://damienbod.com/2019/06/13/certificate-authentication-in-asp-net-core-3-0/) *(Damien Bod)*
