@@ -2,9 +2,10 @@
 
 ###### Project: KeyGenRSA
 
-- Console application to generate private and public RSA pem file.
+- Console application to generate private and public RSA pem files.
 - Private key is used in the ApiJWT project to sign and validate JWT.
-- Public key can be used for validation of JWT in other server.
+- Public key can be used to validate an ApiJWT token. It can be an RsaSecurityKey during authentication process passing the ApiJWT token.
+- Hashing and Salting password with [PBKDF2](KeyGenRSA/Hashing_PBKDF2.cs).
 
 ###### Project: ApiJWT
 
@@ -29,7 +30,6 @@
 - [What's New in .NET 7 for Authentication and Authorization](https://auth0.com/blog/whats-new-in-dotnet-7-for-authentication-and-authorization) *(auth0)*
 
 ##### Password hashing
-- [Hashing and Salting passwords best practices](https://code-maze.com/csharp-hashing-salting-passwords-best-practices/) *(CodeMaze)* - [PBKDF2](Playing_with_JWT/Playing_with_JWT/Hashing_PBKDF2.cs), [BCrypt/SCrypt](https://github.com/BcryptNet/bcrypt.net), Argon2
+- [Hashing and Salting passwords best practices](https://code-maze.com/csharp-hashing-salting-passwords-best-practices/) *(CodeMaze)* - [PBKDF2](KeyGenRSA/Hashing_PBKDF2.cs), [BCrypt/SCrypt](https://github.com/BcryptNet/bcrypt.net), Argon2
 - [How to store a password](https://www.meziantou.net/how-to-store-a-password-in-a-web-application.htm) *(meziantou)*
 - [Cryptography in .NET](https://www.meziantou.net/cryptography-in-dotnet.htm) *(meziantou)*
-
