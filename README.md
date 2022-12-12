@@ -28,6 +28,7 @@
 
 ##### Other resources
 
+- [Overview of different App security topics](https://github.com/damienbod/aspnetcore-standup-authn-authz) *(GitHub, Damien Bod)*
 - [Protect your API with API Keys](https://josefottosson.se/asp-net-core-protect-your-api-with-api-keys/) *(Josef)*
 - [Certificate Authentication](https://damienbod.com/2019/06/13/certificate-authentication-in-asp-net-core-3-0/) *(Damien Bod)*
 - [Creating a custom authentication scheme](https://joonasw.net/view/creating-auth-scheme-in-aspnet-core-2/) (Joonas w)
