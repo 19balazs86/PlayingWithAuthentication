@@ -40,3 +40,4 @@
 ##### Password hashing
 - [How to store a password](https://www.meziantou.net/how-to-store-a-password-in-a-web-application.htm) 📓meziantou
 - [Cryptography in .NET](https://www.meziantou.net/cryptography-in-dotnet.htm) 📓meziantou
+- [Cryptography Implementations in .NET](https://code-maze.com/dotnet-cryptography-implementations/) 📓*CodeMaze*
