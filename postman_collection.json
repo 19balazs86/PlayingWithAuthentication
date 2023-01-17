@@ -164,6 +164,26 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Invalidate my token",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5000/Auth/InvalidateMyToken",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"Auth",
+						"InvalidateMyToken"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
