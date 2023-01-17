@@ -4,134 +4,148 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace ApiJWT
+namespace ApiJWT;
+
+public static class AuthHelper
 {
-    public static class AuthHelper
+    private static readonly string _issuer   = "https://localhost:5000";
+    private static readonly string _audience = "https://localhost:5000";
+
+    //private static SecurityKey _securityKeySymm = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+
+    private static readonly RSA _rsa;
+
+    private static readonly RsaSecurityKey _securityKey;
+    private static readonly SigningCredentials _signingCredential;
+
+    private static readonly TokenValidationParameters _tokenValidationParameters;
+
+    static AuthHelper()
     {
-        private static readonly string _issuer   = "https://localhost:5000";
-        private static readonly string _audience = "https://localhost:5000";
+        _rsa = RSA.Create();
 
-        //private static SecurityKey _securityKeySymm = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+        // You can import the public RSA key as well, and the authentication will work. However, the token can only be generated using the private key.
+        _rsa.ImportFromPem(File.ReadAllText("Key-RSA-Private.pem"));
 
-        private static readonly RSA _rsa;
+        _securityKey = new RsaSecurityKey(_rsa);
 
-        private static readonly RsaSecurityKey _securityKey;
-        private static readonly SigningCredentials _signingCredential;
+        // For simplicity, the SymmetricSecurityKey can be used with HmacSha256, but the symmetric key is not that safe.
+        _signingCredential = new SigningCredentials(_securityKey, SecurityAlgorithms.RsaSha256);
 
-        private static readonly TokenValidationParameters _tokenValidationParameters;
-
-        static AuthHelper()
+        _tokenValidationParameters = new TokenValidationParameters
         {
-            _rsa = RSA.Create();
+            ValidateIssuer           = true,
+            ValidateAudience         = true,
+            ValidateLifetime         = true,
+            ValidateIssuerSigningKey = true,
 
-            // RSA can be created with the public key and the authentication works. But you can not generate tokens with the public key.
-            _rsa.ImportFromPem(File.ReadAllText("Key-RSA-Private.pem"));
+            ClockSkew = TimeSpan.Zero,
 
-            _securityKey = new RsaSecurityKey(_rsa);
+            ValidIssuer      = _issuer,
+            ValidAudience    = _audience,
+            IssuerSigningKey = _securityKey
+        };
+    }
 
-            // For simplicity, the SymmetricSecurityKey can be used with HmacSha256, but the symmetric key is not that safe.
-            _signingCredential = new SigningCredentials(_securityKey, SecurityAlgorithms.RsaSha256);
-
-            _tokenValidationParameters = new TokenValidationParameters
+    public static IServiceCollection AddJwtAuthentication(this IServiceCollection services)
+    {
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
             {
-                ValidateIssuer           = true,
-                ValidateAudience         = true,
-                ValidateLifetime         = true,
-                ValidateIssuerSigningKey = true,
+                // options.Configuration = new OpenIdConnectConfiguration { SigningKeys = { _securityKey } };
 
-                ClockSkew = TimeSpan.Zero,
-
-                ValidIssuer      = _issuer,
-                ValidAudience    = _audience,
-                IssuerSigningKey = _securityKey
-            };
-        }
-
-        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services)
-        {
-            services
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+                options.TokenValidationParameters = _tokenValidationParameters;
+                options.Events = new JwtBearerEvents
                 {
-                    options.TokenValidationParameters = _tokenValidationParameters;
-                    options.Events = new JwtBearerEvents
+                    OnMessageReceived = context => // Retrieve the token from the cookie.
                     {
-                        OnMessageReceived = context => // Retrieve the token from the cookie.
-                        {
-                            context.Token = context.Request.Cookies["TokenCookieName"];
-                            return Task.CompletedTask;
-                        }
-                    };
-                });
+                        context.Token = context.Request.Cookies["TokenCookieName"];
+                        return Task.CompletedTask;
+                    },
+                    OnTokenValidated = onTokenValidated
+                };
+            });
 
-            return services;
-        }
+        return services;
+    }
 
-        public static string CreateToken(IEnumerable<Claim> claims)
+    public static string CreateToken(IEnumerable<Claim> claims)
+    {
+        var tokenDescriptor = new SecurityTokenDescriptor
         {
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject            = new ClaimsIdentity(claims),
-                Issuer             = _issuer,
-                Audience           = _audience,
-                Expires            = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = _signingCredential
-            };
+            Subject            = new ClaimsIdentity(claims),
+            Issuer             = _issuer,
+            Audience           = _audience,
+            Expires            = DateTime.UtcNow.AddDays(1),
+            SigningCredentials = _signingCredential
+        };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+        var tokenHandler = new JwtSecurityTokenHandler();
 
-            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+        SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return tokenHandler.WriteToken(token);
-        }
+        return tokenHandler.WriteToken(token);
+    }
 
-        public static bool TryValidateToken(string token, out ClaimsPrincipal claimsPrincipal, out string? invalidReason)
+    public static bool TryValidateToken(string token, out ClaimsPrincipal claimsPrincipal, out string? invalidReason)
+    {
+        return tryValidateToken(token, _tokenValidationParameters, out claimsPrincipal, out _, out invalidReason);
+    }
+
+    public static bool TryValidateExpiredToken(string token, out JwtSecurityToken? jwtSecurityToken, out string? invalidReason)
+    {
+        var tokenValidationParameters = new TokenValidationParameters
         {
-            return tryValidateToken(token, _tokenValidationParameters, out claimsPrincipal, out _, out invalidReason);
-        }
+            ValidateIssuer           = false,
+            ValidateAudience         = false,
+            ValidateLifetime         = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey         = _securityKey
+        };
 
-        public static bool TryValidateExpiredToken(string token, out JwtSecurityToken? jwtSecurityToken, out string? invalidReason)
+        return tryValidateToken(token, tokenValidationParameters, out _, out jwtSecurityToken, out invalidReason);
+    }
+
+    private static bool tryValidateToken(
+        string token,
+        TokenValidationParameters tokenValidationParameters,
+        out ClaimsPrincipal claimsPrincipal,
+        out JwtSecurityToken? jwtSecurityToken,
+        out string? invalidReason)
+    {
+        invalidReason    = null;
+        jwtSecurityToken = null;
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        try
         {
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer           = false,
-                ValidateAudience         = false,
-                ValidateLifetime         = false,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey         = _securityKey
-            };
+            claimsPrincipal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
 
-            return tryValidateToken(token, tokenValidationParameters, out _, out jwtSecurityToken, out invalidReason);
+            jwtSecurityToken = securityToken as JwtSecurityToken;
+
+            return true;
         }
-
-        private static bool tryValidateToken(
-            string token,
-            TokenValidationParameters tokenValidationParameters,
-            out ClaimsPrincipal claimsPrincipal,
-            out JwtSecurityToken? jwtSecurityToken,
-            out string? invalidReason)
+        catch (Exception ex) // The exception can be: SecurityTokenExpiredException, SecurityTokenValidationException
         {
-            invalidReason    = null;
-            jwtSecurityToken = null;
+            claimsPrincipal = new ClaimsPrincipal();
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+            invalidReason = ex.Message;
 
-            try
-            {
-                claimsPrincipal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
-
-                jwtSecurityToken = securityToken as JwtSecurityToken;
-
-                return true;
-            }
-            catch (Exception ex) // The exception can be: SecurityTokenExpiredException, SecurityTokenValidationException
-            {
-                claimsPrincipal = new ClaimsPrincipal();
-
-                invalidReason = ex.Message;
-
-                return false;
-            }
+            return false;
         }
+    }
+
+    private static Task onTokenValidated(TokenValidatedContext ctx)
+    {
+        // IServiceProvider serviceProvider = ctx.HttpContext.RequestServices;
+
+        string jwtId = ctx.SecurityToken.Id;
+
+        if (!RefreshTokenRepository.IsValidToken(jwtId))
+            ctx.Fail("Token is not valid anymore.");
+
+        return Task.CompletedTask;
     }
 }

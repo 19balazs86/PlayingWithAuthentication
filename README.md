@@ -1,5 +1,15 @@
 # Playing with Authentication
 
+Table of content
+
+- Project: [KeyGenRSA](#project-keygenrsa)
+- Project: [ApiJWT](#project-apijwt)
+- Project: [ApiCookieAuth](#project-apicookieauth)
+- [Other resources](#other-resources)
+- [Password hashing](#password-hashing)
+
+---
+
 ##### Project: KeyGenRSA
 
 - Console application to generate private and public RSA pem files.
@@ -11,18 +21,22 @@
 
 ##### Project: ApiJWT
 
-- WebAPI using JWT authentication signing the token with the RSA private key.
+- WebAPI using JWT authentication, signing the token with the RSA private key.
 - Create SigningCredentials with symmetric and asymmetric security key using RSA or X509Certificate.
-- Apply a way to refresh the token.
+- Implement a method for refreshing the token.
+- Implement a method for invalidating the token.
 
 ###### Resources
 - [JWT Authentication](https://youtu.be/8FvN5bhVYxY) 📽️33min | [Raw Coding](https://www.youtube.com/@RawCoding/videos) YouTube channel contains deep dive videos into authentication topic
+- [Cookie invalidation and Token revocation](https://youtu.be/R6r_uSSIzvs) 📽️*13min - Raw Coding*
 - [Signing JWT with RSA](https://vmsdurano.com/-net-core-3-1-signing-jwt-with-rsa/) 📓ProudMonkey
 - [What's new in .NET 7 for Authentication](https://auth0.com/blog/whats-new-in-dotnet-7-for-authentication-and-authorization/) 📓auth0 | [Setup JWT Bearer token](https://wildermuth.com/2022/12/07/changes-in-jwt-bearer-tokens-in-dotnet-7/) 📓ShawnWildermuth | [user-jwts](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/jwt-authn) 📚
 
 ##### Project: ApiCookieAuth
 
-- Implements a cookie authentication. Calling ApiJWT service to get a token and store it in AuthenticationProperties for later usage.
+- Implements a cookie authentication.
+- Call the ApiJWT service to obtain a token and store it in the AuthenticationProperties for future use.
+- Implement a method for adding sessions to the black list.
 ###### Resources
 - [ASP.NET Core Cookie Authentication](https://youtu.be/hw2B6SZj8y8) 📽️46min-RawCoding
 

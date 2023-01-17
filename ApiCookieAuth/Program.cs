@@ -1,56 +1,72 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
-namespace ApiCookieAuth
+namespace ApiCookieAuth;
+
+public class Program
 {
-    public class Program
+    public const string SessionClaimName = "SessionId";
+
+    public static List<string> CookieBlackList { get; } = new List<string>();
+
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            configureServices(builder.Services);
+        // Add services to the container.
+        configureServices(builder.Services);
 
-            WebApplication app = builder.Build();
+        WebApplication app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+        // Configure the HTTP request pipeline.
 
-            app.UseHttpsRedirection();
+        app.UseHttpsRedirection();
 
-            app.UseStaticFiles();
+        app.UseStaticFiles();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+        app.UseAuthentication();
+        app.UseAuthorization();
 
-            app.MapControllers();
+        app.MapControllers();
 
-            app.Run();
-        }
+        app.Run();
+    }
 
-        private static void configureServices(IServiceCollection services)
-        {
-            services.AddControllers();
+    private static void configureServices(IServiceCollection services)
+    {
+        services.AddControllers();
 
-            services
-                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-                {
-                    options.LoginPath   = "/login.html";
-                    options.Cookie.Name = "auth-cookie";
-                    //options.ExpireTimeSpan = TimeSpan.FromDays(15); // During HttpContext.SignIn the AuthenticationProperties needs to be set IsPersistent = true
-                });
-
-
-            services.AddAuthorization();
-
-            services.AddTransient<ApiJwtClientAuthHandler>();
-
-            services.AddHttpContextAccessor();
-
-            services.AddHttpClient<IApiJwtClient, ApiJwtClient>(configureClient =>
+        services
+            .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
             {
-                configureClient.BaseAddress = new Uri("https://localhost:5000");
-            }).AddHttpMessageHandler<ApiJwtClientAuthHandler>();
-        }
+                options.LoginPath   = "/login.html";
+                options.Cookie.Name = "auth-cookie";
+                //options.ExpireTimeSpan = TimeSpan.FromDays(15); // During HttpContext.SignIn the AuthenticationProperties needs to be set IsPersistent = true
+
+                options.Events.OnValidatePrincipal = onValidatePrincipal;
+            });
+
+
+        services.AddAuthorization();
+
+        services.AddTransient<ApiJwtClientAuthHandler>();
+
+        services.AddHttpContextAccessor();
+
+        services.AddHttpClient<IApiJwtClient, ApiJwtClient>(configureClient =>
+        {
+            configureClient.BaseAddress = new Uri("https://localhost:5000");
+        }).AddHttpMessageHandler<ApiJwtClientAuthHandler>();
+    }
+
+    private static Task onValidatePrincipal(CookieValidatePrincipalContext ctx)
+    {
+        // IServiceProvider serviceProvider = ctx.HttpContext.RequestServices;
+
+        if (CookieBlackList.Contains(ctx.Principal.FindFirstValue(SessionClaimName)))
+            ctx.RejectPrincipal();
+
+        return Task.CompletedTask;
     }
 }
