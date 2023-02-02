@@ -5,6 +5,7 @@ Table of content
 - Project: [KeyGenRSA](#project-keygenrsa)
 - Project: [ApiJWT](#project-apijwt)
 - Project: [ApiCookieAuth](#project-apicookieauth)
+- Project: [WebApi_EF_Identity](#project-webapi_ef_identity)
 - [Other resources](#other-resources)
 - [Password hashing](#password-hashing)
 
@@ -39,6 +40,10 @@ Table of content
 - Implement a method for adding sessions to the black list.
 ###### Resources
 - [ASP.NET Core Cookie Authentication](https://youtu.be/hw2B6SZj8y8) 📽️46min-RawCoding
+
+##### Project: WebApi_EF_Identity
+
+- Take advantage of the Entity Framework Identity features, including UserManager and SignInManager.
 
 ##### Other resources
 

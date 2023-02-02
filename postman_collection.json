@@ -7,6 +7,86 @@
 	},
 	"item": [
 		{
+			"name": "WebApi_EF_Identity",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"FirstName\": \"Test\",\r\n    \"LastName\": \"User\",\r\n    \"Email\": \"user@domain.com\",\r\n    \"Password\": \"Password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5019/Register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5019",
+							"path": [
+								"Register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Email\": \"user@domain.com\",\r\n    \"Password\": \"Password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5019/Login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5019",
+							"path": [
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5019/Logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5019",
+							"path": [
+								"Logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "GetCurrentUser",
 			"request": {
 				"method": "GET",
