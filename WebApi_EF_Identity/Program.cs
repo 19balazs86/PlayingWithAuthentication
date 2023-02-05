@@ -13,6 +13,8 @@ public class Program
 
         // Add services to the container.
         {
+            services.AddControllers();
+
             services.AddProblemDetails();
 
             services.AddDbContext<MyDataContext>(options => options.UseInMemoryDatabase("data"));
@@ -39,12 +41,12 @@ public class Program
 
         // Configure the HTTP request pipeline.
         {
+            app.UseExceptionHandler();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseExceptionHandler();
-
-            AuthEndpoints.MapEndpoints(app);
+            app.MapControllers();
         }
 
         app.Run();
