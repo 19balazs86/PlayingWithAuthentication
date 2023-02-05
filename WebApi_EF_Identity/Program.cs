@@ -21,6 +21,8 @@ public class Program
                 {
                     if (builder.Environment.IsDevelopment())
                     {
+                        identityOptions.SignIn.RequireConfirmedEmail = true;
+
                         identityOptions.User.RequireUniqueEmail = true;
 
                         identityOptions.Password.RequireNonAlphanumeric = false;
@@ -42,9 +44,7 @@ public class Program
 
             app.UseExceptionHandler();
 
-            app.MapPost("/register", Endpoints.Register);
-            app.MapPost("/login",    Endpoints.Login);
-            app.MapGet("/logout",    Endpoints.Logout).RequireAuthorization();
+            AuthEndpoints.MapEndpoints(app);
         }
 
         app.Run();
