@@ -71,17 +71,17 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("Login")]
-    public async Task<IResult> Login(LoginRequest request)
+    public async Task<IActionResult> Login(LoginRequest request)
     {
-        //var user = await userManager.FindByEmailAsync(request.Email);
-        //SignInResult result = await signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: false);
+        //var user = await _userManager.FindByEmailAsync(request.Email);
+        //SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: false);
 
         SignInResult result = await _signInManager.PasswordSignInAsync(userName: request.Email, request.Password, isPersistent: true, lockoutOnFailure: false);
 
         if (result.Succeeded)
-            return TypedResults.Ok("You are signed in");
+            return Ok("You are signed in");
 
-        return TypedResults.Problem(title: "Failed to login", statusCode: StatusCodes.Status400BadRequest);
+        return Problem(title: "Failed to login", detail: result.ToString(), statusCode: StatusCodes.Status400BadRequest);
     }
 
     [Authorize]

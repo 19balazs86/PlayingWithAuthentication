@@ -18,6 +18,7 @@ public class Program
             services.AddProblemDetails();
 
             services.AddDbContext<MyDataContext>(options => options.UseInMemoryDatabase("data"));
+
             services
                 .AddIdentity<MyIdentityUser, IdentityRole>(identityOptions =>
                 {
