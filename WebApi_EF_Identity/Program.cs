@@ -35,6 +35,8 @@ public class Program
                 .AddEntityFrameworkStores<MyDataContext>()
                 .AddDefaultTokenProviders();
 
+            services.ConfigureApplicationCookie(c => c.ExpireTimeSpan = TimeSpan.FromSeconds(30));
+
             services.AddAuthorization();
         }
 

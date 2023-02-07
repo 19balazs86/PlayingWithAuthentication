@@ -63,7 +63,8 @@ public static class AuthHelper
                         context.Token = context.Request.Cookies["TokenCookieName"];
                         return Task.CompletedTask;
                     },
-                    OnTokenValidated = onTokenValidated
+                    OnAuthenticationFailed = onAuthenticationFailed,
+                    OnTokenValidated       = onTokenValidated
                 };
             });
 
@@ -144,7 +145,21 @@ public static class AuthHelper
         string jwtId = ctx.SecurityToken.Id;
 
         if (!RefreshTokenRepository.IsValidToken(jwtId))
+        {
+            ctx.Response.Headers.Add("IsTokenInvalidated", "true");
+
             ctx.Fail("Token is not valid anymore.");
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private static Task onAuthenticationFailed(AuthenticationFailedContext ctx)
+    {
+        // IServiceProvider serviceProvider = ctx.HttpContext.RequestServices;
+
+        if (ctx.Exception.GetType() == typeof(SecurityTokenExpiredException))
+            ctx.Response.Headers.Add("IsTokenExpired", "true");
 
         return Task.CompletedTask;
     }

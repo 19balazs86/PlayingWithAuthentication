@@ -64,6 +64,8 @@ public class Program
     {
         // IServiceProvider serviceProvider = ctx.HttpContext.RequestServices;
 
+        // To invalidate a cookie, it can can be rejected based on the session id.
+
         if (CookieBlackList.Contains(ctx.Principal.FindFirstValue(SessionClaimName)))
             ctx.RejectPrincipal();
 
