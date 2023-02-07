@@ -77,7 +77,7 @@ public class TwoFactorAuthController : ControllerBase
     {
         var user = await _userManager.GetUserAsync(User);
 
-        bool isValidCode = await _userManager.VerifyTwoFactorTokenAsync(user, _userManager.Options.Tokens.AuthenticatorTokenProvider, code);
+        bool isValidCode = await _userManager.VerifyTwoFactorTokenAsync(user, _tokenProvider, code);
 
         if (!isValidCode)
             return BadRequest("Invalid code");
