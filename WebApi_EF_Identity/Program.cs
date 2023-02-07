@@ -35,7 +35,25 @@ public class Program
                 .AddEntityFrameworkStores<MyDataContext>()
                 .AddDefaultTokenProviders();
 
-            services.ConfigureApplicationCookie(c => c.ExpireTimeSpan = TimeSpan.FromSeconds(30));
+            services.ConfigureApplicationCookie(optinos =>
+            {
+                optinos.ExpireTimeSpan = TimeSpan.FromSeconds(30);
+
+                // Since there is no front-end, we need to change the default behavior.
+                // Do not redirect to "/Account/Login"
+
+                optinos.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    return Task.CompletedTask;
+                };
+
+                optinos.Events.OnRedirectToAccessDenied = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                    return Task.CompletedTask;
+                };
+            });
 
             services.AddAuthorization();
         }

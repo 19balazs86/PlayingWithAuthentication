@@ -12,52 +12,50 @@ public class Program
     public static void Main(string[] args)
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+        IServiceCollection services   = builder.Services;
 
         // Add services to the container.
-        configureServices(builder.Services);
+        {
+            services.AddControllers();
+
+            services
+                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+                {
+                    options.LoginPath   = "/login.html";
+                    options.Cookie.Name = "auth-cookie";
+                    //options.ExpireTimeSpan = TimeSpan.FromDays(15); // During HttpContext.SignIn the AuthenticationProperties needs to be set IsPersistent = true
+
+                    options.Events.OnValidatePrincipal = onValidatePrincipal;
+                });
+
+
+            services.AddAuthorization();
+
+            services.AddTransient<ApiJwtClientAuthHandler>();
+
+            services.AddHttpContextAccessor();
+
+            services
+                .AddHttpClient<IApiJwtClient, ApiJwtClient>(client => client.BaseAddress = new Uri("https://localhost:5000"))
+                .AddHttpMessageHandler<ApiJwtClientAuthHandler>();
+        }
 
         WebApplication app = builder.Build();
 
         // Configure the HTTP request pipeline.
+        {
+            app.UseHttpsRedirection();
 
-        app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
-        app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
-        app.UseAuthentication();
-        app.UseAuthorization();
-
-        app.MapControllers();
+            app.MapControllers();
+        }
 
         app.Run();
-    }
-
-    private static void configureServices(IServiceCollection services)
-    {
-        services.AddControllers();
-
-        services
-            .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-            {
-                options.LoginPath   = "/login.html";
-                options.Cookie.Name = "auth-cookie";
-                //options.ExpireTimeSpan = TimeSpan.FromDays(15); // During HttpContext.SignIn the AuthenticationProperties needs to be set IsPersistent = true
-
-                options.Events.OnValidatePrincipal = onValidatePrincipal;
-            });
-
-
-        services.AddAuthorization();
-
-        services.AddTransient<ApiJwtClientAuthHandler>();
-
-        services.AddHttpContextAccessor();
-
-        services.AddHttpClient<IApiJwtClient, ApiJwtClient>(configureClient =>
-        {
-            configureClient.BaseAddress = new Uri("https://localhost:5000");
-        }).AddHttpMessageHandler<ApiJwtClientAuthHandler>();
     }
 
     private static Task onValidatePrincipal(CookieValidatePrincipalContext ctx)
