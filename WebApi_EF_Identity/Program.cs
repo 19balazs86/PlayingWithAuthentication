@@ -33,11 +33,12 @@ public class Program
                     }
                 })
                 .AddEntityFrameworkStores<MyDataContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddPasswordlessLoginTokenProvider();
 
             services.ConfigureApplicationCookie(optinos =>
             {
-                optinos.ExpireTimeSpan = TimeSpan.FromSeconds(30);
+                optinos.ExpireTimeSpan = TimeSpan.FromDays(1);
 
                 // Since there is no front-end, we need to change the default behavior.
                 // Do not redirect to "/Account/Login"

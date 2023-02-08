@@ -17,7 +17,9 @@ Table of content
 - Private key is used in the ApiJWT project to sign and validate JWT.
 - Public key can be used to validate an ApiJWT token. It can be an RsaSecurityKey during authentication process passing the ApiJWT token.
 - Hashing and Salting password with [PBKDF2](KeyGenRSA/Hashing_PBKDF2.cs).
+
 ###### Resources
+
 - [Hashing and Salting passwords best practices](https://code-maze.com/csharp-hashing-salting-passwords-best-practices/) 📓*Code-Maze* - [PBKDF2](KeyGenRSA/Hashing_PBKDF2.cs), [BCrypt/SCrypt](https://github.com/BcryptNet/bcrypt.net), Argon2
 
 ##### Project: ApiJWT
@@ -28,6 +30,7 @@ Table of content
 - Implement a method for invalidating the token.
 
 ###### Resources
+
 - [JWT Authentication](https://youtu.be/8FvN5bhVYxY) 📽️*33min* | [Raw Coding](https://www.youtube.com/@RawCoding/videos) YouTube channel contains deep dive videos into authentication topic
 - [Cookie invalidation and Token revocation](https://youtu.be/R6r_uSSIzvs) 📽️*13min - Raw Coding*
 - [Signing JWT with RSA](https://vmsdurano.com/-net-core-3-1-signing-jwt-with-rsa/) 📓*ProudMonkey*
@@ -44,11 +47,15 @@ Table of content
 ##### Project: WebApi_EF_Identity
 
 - Take advantage of the Entity Framework Identity features, including UserManager and SignInManager.
-- Two Factor Authentication with Google Authenticator
+- Two Factor Authentication with Authenticator app
   - Flow: Register -> Confirm email -> Get TwoFactor auth setup -> Enable TwoFactor -> Logout -> Login -> Login with TwoFactor
+- Generating a short-lived token for signing in like Slack and Medium
+
 ###### Resources
+
 - [Two Factor Authentication with Web API and Angular using Google Authenticator](https://code-maze.com/dotnet-angular-two-factor-authentication-with-using-google-authenticator) 📓*Code-Maze*
 - [QR code generator](https://goqr.me/api) 📓*WebAPI*
+- [Implementing custom token provider for short-lived token](https://andrewlock.net/implementing-custom-token-providers-for-passwordless-authentication-in-asp-net-core-identity) 📓*Andrew Lock*
 
 ##### Other resources
 
@@ -62,6 +69,7 @@ Table of content
 - [What's New in .NET 7 for Authentication and Authorization](https://auth0.com/blog/whats-new-in-dotnet-7-for-authentication-and-authorization) 📓*auth0*
 
 ##### Password hashing
+
 - [How to store a password](https://www.meziantou.net/how-to-store-a-password-in-a-web-application.htm) 📓*meziantou*
 - [Cryptography in .NET](https://www.meziantou.net/cryptography-in-dotnet.htm) 📓*meziantou*
 - [Cryptography Implementations in .NET](https://code-maze.com/dotnet-cryptography-implementations/) 📓*Code-Maze*

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
 using WebApi_EF_Identity.Data;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
@@ -12,7 +11,7 @@ public record LoginRequest(string Email, string Password);
 
 [ApiController]
 [Route("[controller]")]
-public class AuthController : ControllerBase
+public sealed class AuthController : ControllerBase
 {
     private readonly UserManager<MyIdentityUser> _userManager;
     private readonly SignInManager<MyIdentityUser> _signInManager;
@@ -39,15 +38,11 @@ public class AuthController : ControllerBase
         if (!result.Succeeded)
             return getValidationProblem(result);
 
-        // await signInManager.PasswordSignInAsync(user, request.Password, isPersistent: true, lockoutOnFailure: false);
+        string emailConfirmation = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-        string emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        emailConfirmation = Url.Action(nameof(ConfirmEmail), "Auth", new { token = emailConfirmation, email = request.Email }, Request.Scheme);
 
-        emailConfirmationToken = UrlEncoder.Default.Encode(emailConfirmationToken);
-
-        string confirmEmailUrl = $"http://localhost:5019/Auth/{nameof(ConfirmEmail)}/{request.Email}?token={emailConfirmationToken}";
-
-        return Ok(new { confirmEmailUrl });
+        return Ok(new { emailConfirmation });
     }
 
     [HttpGet("ConfirmEmail/{email}")]

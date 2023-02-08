@@ -9,7 +9,7 @@ namespace WebApi_EF_Identity.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class TwoFactorAuthController : ControllerBase
+public sealed class TwoFactorAuthController : ControllerBase
 {
     private const string _authenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
     private const string _qrServerUrlFormat      = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={0}";
@@ -35,7 +35,7 @@ public class TwoFactorAuthController : ControllerBase
         var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
 
         if (user is null)
-            return Unauthorized("Invalid authentication");
+            return Unauthorized("First you need to login with user name and password");
 
         //bool validVerification = await _userManager.VerifyTwoFactorTokenAsync(user, _tokenProvider, request.Code);
 
@@ -105,10 +105,8 @@ public class TwoFactorAuthController : ControllerBase
 
     private string generateQRCode(string email, string authenticatorKey)
     {
-        return string.Format(
-            _authenticatorUriFormat,
-            _urlEncoder.Encode("2Factor-Auth"),
-            _urlEncoder.Encode(email),
-            authenticatorKey);
+        const string issuer = "2Factor-Auth";
+
+        return string.Format(_authenticatorUriFormat, issuer, email, authenticatorKey);
     }
 }

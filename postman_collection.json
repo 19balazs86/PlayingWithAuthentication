@@ -188,6 +188,27 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Passwordless-Create",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5019/PasswordlessLogin/Create/user@domain.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5019",
+							"path": [
+								"PasswordlessLogin",
+								"Create",
+								"user@domain.com"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
