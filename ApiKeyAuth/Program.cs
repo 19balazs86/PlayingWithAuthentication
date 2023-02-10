@@ -23,7 +23,7 @@ public sealed class Program
 
             services.AddEndpointsApiExplorer();
 
-            services.AddSwaggerGenWithApiKey();
+            services.AddSwaggerWithApiKeyAuth();
 
             // TODO: Solution 4 - Add custom authentication handler (I think the most complex compare with the others)
             // Use it as usual with [Authorize] attribute
@@ -56,7 +56,7 @@ public sealed class Program
 
 public static class SwaggerExtensions
 {
-    public static IServiceCollection AddSwaggerGenWithApiKey(this IServiceCollection services)
+    public static IServiceCollection AddSwaggerWithApiKeyAuth(this IServiceCollection services)
     {
         services.AddSwaggerGen(options =>
         {
@@ -73,7 +73,6 @@ public static class SwaggerExtensions
 
             var key = new OpenApiSecurityScheme
             {
-                In        = ParameterLocation.Header,
                 Reference = new OpenApiReference
                 {
                     Type = ReferenceType.SecurityScheme,

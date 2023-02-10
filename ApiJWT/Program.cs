@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.OpenApi.Models;
 
 namespace ApiJWT
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -12,6 +13,8 @@ namespace ApiJWT
             // Add services to the container.
             {
                 services.AddControllers();
+
+                services.addSwaggerWithJwtAuth();
 
                 services.AddJwtAuthentication();
 
@@ -36,6 +39,9 @@ namespace ApiJWT
             {
                 app.UseHttpsRedirection();
 
+                app.UseSwagger();
+                app.UseSwaggerUI();
+
                 app.UseAuthentication();
                 app.UseAuthorization();
 
@@ -43,6 +49,44 @@ namespace ApiJWT
             }
 
             app.Run();
+        }
+
+        private static IServiceCollection addSwaggerWithJwtAuth(this IServiceCollection services)
+        {
+            const string schemeName = "Bearer";
+
+            services.AddSwaggerGen(options =>
+            {
+                var scheme = new OpenApiSecurityScheme
+                {
+                    Description  = "Provide a JWT in the following format: 'Bearer YourToken'",
+                    Type         = SecuritySchemeType.ApiKey,
+                    Name         = "Authorization",
+                    In           = ParameterLocation.Header,
+                    Scheme       = schemeName,
+                    BearerFormat = "JWT"
+                };
+
+                options.AddSecurityDefinition(schemeName, scheme);
+
+                var key = new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id   = schemeName
+                    },
+                };
+
+                var requirement = new OpenApiSecurityRequirement
+                {
+                    { key, new List<string>() }
+                };
+
+                 options.AddSecurityRequirement(requirement);
+            });
+
+            return services;
         }
     }
 }
