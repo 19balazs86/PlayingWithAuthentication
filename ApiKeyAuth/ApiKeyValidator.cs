@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Primitives;
-
-namespace ApiKeyAuth;
-
+﻿namespace ApiKeyAuth;
 
 public interface IApiKeyValidator
 {
@@ -29,22 +26,16 @@ public sealed class ApiKeyValidator : IApiKeyValidator
 
     public bool Validate(IHeaderDictionary headers)
     {
-        if (headers is null || !headers.TryGetValue(ApiKeyHeaderName, out StringValues apiKey))
-            return false;
-
-        return Validate(apiKey);
+        return headers is not null && Validate(headers[ApiKeyHeaderName]);
     }
 
     public bool Validate(IQueryCollection query)
     {
-        if (query is null || !query.TryGetValue(ApiKeyQueryName, out StringValues apiKey))
-            return false;
-
-        return Validate(apiKey);
+        return query is not null && Validate(query[ApiKeyQueryName]);
     }
 
     public bool Validate(HttpRequest request)
     {
-        return request is not null && Validate(request.Headers) || Validate(request.Query);
+        return request is not null && (Validate(request.Headers) || Validate(request.Query));
     }
 }
