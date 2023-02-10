@@ -15,7 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCookieAuth", "ApiCookieAuth\ApiCookieAuth.csproj", "{A6F1D7BF-010B-4941-AFA0-2D75099A9434}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi_EF_Identity", "WebApi_EF_Identity\WebApi_EF_Identity.csproj", "{A3585E0D-25BA-464C-93B6-BB489E0D0080}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi_EF_Identity", "WebApi_EF_Identity\WebApi_EF_Identity.csproj", "{A3585E0D-25BA-464C-93B6-BB489E0D0080}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiKeyAuth", "ApiKeyAuth\ApiKeyAuth.csproj", "{531D821C-4519-4C29-92A1-87BA2607AE45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A3585E0D-25BA-464C-93B6-BB489E0D0080}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3585E0D-25BA-464C-93B6-BB489E0D0080}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3585E0D-25BA-464C-93B6-BB489E0D0080}.Release|Any CPU.Build.0 = Release|Any CPU
+		{531D821C-4519-4C29-92A1-87BA2607AE45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{531D821C-4519-4C29-92A1-87BA2607AE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{531D821C-4519-4C29-92A1-87BA2607AE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{531D821C-4519-4C29-92A1-87BA2607AE45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
