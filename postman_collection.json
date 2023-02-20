@@ -264,7 +264,7 @@
 									"var jsonData = JSON.parse(responseBody);\r",
 									"\r",
 									"pm.globals.set(\"JwtToken\", jsonData.token);\r",
-									"pm.globals.set(\"RefreshToken\", jsonData.RefreshToken);"
+									"pm.globals.set(\"RefreshToken\", jsonData.refreshToken);"
 								],
 								"type": "text/javascript"
 							}
@@ -394,19 +394,39 @@
 					},
 					"response": []
 				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{JwtToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		}
 	],
-	"auth": {
-		"type": "bearer",
-		"bearer": [
-			{
-				"key": "token",
-				"value": "{{JwtToken}}",
-				"type": "string"
-			}
-		]
-	},
 	"event": [
 		{
 			"listen": "prerequest",
