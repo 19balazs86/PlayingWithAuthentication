@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 
@@ -27,6 +28,10 @@ public class Program
                     //options.ExpireTimeSpan = TimeSpan.FromDays(15); // During HttpContext.SignIn the AuthenticationProperties needs to be set IsPersistent = true
 
                     options.Events.OnValidatePrincipal = onValidatePrincipal;
+
+                    // When you are unauthorized, the server redirects you to LoginPath. However, you can prevent this by adding the following:
+                    //options.Events.OnRedirectToLogin        = context => preventRedirect(context, 401);
+                    //options.Events.OnRedirectToAccessDenied = context => preventRedirect(context, 403);
                 });
 
 
@@ -67,6 +72,12 @@ public class Program
         if (CookieBlackList.Contains(ctx.Principal.FindFirstValue(SessionClaimName)))
             ctx.RejectPrincipal();
 
+        return Task.CompletedTask;
+    }
+
+    private static Task preventRedirect(RedirectContext<CookieAuthenticationOptions> context, int statusCode)
+    {
+        context.Response.StatusCode = statusCode;
         return Task.CompletedTask;
     }
 }
