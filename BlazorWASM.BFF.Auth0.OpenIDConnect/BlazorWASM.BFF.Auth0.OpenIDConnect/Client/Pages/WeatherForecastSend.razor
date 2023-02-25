@@ -1,0 +1,35 @@
+﻿@page "/SendWeatherForecast"
+
+@attribute [Authorize]
+
+@inject IAntiforgeryHttpClientFactory httpClientFactory
+
+<PageTitle>Send forecast</PageTitle>
+
+<h1>Send Weather forecast</h1>
+
+<p>Sending data to the server with an antiforgery token.</p>
+
+<EditForm Model="@forecast" OnSubmit="@submitForecast">
+    <InputNumber id="name" @bind-Value="forecast.TemperatureC" />
+
+    <InputText id="name" @bind-Value="forecast.Summary" />
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+
+@code {
+    private WeatherForecast forecast = WeatherForecast.CreateRandom();
+
+    private async Task submitForecast()
+    {
+        HttpClient client = await httpClientFactory.CreateClientAsync();
+
+        using HttpResponseMessage response = await client.PostAsJsonAsync("api/WeatherForecast", forecast);
+
+        response.EnsureSuccessStatusCode();
+
+        forecast = await response.Content.ReadFromJsonAsync<WeatherForecast>();
+    }
+}

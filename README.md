@@ -7,6 +7,7 @@ Table of content
 - Project: [ApiCookieAuth](#project-apicookieauth)
 - Project: [WebApi_EF_Identity](#project-webapi_ef_identity)
 - Project: [ApiKeyAuth](#project-apikeyauth)
+- Project: [Blazor WASM BFF - Auth0 - OpenIDConnect](#project-blazorwasmbffauth0openidconnect)
 - [Other resources](#other-resources)
 - [Password hashing](#password-hashing)
 
@@ -60,6 +61,7 @@ Table of content
 
 ### Project: ApiKeyAuth
 
+The following solutions have been implemented
 1. Use a custom middleware to check the API Key
 2. Add an authorization filter for all endpoints of the Controller
 3. Apply an authorization filter individually *(controller and/or endpoint level)* with an attribute
@@ -71,6 +73,18 @@ Table of content
 - [API Key Authentication](https://youtu.be/GrJJXixjR8M) 📽️*18m - Nick Chapsas*
 - [Protect your API with API Keys](https://josefottosson.se/asp-net-core-protect-your-api-with-api-keys/) 📓*Josef Ottosson - Custom authentication handler with roles*
 - [Creating a custom authentication scheme](https://joonasw.net/view/creating-auth-scheme-in-aspnet-core-2/) 📓*JoonasW - BasicAuthentication*
+
+### Project: BlazorWASM.BFF.Auth0.OpenIDConnect
+
+- Blazor WASM BFF (Backend For Frontend) using OpenIDConnect and [Auth0](https://auth0.com)
+- Separate solution with 3 projects (Client, Server, Shared)
+
+###### Resources
+
+- [Blazor.BFF.OpenIDConnect.Template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) 👤*DamienBod* - This template is used as a base and customized it for Auth0
+- [OpenIddict](https://documentation.openiddict.com) 📓*Official doc*
+- [OpenIddict-Core](https://github.com/openiddict/openiddict-core) 👤*Official repo*
+- [Configure Auth0 in ASP.NET application with cookies](https://auth0.com/docs/quickstart/webapp/aspnet-core) 📓*Auth0 doc*
 
 ##### Other resources
 

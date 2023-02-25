@@ -1,0 +1,44 @@
+﻿@page "/"
+
+@inject HostAuthenticationStateProvider _authStateProvider;
+
+<PageTitle>Blazor WASM BFF</PageTitle>
+
+<h1>Blazor WASM BFF (Backend For Frontend)</h1>
+
+<br />
+<h3>Using Auth0 for OpenIDConnect</h3>
+
+<p>List of your claims</p>
+
+@if (_identity is not null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Claim claim in _identity.Claims)
+            {
+                <tr>
+                    <td>@claim.Type</td>
+                    <td>@claim.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private ClaimsIdentity? _identity;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await _authStateProvider.GetAuthenticationStateAsync();
+
+        _identity = authState?.User?.Identity as ClaimsIdentity;
+    }
+}
