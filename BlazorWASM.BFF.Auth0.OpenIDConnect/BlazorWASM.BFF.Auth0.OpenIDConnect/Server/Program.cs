@@ -79,8 +79,8 @@ public static class Program
             options.DefaultScheme          = CookieAuthenticationDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
-            // Unauthorized calls will be challenged and redirected to Auth0, which is undesirable
-            // Redirection causing exception in AuthorizedHandler.
+            // With Auth0 DefaultChallenge, unauthorized calls will be redirected to Auth0 log in page, which is undesirable
+            // Redirection causing exception in AuthorizedHandler
             // If you ConfigurePrimaryHttpMessageHandler with AllowAutoRedirect = false, then StatusCode return 0
             // options.DefaultChallengeScheme = Auth0Constants.AuthenticationScheme;
         })
@@ -145,8 +145,42 @@ public static class Program
         // 2) Based on a claim (NameIdentifier), the user can be identified, and you can create or retrieve the user from the database
 
         // context.HttpContext.RequestServices
-        // context.Principal = new ClaimsPrincipal();
+
+        context.Principal = transformClaims(context.Principal);
 
         return Task.CompletedTask;
+    }
+
+    private static ClaimsPrincipal? transformClaims(ClaimsPrincipal? givenPrincipal)
+    {
+        ClaimsIdentity? givenIdentity = givenPrincipal?.Identity as ClaimsIdentity;
+
+        if (givenIdentity is null)
+            return givenPrincipal;
+
+        var claims = new List<Claim>();
+
+        // To reduce the cookie size
+        foreach (Claim claim in givenIdentity.Claims)
+        {
+            string? newType = claim.Type switch
+            {
+                ClaimTypes.Role           => "role",
+                ClaimTypes.GivenName      => "firstname",
+                ClaimTypes.Surname        => "lastname",
+                ClaimTypes.Email          => "email",
+                ClaimTypes.NameIdentifier => "userid",
+                "sid"                     => "session",
+                "updated_at"              => null, // Ignore
+                var type                  => type
+            };
+
+            if (newType is not null)
+                claims.Add(new Claim(newType, claim.Value));
+        }
+
+        var identity = new ClaimsIdentity(claims, givenIdentity.AuthenticationType, givenIdentity.NameClaimType, "role");
+
+        return new ClaimsPrincipal(identity);
     }
 }

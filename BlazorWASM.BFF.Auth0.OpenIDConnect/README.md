@@ -23,6 +23,7 @@ Damien’s template is used to create and customize three projects: Client, Serv
 
 - [Blazor.BFF.OpenIDConnect.Template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) 👤*DamienBod* - This template is used as a base and customized it for Auth0
 - [Overview of different App security topics](https://github.com/damienbod/aspnetcore-standup-authn-authz) 👤*DamienBod*
+- [Exploring the Auth0 ASP.NET Authentication SDK](https://auth0.com/blog/exploring-auth0-aspnet-core-authentication-sdk) 📓*Auth0 blog - Andrea Chiarelli*
 - [OpenIddict](https://documentation.openiddict.com) 📓*Official doc*
 - [OpenIddict-Core](https://github.com/openiddict/openiddict-core) 👤*Official repo*
 - [Auth0 - Social Connections](https://marketplace.auth0.com/features/social-connections) 📓*Auth0 doc*

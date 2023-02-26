@@ -83,6 +83,7 @@ The following solutions have been implemented
 ###### Resources
 
 - [Blazor.BFF.OpenIDConnect.Template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) 👤*DamienBod* - This template is used as a base and customized it for Auth0
+- [Exploring the Auth0 ASP.NET Authentication SDK](https://auth0.com/blog/exploring-auth0-aspnet-core-authentication-sdk) 📓*Auth0 blog - Andrea Chiarelli*
 - [OpenIddict](https://documentation.openiddict.com) 📓*Official doc*
 - [OpenIddict-Core](https://github.com/openiddict/openiddict-core) 👤*Official repo*
 - [Configure Auth0 in ASP.NET application with cookies](https://auth0.com/docs/quickstart/webapp/aspnet-core) 📓*Auth0 doc*
