@@ -2,7 +2,7 @@
 
 An example of using [Auth0](https://auth0.com) with OpenIDConnect in a Blazor WebAssembly application that has a Backend For Frontend (BFF) architecture.
 
-Damien’s template is used to create and customize three projects: Client, Server and Shared and customized for Auth0.
+[Damien’s template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) is used to create 3 projects: Client, Server and Shared and customized for Auth0.
 
 ###### Prerequisite to run the application
 
@@ -12,16 +12,16 @@ Damien’s template is used to create and customize three projects: Client, Serv
 
 ```json
 "Authentication": {
-    "Auth0": {
-      "Domain": "Your Auth0 Domain",
-      "ClientId": "Your Auth0 Application's ClientId"
-    }
+  "Auth0": {
+    "Domain": "Your Auth0 Domain",
+    "ClientId": "Your Auth0 Application's ClientId"
   }
+}
 ```
 
 ###### Resources
 
-- [Blazor.BFF.OpenIDConnect.Template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) 👤*DamienBod* - This template is used as a base and customized it for Auth0
+- [Blazor.BFF.OpenIDConnect.Template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) 👤*DamienBod* - This template is used and customized for Auth0
 - [Overview of different App security topics](https://github.com/damienbod/aspnetcore-standup-authn-authz) 👤*DamienBod*
 - [Exploring the Auth0 ASP.NET Authentication SDK](https://auth0.com/blog/exploring-auth0-aspnet-core-authentication-sdk) 📓*Auth0 blog - Andrea Chiarelli*
 - [OpenIddict](https://documentation.openiddict.com) 📓*Official doc*
