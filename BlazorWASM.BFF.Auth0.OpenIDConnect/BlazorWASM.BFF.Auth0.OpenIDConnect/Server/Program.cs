@@ -70,13 +70,19 @@ public static class Program
 
     private static void addAuth0Authentication(this IServiceCollection services, IConfiguration configuration)
     {
-        // Valid OAuth redirect URLs need to be set for external login providers
-        // Auth0 is the following: https://<YourTenantDomain>/login/callback
+        // This extension method can be used for simplicity
+        // services.AddAuth0WebAppAuthentication(options => { });
 
+        // Adding Authentication and Cookie manually provides more control
         services.AddAuthentication(options =>
         {
             options.DefaultScheme          = CookieAuthenticationDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = Auth0Constants.AuthenticationScheme;
+            options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+            // Unauthorized calls will be challenged and redirected to Auth0, which is undesirable
+            // Redirection causing exception in AuthorizedHandler.
+            // If you ConfigurePrimaryHttpMessageHandler with AllowAutoRedirect = false, then StatusCode return 0
+            // options.DefaultChallengeScheme = Auth0Constants.AuthenticationScheme;
         })
         .AddCookie(options => options.Cookie.Name = "AuthCookie")
         .AddAuth0WebAppAuthentication(options => configureAuth0Options(options, configuration));
@@ -84,18 +90,11 @@ public static class Program
 
     private static void configureAuth0Options(Auth0WebAppOptions options, IConfiguration configuration)
     {
-        options.Domain = configuration.GetValue<string>("Authentication:Auth0:Domain")
-            ?? throw new NullReferenceException("Missing configuration for Domain");
-
-        options.ClientId = configuration.GetValue<string>("Authentication:Auth0:ClientId")
-            ?? throw new NullReferenceException("Missing configuration for ClientId");
+        // Bind the following values: Domain, ClientId, SkipCookieMiddleware, Scope
+        configuration.GetSection("Authentication:Auth0").Bind(options);
 
         //options.ClientSecret = configuration.GetValue<string>("Authentication:Auth0:ClientSecret");
         //options.ResponseType = OpenIdConnectResponseType.Code;
-
-        options.SkipCookieMiddleware = true;
-
-        options.Scope = "openid profile email"; // Default: "openid profile"
 
         options.OpenIdConnectEvents = new OpenIdConnectEvents { OnTicketReceived = onTicketReceived };
     }

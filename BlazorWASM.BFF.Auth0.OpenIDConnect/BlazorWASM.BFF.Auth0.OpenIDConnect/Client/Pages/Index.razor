@@ -9,36 +9,33 @@
 <br />
 <h3>Using Auth0 for OpenIDConnect</h3>
 
-<p>List of your claims, count: @(_identity?.Claims?.Count() ?? 0)</p>
+<p>List of your claims, count: @_userInfo.Claims.Count()</p>
 
-@if (_identity is not null)
-{
-    <table class="table">
-        <thead>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ClaimValue claim in _userInfo.Claims)
+        {
             <tr>
-                <th>Type</th>
-                <th>Name</th>
+                <td>@claim.Type</td>
+                <td>@claim.Value</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (Claim claim in _identity.Claims)
-            {
-                <tr>
-                    <td>@claim.Type</td>
-                    <td>@claim.Value</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+        }
+    </tbody>
+</table>
 
 @code {
-    private ClaimsIdentity? _identity;
+    private UserInfo _userInfo = UserInfo.Anonymous;
 
     protected override async Task OnInitializedAsync()
     {
         var authState = await _authStateProvider.GetAuthenticationStateAsync();
 
-        _identity = authState?.User?.Identity as ClaimsIdentity;
+        _userInfo = UserInfo.FromClaimsPrincipal(authState.User);
     }
 }

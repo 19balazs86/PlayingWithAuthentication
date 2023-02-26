@@ -45,8 +45,8 @@ public static class Program
         // Set AllowAutoRedirect to false, otherwise throw exception and AuthorizedHandler will not work
         services
             .AddHttpClient(AuthDefaults.AuthorizedClientName, client => client.BaseAddress = baseAddress)
-            .AddHttpMessageHandler<AuthorizedHandler>()
-            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
+            .AddHttpMessageHandler<AuthorizedHandler>();
+            //.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 
         services.AddTransient<IAntiforgeryHttpClientFactory, AntiforgeryHttpClientFactory>();
     }

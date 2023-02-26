@@ -17,7 +17,7 @@ public sealed class AuthorizedHandler : DelegatingHandler
             await base.SendAsync(request, cancellationToken) :
             new HttpResponseMessage(HttpStatusCode.Unauthorized);
 
-        if (responseMessage.StatusCode is 0 or HttpStatusCode.Unauthorized)
+        if (responseMessage.StatusCode == HttpStatusCode.Unauthorized)
         {
             _authenticationStateProvider.SignIn();
         }

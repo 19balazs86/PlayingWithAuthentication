@@ -11,7 +11,7 @@ public sealed class HostAuthenticationStateProvider : AuthenticationStateProvide
     private readonly ILogger<HostAuthenticationStateProvider> _logger;
 
     private DateTime _userLastCheck     = DateTime.MinValue;
-    private ClaimsPrincipal _cachedUser = new(new ClaimsIdentity());
+    private ClaimsPrincipal _cachedUser = UserInfo.Anonymous.ToClaimsPrincipal(_authType);
 
     public HostAuthenticationStateProvider(
         NavigationManager navigationManager,
@@ -57,26 +57,27 @@ public sealed class HostAuthenticationStateProvider : AuthenticationStateProvide
             return _cachedUser;
         }
 
-        _cachedUser = await fetchUser();
+        UserInfo? userInfo = await fetchUserInfo();
 
+        _cachedUser    = userInfo!.ToClaimsPrincipal(_authType);
         _userLastCheck = now;
 
         return _cachedUser;
     }
 
-    private async Task<ClaimsPrincipal> fetchUser()
+    private async Task<UserInfo?> fetchUserInfo()
     {
-        UserInfo? user = null;
+        UserInfo? userInfo = null;
 
         try
         {
-            user = await _httpClient.GetFromJsonAsync<UserInfo>(AuthDefaults.UserInfoPath);
+            userInfo = await _httpClient.GetFromJsonAsync<UserInfo>(AuthDefaults.UserInfoPath);
         }
         catch (Exception ex)
         {
             _logger.LogWarning(ex, "Fetching user failed");
         }
 
-        return user!.ToClaimsPrincipal(_authType);
+        return userInfo;
     }
 }

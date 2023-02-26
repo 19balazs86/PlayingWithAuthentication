@@ -12,7 +12,7 @@ public class AccountController : ControllerBase
     {
         var properties = new AuthenticationProperties { RedirectUri = returnUrl, IsPersistent = true };
 
-        return Challenge(properties);
+        return Challenge(properties, Auth0Constants.AuthenticationScheme);
     }
 
     [Authorize]
