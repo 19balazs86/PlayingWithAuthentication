@@ -7,7 +7,7 @@ Damien’s template is used to create and customize three projects: Client, Serv
 ###### Prerequisite to run the application
 
 - Auth0 account, where the Application is configured with the callback URL: https://localhost:5301/callback
-- Social connections can be added with the redirect URL: https://YourTenantDomain/login/callback
+- [Social connections](https://marketplace.auth0.com/features/social-connections) can be added with the redirect URL: https://YOUR_DOMAIN/login/callback
 - appsettings.json
 
 ```json
@@ -19,11 +19,13 @@ Damien’s template is used to create and customize three projects: Client, Serv
   }
 ```
 
-
 ###### Resources
 
 - [Blazor.BFF.OpenIDConnect.Template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) 👤*DamienBod* - This template is used as a base and customized it for Auth0
 - [Overview of different App security topics](https://github.com/damienbod/aspnetcore-standup-authn-authz) 👤*DamienBod*
 - [OpenIddict](https://documentation.openiddict.com) 📓*Official doc*
 - [OpenIddict-Core](https://github.com/openiddict/openiddict-core) 👤*Official repo*
+- [Auth0 - Social Connections](https://marketplace.auth0.com/features/social-connections) 📓*Auth0 doc*
 - [Configure Auth0 in ASP.NET application with cookies](https://auth0.com/docs/quickstart/webapp/aspnet-core) 📓*Auth0 doc*
+
+![Screenshot](Screenshot.JPG)
