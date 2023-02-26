@@ -9,7 +9,8 @@
         <div class="top-row px-4 auth">
             <AuthorizeView>
                 <Authorized>
-                    <strong>Hello, @context?.User?.Identity?.Name!</strong>
+                    <img class="rounded" src="@getAvatarUrl(context)" />
+                    <strong class="m-1">Hello, @context?.User?.Identity?.Name!</strong>
                     <form method="post" action="@AuthDefaults.LogOutPath">
                         <AntiForgeryTokenInput/>
                         <button class="btn btn-link" type="submit">Sign out</button>
@@ -26,3 +27,14 @@
         </div>
     </div>
 </div>
+
+@code {
+    private const string _defaultAvatarUrl = "https://www.gravatar.com/avatar/nopicture?d=monsterid&s=50";
+
+    private string getAvatarUrl(AuthenticationState state)
+    {
+        Claim? claim = state?.User?.Claims.FirstOrDefault(c => c.Type == "picture");
+
+        return claim is null ? _defaultAvatarUrl : claim.Value;
+    }
+}

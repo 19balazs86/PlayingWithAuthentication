@@ -71,7 +71,7 @@ public static class Program
     private static void addAuth0Authentication(this IServiceCollection services, IConfiguration configuration)
     {
         // Valid OAuth redirect URLs need to be set for external login providers
-        // Auth0 is the following: https://<YourTenantUrl>/login/callback
+        // Auth0 is the following: https://<YourTenantDomain>/login/callback
 
         services.AddAuthentication(options =>
         {
@@ -94,6 +94,8 @@ public static class Program
         //options.ResponseType = OpenIdConnectResponseType.Code;
 
         options.SkipCookieMiddleware = true;
+
+        options.Scope = "openid profile email"; // Default: "openid profile"
 
         options.OpenIdConnectEvents = new OpenIdConnectEvents { OnTicketReceived = onTicketReceived };
     }

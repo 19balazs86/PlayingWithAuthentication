@@ -28,24 +28,6 @@ public class AccountController : ControllerBase
     [HttpGet("UserInfo")]
     public UserInfo GetUserInfo()
     {
-        return createUserInfo(User);
-    }
-
-    private static UserInfo createUserInfo(ClaimsPrincipal claimsPrincipal)
-    {
-        if (claimsPrincipal?.Identity is ClaimsIdentity claimsIdentity && claimsIdentity.IsAuthenticated)
-        {
-            ClaimValue[] claims = claimsPrincipal.Claims.Select(c => new ClaimValue(c.Type, c.Value)).ToArray();
-
-            return new UserInfo
-            {
-                IsAuthenticated = true,
-                NameClaimType   = claimsIdentity.NameClaimType,
-                RoleClaimType   = claimsIdentity.RoleClaimType,
-                Claims          = claims
-            };
-        }
-
-        return UserInfo.Anonymous;
+        return UserInfo.FromClaimsPrincipal(User);
     }
 }

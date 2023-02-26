@@ -9,7 +9,7 @@
 <br />
 <h3>Using Auth0 for OpenIDConnect</h3>
 
-<p>List of your claims</p>
+<p>List of your claims, count: @(_identity?.Claims?.Count() ?? 0)</p>
 
 @if (_identity is not null)
 {

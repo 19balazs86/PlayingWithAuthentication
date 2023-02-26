@@ -77,15 +77,6 @@ public sealed class HostAuthenticationStateProvider : AuthenticationStateProvide
             _logger.LogWarning(ex, "Fetching user failed");
         }
 
-        if (user is null || !user.IsAuthenticated)
-        {
-            return new ClaimsPrincipal(new ClaimsIdentity());
-        }
-
-        Claim[] claims = user.Claims.Select(c => new Claim(c.Type, c.Value)).ToArray();
-
-        var identity = new ClaimsIdentity(claims, _authType, user.NameClaimType, user.RoleClaimType);
-
-        return new ClaimsPrincipal(identity);
+        return user!.ToClaimsPrincipal(_authType);
     }
 }
