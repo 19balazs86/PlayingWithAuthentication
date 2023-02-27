@@ -8,7 +8,7 @@ namespace BlazorWASM.BFF.Auth0.OpenIDConnect.Server;
 
 public static class Program
 {
-    private static readonly PathString _apiPrefix = new PathString("/api");
+    private static readonly PathString _apiPrefix = "/api";
 
     public static void Main(string[] args)
     {
@@ -88,6 +88,10 @@ public static class Program
         })
         .AddCookie(options => options.Cookie.Name = "AuthCookie")
         .AddAuth0WebAppAuthentication(options => configureAuth0Options(options, configuration));
+        //.WithAccessToken(options => { }); // This can be added
+
+        // It can be configured this way, but easier to use AddAuth0WebAppAuthentication
+        //.AddOpenIdConnect(Auth0Constants.AuthenticationScheme, options => configureOpenIdConnect(options, configuration));
     }
 
     private static void configureAuth0Options(Auth0WebAppOptions options, IConfiguration configuration)
@@ -185,4 +189,26 @@ public static class Program
 
         return new ClaimsPrincipal(identity);
     }
+
+    //private static void configureOpenIdConnect(OpenIdConnectOptions options, IConfiguration configuration)
+    //{
+    //    options.Authority = "https://" + configuration.GetValue<string>("Authentication:Auth0:Domain");
+    //    options.ClientId  = configuration.GetValue<string>("Authentication:Auth0:ClientId");
+
+    //    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    //    options.ResponseType = OpenIdConnectResponseType.IdToken;
+    //    options.CallbackPath = "/callback";
+
+    //    options.SaveTokens = true;
+
+    //    options.GetClaimsFromUserInfoEndpoint = true;
+
+    //    options.Events = new OpenIdConnectEvents { OnTicketReceived = onTicketReceived };
+
+    //    options.TokenValidationParameters = new TokenValidationParameters
+    //    {
+    //        NameClaimType = "name",
+    //        RoleClaimType = "role"
+    //    };
+    //}
 }
