@@ -59,7 +59,7 @@ public sealed class HostAuthenticationStateProvider : AuthenticationStateProvide
 
         UserInfo? userInfo = await fetchUserInfo();
 
-        _cachedUser    = userInfo!.ToClaimsPrincipal(_authType);
+        _cachedUser    = userInfo.ToClaimsPrincipal(_authType);
         _userLastCheck = now;
 
         return _cachedUser;
@@ -67,17 +67,15 @@ public sealed class HostAuthenticationStateProvider : AuthenticationStateProvide
 
     private async Task<UserInfo?> fetchUserInfo()
     {
-        UserInfo? userInfo = null;
-
         try
         {
-            userInfo = await _httpClient.GetFromJsonAsync<UserInfo>(AuthDefaults.UserInfoPath);
+            return await _httpClient.GetFromJsonAsync<UserInfo>(AuthDefaults.UserInfoPath);
         }
         catch (Exception ex)
         {
             _logger.LogWarning(ex, "Fetching user failed");
-        }
 
-        return userInfo;
+            return UserInfo.Anonymous;
+        }
     }
 }

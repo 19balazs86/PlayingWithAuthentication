@@ -42,7 +42,6 @@ public static class Program
         services.AddTransient<AuthorizedHandler>();
 
         // This HttpClient will navigate unauthorized calls to the login page using the AuthorizedHandler and HostAuthenticationStateProvider
-        // Set AllowAutoRedirect to false, otherwise throw exception and AuthorizedHandler will not work
         services
             .AddHttpClient(AuthDefaults.AuthorizedClientName, client => client.BaseAddress = baseAddress)
             .AddHttpMessageHandler<AuthorizedHandler>();

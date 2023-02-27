@@ -16,6 +16,8 @@ public static class Program
         IServiceCollection services   = builder.Services;
         IConfiguration configuration  = builder.Configuration;
 
+        builder.WebHost.UseKestrel(option => option.AddServerHeader = false);
+
         // Add services to the container
         {
             // Use IDbContextFactory with AddDbContextFactory instead of AddDbContext.

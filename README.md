@@ -77,7 +77,7 @@ The following solutions have been implemented
 ### Project: BlazorWASM.BFF.Auth0.OpenIDConnect
 
 - An example of using [Auth0](https://auth0.com) with OpenIDConnect in a Blazor WebAssembly application that has a Backend For Frontend (BFF) architecture.
-- Damien’s template is used to create and three projects: Client, Server and Shared and customized for Auth0.
+- Damien’s template is used to create 3 projects: Client, Server and Shared and customized for Auth0.
 - [For more information](BlazorWASM.BFF.Auth0.OpenIDConnect)
 
 ###### Resources

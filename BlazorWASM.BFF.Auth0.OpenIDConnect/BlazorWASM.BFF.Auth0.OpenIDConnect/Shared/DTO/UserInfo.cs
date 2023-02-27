@@ -44,7 +44,7 @@ public sealed class UserInfo
 
 public static class UserInfoExtentsion
 {
-    public static ClaimsPrincipal ToClaimsPrincipal(this UserInfo user, string authenticationType)
+    public static ClaimsPrincipal ToClaimsPrincipal(this UserInfo? user, string authenticationType)
     {
         if (user is null || !user.IsAuthenticated)
         {
