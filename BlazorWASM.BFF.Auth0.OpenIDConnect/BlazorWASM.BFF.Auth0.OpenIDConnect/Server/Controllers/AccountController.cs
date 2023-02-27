@@ -30,4 +30,11 @@ public class AccountController : ControllerBase
     {
         return UserInfo.FromClaimsPrincipal(User);
     }
+
+    [Authorize(Roles = "TestRole")]
+    [HttpGet("TestRole")]
+    public string TestRole()
+    {
+        return "You have TestRole";
+    }
 }
