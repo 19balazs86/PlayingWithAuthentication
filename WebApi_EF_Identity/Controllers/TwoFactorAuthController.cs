@@ -49,6 +49,27 @@ public sealed class TwoFactorAuthController : ControllerBase
         return Problem(title: "Failed to login", detail: result.ToString(), statusCode: StatusCodes.Status400BadRequest);
     }
 
+    [AllowAnonymous]
+    [HttpPost("LoginWithRecoveryCode/{recoveryCode}")]
+    public async Task<IActionResult> LoginWithRecoveryCode(string recoveryCode)
+    {
+        var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+
+        if (user is null)
+            return Unauthorized("First you need to login with user name and password");
+
+        //IdentityResult result = await _userManager.RedeemTwoFactorRecoveryCodeAsync(user, recoveryCode);
+
+        SignInResult result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
+
+        if (!result.Succeeded)
+            return Problem(title: "Failed to login", detail: result.ToString(), statusCode: StatusCodes.Status400BadRequest);
+
+        int countRecoveryCodes = await _userManager.CountRecoveryCodesAsync(user);
+
+        return Ok($"You are signed in with recovery code. {countRecoveryCodes} number of code left.");
+    }
+
     [HttpGet("setup")]
     public async Task<IActionResult> GetSetup()
     {
@@ -104,23 +125,7 @@ public sealed class TwoFactorAuthController : ControllerBase
 
         IEnumerable<string> recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 5);
 
-        return Ok(new { Message = "You can use the following recovery codes to disable the Two-Factor authentication.", recoveryCodes });
-    }
-
-    // The method should allow anonymous access, but testing it this way is easier.
-    [HttpDelete("RecoveryCodes/{recoveryCode}")]
-    public async Task<IActionResult> ResetWithRecoveryCode(string recoveryCode)
-    {
-        var user = await _userManager.GetUserAsync(User);
-
-        IdentityResult result = await _userManager.RedeemTwoFactorRecoveryCodeAsync(user, recoveryCode);
-
-        if (result.Succeeded)
-        {
-            return Ok("Two-Factor authentication is disabled by recovery code!");
-        }
-
-        return BadRequest(result.Errors.Single().Description);
+        return Ok(new { Message = "You can use 1 of the following codes to login and ignore Two-Factor authentication.", recoveryCodes });
     }
 
     private string get_QR_ServerUrl(string otpAuth)

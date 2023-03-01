@@ -210,12 +210,12 @@
 					"response": []
 				},
 				{
-					"name": "2FA-Reset",
+					"name": "2FA-LoginWithRecoveryCode",
 					"request": {
-						"method": "DELETE",
+						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5019/TwoFactorAuth/RecoveryCodes/BT436-GCR8D",
+							"raw": "http://localhost:5019/TwoFactorAuth/LoginWithRecoveryCode/44GPG-6CWDD",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -223,8 +223,8 @@
 							"port": "5019",
 							"path": [
 								"TwoFactorAuth",
-								"RecoveryCodes",
-								"BT436-GCR8D"
+								"LoginWithRecoveryCode",
+								"44GPG-6CWDD"
 							]
 						}
 					},
