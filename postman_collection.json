@@ -190,6 +190,47 @@
 					"response": []
 				},
 				{
+					"name": "2FA-RecoveryCodes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5019/TwoFactorAuth/RecoveryCodes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5019",
+							"path": [
+								"TwoFactorAuth",
+								"RecoveryCodes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2FA-Reset",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5019/TwoFactorAuth/RecoveryCodes/BT436-GCR8D",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5019",
+							"path": [
+								"TwoFactorAuth",
+								"RecoveryCodes",
+								"BT436-GCR8D"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Passwordless-Create",
 					"request": {
 						"method": "GET",

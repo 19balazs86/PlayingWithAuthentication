@@ -7,6 +7,7 @@ using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace WebApi_EF_Identity.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public sealed class TwoFactorAuthController : ControllerBase
@@ -29,6 +30,7 @@ public sealed class TwoFactorAuthController : ControllerBase
         _tokenProvider = _userManager.Options.Tokens.AuthenticatorTokenProvider;
     }
 
+    [AllowAnonymous]
     [HttpPost("Login/{code}")]
     public async Task<IActionResult> Login(string code)
     {
@@ -48,7 +50,6 @@ public sealed class TwoFactorAuthController : ControllerBase
     }
 
     [HttpGet("setup")]
-    [Authorize]
     public async Task<IActionResult> GetSetup()
     {
         //string email = User.Identity.Name;
@@ -72,7 +73,6 @@ public sealed class TwoFactorAuthController : ControllerBase
     }
 
     [HttpPost("setup/{code}")]
-    [Authorize]
     public async Task<IActionResult> Enable(string code)
     {
         var user = await _userManager.GetUserAsync(User);
@@ -88,7 +88,6 @@ public sealed class TwoFactorAuthController : ControllerBase
     }
 
     [HttpDelete("setup")]
-    [Authorize]
     public async Task<IActionResult> Disable()
     {
         var user = await _userManager.GetUserAsync(User);
@@ -98,12 +97,38 @@ public sealed class TwoFactorAuthController : ControllerBase
         return Ok("Two-Factor authentication is disabled!");
     }
 
+    [HttpGet("RecoveryCodes")]
+    public async Task<IActionResult> GetRecoveryCodes()
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        IEnumerable<string> recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 5);
+
+        return Ok(new { Message = "You can use the following recovery codes to disable the Two-Factor authentication.", recoveryCodes });
+    }
+
+    // The method should allow anonymous access, but testing it this way is easier.
+    [HttpDelete("RecoveryCodes/{recoveryCode}")]
+    public async Task<IActionResult> ResetWithRecoveryCode(string recoveryCode)
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        IdentityResult result = await _userManager.RedeemTwoFactorRecoveryCodeAsync(user, recoveryCode);
+
+        if (result.Succeeded)
+        {
+            return Ok("Two-Factor authentication is disabled by recovery code!");
+        }
+
+        return BadRequest(result.Errors.Single().Description);
+    }
+
     private string get_QR_ServerUrl(string otpAuth)
     {
         return string.Format(_qrServerUrlFormat, _urlEncoder.Encode(otpAuth));
     }
 
-    private string generateQRCode(string email, string authenticatorKey)
+    private static string generateQRCode(string email, string authenticatorKey)
     {
         const string issuer = "2Factor-Auth";
 
