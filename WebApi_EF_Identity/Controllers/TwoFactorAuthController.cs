@@ -34,6 +34,7 @@ public sealed class TwoFactorAuthController : ControllerBase
     [HttpPost("Login/{code}")]
     public async Task<IActionResult> Login(string code)
     {
+        // In order to make 2FA work, you need to log in with username and password to create the 'Identity.TwoFactorUserId' cookie.
         var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
 
         if (user is null)
