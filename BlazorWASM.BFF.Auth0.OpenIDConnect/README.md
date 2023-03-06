@@ -6,7 +6,10 @@ An example of using [Auth0](https://auth0.com) with OpenIDConnect in a Blazor We
 
 ###### Prerequisite to run the application
 
-- Auth0 account, where the Application is configured with the callback URL: https://localhost:5301/callback
+- Auth0 account, where the SPA Application is configured
+  - Allowed Callback URLs: https://localhost:5301/callback
+  - Allowed Logout URLs: https://localhost:5301, https://localhost:5301/api/Account/Logout
+
 - [Social connections](https://marketplace.auth0.com/features/social-connections) can be added with the redirect URL: https://YOUR_DOMAIN/login/callback
 - appsettings.json
 

@@ -1,0 +1,64 @@
+﻿@page "/account-test"
+
+@inject HttpClient _http
+
+<PageTitle>Account test</PageTitle>
+
+<p>This page is testing your account on the server side.</p>
+
+<button class="btn, btn-primary" @onclick="CheckTestRole">Check TestRole</button>
+<p>@_checkTestRoleResponse</p>
+
+<p>List of your claims from the server, count: @_userInfo.Claims.Count()</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ClaimValue claim in _userInfo.Claims)
+        {
+            <tr>
+                <td>@claim.Type</td>
+                <td>@claim.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private UserInfo _userInfo = UserInfo.Anonymous;
+
+    private string? _checkTestRoleResponse;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _userInfo = await _http.GetFromJsonAsync<UserInfo>("/api/Account/UserInfo") ?? UserInfo.Anonymous;
+        }
+        catch (AccessTokenNotAvailableException)
+        {
+            // Since the endpoint is anonymous, it would be better to use a default HttpClient without the BaseAddressAuthorizationMessageHandler.
+        }
+    }
+
+    private async Task CheckTestRole()
+    {
+        try
+        {
+            using HttpResponseMessage response = await _http.GetAsync("/api/Account/TestRole");
+
+            _checkTestRoleResponse = $"StatusCode: {response.StatusCode}";
+        }
+        catch (AccessTokenNotAvailableException)
+        {
+            // It would be better to use a default HttpClient without the BaseAddressAuthorizationMessageHandler.
+
+            _checkTestRoleResponse = "You need to log in";
+        }
+    }
+}

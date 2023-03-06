@@ -1,0 +1,43 @@
+﻿@page "/"
+
+@using System.Security.Claims
+
+@inject AuthenticationStateProvider _authStateProvider;
+
+<PageTitle>Blazor WASM</PageTitle>
+
+<h1>Blazor WASM</h1>
+
+<br />
+<h3>Using OpenIDConnect with Auth0</h3>
+
+<p>List of your claims, count: @_userInfo.Claims.Count()</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Claim claim in _userInfo.Claims)
+        {
+            <tr>
+                <td>@claim.Type</td>
+                <td>@claim.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private ClaimsPrincipal _userInfo = new ClaimsPrincipal(new ClaimsIdentity());
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await _authStateProvider.GetAuthenticationStateAsync();
+
+        _userInfo = authState.User;
+    }
+}

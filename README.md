@@ -8,6 +8,7 @@ Table of content
 - Project: [WebApi_EF_Identity](#project-webapi_ef_identity)
 - Project: [ApiKeyAuth](#project-apikeyauth)
 - Project: [Blazor WASM BFF - Auth0 - OpenIDConnect](#project-blazorwasmbffauth0openidconnect)
+- Project: [Blazor WASM JWT - Auth0 - OpenIDConnect](#project-blazorwasmauth0jwtopenidconnect)
 - [Other resources](#other-resources)
 - [Password hashing](#password-hashing)
 
@@ -78,16 +79,13 @@ The following solutions have been implemented
 ### Project: BlazorWASM.BFF.Auth0.OpenIDConnect
 
 - An example of using [Auth0](https://auth0.com) with OpenIDConnect in a Blazor WebAssembly application that has a Backend For Frontend (BFF) architecture.
-- Damien’s template is used to create 3 projects: Client, Server and Shared and customized for Auth0.
+- [Damien’s template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) is used to create 3 projects: Client, Server and Shared and customized for Auth0.
 - [For more information](BlazorWASM.BFF.Auth0.OpenIDConnect)
 
-###### Resources
+### Project: BlazorWASM.Auth0.JWT.OpenIDConnect
 
-- [Blazor.BFF.OpenIDConnect.Template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) 👤*DamienBod* - This template is used as a base and customized it for Auth0
-- [Exploring the Auth0 ASP.NET Authentication SDK](https://auth0.com/blog/exploring-auth0-aspnet-core-authentication-sdk) 📓*Auth0 blog - Andrea Chiarelli*
-- [OpenIddict](https://documentation.openiddict.com) 📓*Official doc*
-- [OpenIddict-Core](https://github.com/openiddict/openiddict-core) 👤*Official repo*
-- [Configure Auth0 in ASP.NET application with cookies](https://auth0.com/docs/quickstart/webapp/aspnet-core) 📓*Auth0 doc*
+- An example of using [Auth0](https://auth0.com) with OpenIDConnect in a Blazor WebAssembly application.
+- [For more information](BlazorWASM.Auth0.JWT.OpenIDConnect)
 
 ##### Other resources
 

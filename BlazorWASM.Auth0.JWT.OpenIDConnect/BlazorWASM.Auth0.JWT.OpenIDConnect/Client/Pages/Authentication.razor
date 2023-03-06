@@ -1,0 +1,21 @@
+﻿@page "/authentication/{action}"
+
+@using BlazorWASM.Auth0.JWT.OpenIDConnect.Shared
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager _navigation
+@inject OidcConfig _oidcConfig
+
+<RemoteAuthenticatorView Action="@Action">
+     <LogOut>
+        @{
+            string returnUrl = _navigation.BaseUri; // If you have multiple 'Allowed Logout URLs' set in Auth0, you need to define a return URL.
+
+            _navigation.NavigateTo($"{_oidcConfig.Authority}/v2/logout?client_id={_oidcConfig.ClientId}&returnTo={returnUrl}");
+        }
+    </LogOut>
+</RemoteAuthenticatorView>
+
+@code{
+    [Parameter] public string? Action { get; set; }
+}

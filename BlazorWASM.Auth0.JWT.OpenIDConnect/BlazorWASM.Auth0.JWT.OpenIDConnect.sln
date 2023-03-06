@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWASM.Auth0.JWT.OpenIDConnect.Server", "BlazorWASM.Auth0.JWT.OpenIDConnect\Server\BlazorWASM.Auth0.JWT.OpenIDConnect.Server.csproj", "{94636D62-DF09-42BB-9AB7-C7DBBE6F9F5C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWASM.Auth0.JWT.OpenIDConnect.Client", "BlazorWASM.Auth0.JWT.OpenIDConnect\Client\BlazorWASM.Auth0.JWT.OpenIDConnect.Client.csproj", "{10C8F01F-5329-49C9-BB8A-26D967ADF1D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWASM.Auth0.JWT.OpenIDConnect.Shared", "BlazorWASM.Auth0.JWT.OpenIDConnect\Shared\BlazorWASM.Auth0.JWT.OpenIDConnect.Shared.csproj", "{1820A230-A62B-4359-906E-2F036ED14723}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F414954F-5475-410F-9B1C-9F66F2F20CD8}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94636D62-DF09-42BB-9AB7-C7DBBE6F9F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94636D62-DF09-42BB-9AB7-C7DBBE6F9F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94636D62-DF09-42BB-9AB7-C7DBBE6F9F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94636D62-DF09-42BB-9AB7-C7DBBE6F9F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10C8F01F-5329-49C9-BB8A-26D967ADF1D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10C8F01F-5329-49C9-BB8A-26D967ADF1D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10C8F01F-5329-49C9-BB8A-26D967ADF1D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10C8F01F-5329-49C9-BB8A-26D967ADF1D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1820A230-A62B-4359-906E-2F036ED14723}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1820A230-A62B-4359-906E-2F036ED14723}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1820A230-A62B-4359-906E-2F036ED14723}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1820A230-A62B-4359-906E-2F036ED14723}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B883F831-01EA-4D05-A97A-D4EB8838876D}
+	EndGlobalSection
+EndGlobal
