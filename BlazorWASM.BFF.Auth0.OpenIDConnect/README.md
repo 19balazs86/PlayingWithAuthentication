@@ -28,5 +28,6 @@ An example of using [Auth0](https://auth0.com) with OpenIDConnect in a Blazor We
 - [OpenIddict-Core](https://github.com/openiddict/openiddict-core) 👤*Official repo*
 - [Auth0 - Social Connections](https://marketplace.auth0.com/features/social-connections) 📓*Auth0 doc*
 - [Configure Auth0 in ASP.NET application with cookies](https://auth0.com/docs/quickstart/webapp/aspnet-core) 📓*Auth0 doc*
+- [Blazor Server app using OpenIdConnect with Auth0](https://andrewlock.net/adding-authentication-to-a-blazor-server-app-using-auth0) 📓*Andrew Lock*
 
 ![Screenshot](Screenshot.JPG)
