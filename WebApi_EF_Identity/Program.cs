@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebApi_EF_Identity.Data;
@@ -11,7 +12,7 @@ public class Program
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         IServiceCollection services   = builder.Services;
 
-        // Add services to the container.
+        // Add services to the container
         {
             services.AddControllers();
 
@@ -21,47 +22,19 @@ public class Program
 
             services
                 .AddIdentity<MyIdentityUser, IdentityRole>(identityOptions =>
-                {
-                    if (builder.Environment.IsDevelopment())
-                    {
-                        identityOptions.SignIn.RequireConfirmedEmail = true;
-
-                        identityOptions.User.RequireUniqueEmail = true;
-
-                        identityOptions.Password.RequireNonAlphanumeric = false;
-                        identityOptions.Password.RequireDigit           = false;
-                    }
-                })
+                    configureIdentityOptions(identityOptions, builder.Environment.IsDevelopment()))
                 .AddEntityFrameworkStores<MyDataContext>()
                 .AddDefaultTokenProviders()
                 .AddPasswordlessLoginTokenProvider();
 
-            services.ConfigureApplicationCookie(optinos =>
-            {
-                optinos.ExpireTimeSpan = TimeSpan.FromDays(1);
-
-                // Since there is no front-end, we need to change the default behavior.
-                // Do not redirect to "/Account/Login"
-
-                optinos.Events.OnRedirectToLogin = context =>
-                {
-                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    return Task.CompletedTask;
-                };
-
-                optinos.Events.OnRedirectToAccessDenied = context =>
-                {
-                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                    return Task.CompletedTask;
-                };
-            });
+            services.ConfigureApplicationCookie(configureApplicationCookie);
 
             services.AddAuthorization();
         }
 
         WebApplication app = builder.Build();
 
-        // Configure the HTTP request pipeline.
+        // Configure the HTTP request pipeline
         {
             app.UseExceptionHandler();
 
@@ -72,5 +45,38 @@ public class Program
         }
 
         app.Run();
+    }
+
+    private static void configureApplicationCookie(CookieAuthenticationOptions optinos)
+    {
+        optinos.ExpireTimeSpan = TimeSpan.FromDays(1);
+
+        // Since there is no front-end, we need to change the default behavior.
+        // Do not redirect to "/Account/Login"
+
+        optinos.Events.OnRedirectToLogin = context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return Task.CompletedTask;
+        };
+
+        optinos.Events.OnRedirectToAccessDenied = context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+            return Task.CompletedTask;
+        };
+    }
+
+    private static void configureIdentityOptions(IdentityOptions identityOptions, bool isDevelopment)
+    {
+        if (isDevelopment)
+        {
+            identityOptions.SignIn.RequireConfirmedEmail = true;
+
+            identityOptions.User.RequireUniqueEmail = true;
+
+            identityOptions.Password.RequireDigit           = false;
+            identityOptions.Password.RequireNonAlphanumeric = false;
+        }
     }
 }

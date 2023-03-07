@@ -1,92 +1,93 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 
-namespace ApiJWT
+namespace ApiJWT;
+
+public static class Program
 {
-    public static class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+        IServiceCollection services   = builder.Services;
+
+        // Add services to the container
         {
-            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-            IServiceCollection services   = builder.Services;
+            services.AddControllers();
 
-            // Add services to the container.
-            {
-                services.AddControllers();
+            services.addSwaggerWithJwtAuth();
 
-                services.addSwaggerWithJwtAuth();
+            services.AddJwtAuthentication();
 
-                services.AddJwtAuthentication();
-
-                services.AddAuthorization(options =>
-                {
-                    // Add policy for Admin role.
-                    options.AddPolicy("AdminPolicy", new AuthorizationPolicyBuilder().RequireRole("AdminRole").Build());
-
-                    // -> https://andrewlock.net/setting-global-authorization-policies-using-the-defaultpolicy-and-the-fallbackpolicy-in-aspnet-core-3
-                    // -> https://docs.microsoft.com/en-ie/aspnet/core/migration/22-to-30?view=aspnetcore-3.0&tabs=visual-studio#authorization
-                    // FallbackPolicy is initially configured to allow requests without authorization.
-                    // Override it in order to require authentication on all endpoints except when [AllowAnonymous].
-                    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-                        .RequireAuthenticatedUser()
-                        .Build();
-                });
-            }
-
-            WebApplication app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            {
-                app.UseHttpsRedirection();
-
-                app.UseSwagger();
-                app.UseSwaggerUI();
-
-                app.UseAuthentication();
-                app.UseAuthorization();
-
-                app.MapControllers();
-            }
-
-            app.Run();
+            services.AddAuthorization(configureAuthorizationOptions);
         }
 
-        private static IServiceCollection addSwaggerWithJwtAuth(this IServiceCollection services)
+        WebApplication app = builder.Build();
+
+        // Configure the HTTP request pipeline
         {
-            const string schemeName = "Bearer";
+            app.UseHttpsRedirection();
 
-            services.AddSwaggerGen(options =>
-            {
-                var scheme = new OpenApiSecurityScheme
-                {
-                    Description  = "Provide a JWT in the following format: 'Bearer YourToken'",
-                    Type         = SecuritySchemeType.ApiKey,
-                    Name         = "Authorization",
-                    In           = ParameterLocation.Header,
-                    Scheme       = schemeName,
-                    BearerFormat = "JWT"
-                };
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
-                options.AddSecurityDefinition(schemeName, scheme);
+            app.UseAuthentication();
+            app.UseAuthorization();
 
-                var key = new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id   = schemeName
-                    },
-                };
-
-                var requirement = new OpenApiSecurityRequirement
-                {
-                    { key, new List<string>() }
-                };
-
-                 options.AddSecurityRequirement(requirement);
-            });
-
-            return services;
+            app.MapControllers();
         }
+
+        app.Run();
+    }
+
+    private static void configureAuthorizationOptions(AuthorizationOptions options)
+    {
+        // Add policy for Admin role.
+        options.AddPolicy("AdminPolicy", new AuthorizationPolicyBuilder().RequireRole("AdminRole").Build());
+
+        // -> https://andrewlock.net/setting-global-authorization-policies-using-the-defaultpolicy-and-the-fallbackpolicy-in-aspnet-core-3
+        // -> https://docs.microsoft.com/en-ie/aspnet/core/migration/22-to-30?view=aspnetcore-3.0&tabs=visual-studio#authorization
+        // FallbackPolicy is initially configured to allow requests without authorization.
+        // Override it in order to require authentication on all endpoints except when [AllowAnonymous].
+        options.FallbackPolicy = new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            .Build();
+    }
+
+    private static IServiceCollection addSwaggerWithJwtAuth(this IServiceCollection services)
+    {
+        const string schemeName = "Bearer";
+
+        services.AddSwaggerGen(options =>
+        {
+            var scheme = new OpenApiSecurityScheme
+            {
+                Description  = "Provide a JWT in the following format: 'Bearer YourToken'",
+                Type         = SecuritySchemeType.ApiKey,
+                Name         = "Authorization",
+                In           = ParameterLocation.Header,
+                Scheme       = schemeName,
+                BearerFormat = "JWT"
+            };
+
+            options.AddSecurityDefinition(schemeName, scheme);
+
+            var key = new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id   = schemeName
+                },
+            };
+
+            var requirement = new OpenApiSecurityRequirement
+            {
+                { key, new List<string>() }
+            };
+
+             options.AddSecurityRequirement(requirement);
+        });
+
+        return services;
     }
 }

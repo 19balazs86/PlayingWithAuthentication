@@ -4,7 +4,7 @@ using System.Security.Claims;
 
 namespace ApiCookieAuth;
 
-public class Program
+public static class Program
 {
     public const string SessionClaimName = "SessionId";
 
@@ -15,25 +15,13 @@ public class Program
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         IServiceCollection services   = builder.Services;
 
-        // Add services to the container.
+        // Add services to the container
         {
             services.AddControllers();
 
             services
-                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-                {
-                    options.LoginPath   = "/login.html";
-                    options.Cookie.Name = "auth-cookie";
-                    //options.ExpireTimeSpan = TimeSpan.FromDays(15); // During HttpContext.SignIn the AuthenticationProperties needs to be set IsPersistent = true
-
-                    options.Events.OnValidatePrincipal = onValidatePrincipal;
-
-                    // When you are unauthorized, the server redirects you to LoginPath. However, you can prevent this by adding the following:
-                    //options.Events.OnRedirectToLogin        = context => preventRedirect(context, 401);
-                    //options.Events.OnRedirectToAccessDenied = context => preventRedirect(context, 403);
-                });
-
+                .AddAuthentication()
+                .AddCookie(configureCookieAuthenticationOptions);
 
             services.AddAuthorization();
 
@@ -48,7 +36,7 @@ public class Program
 
         WebApplication app = builder.Build();
 
-        // Configure the HTTP request pipeline.
+        // Configure the HTTP request pipeline
         {
             app.UseHttpsRedirection();
 
@@ -61,6 +49,19 @@ public class Program
         }
 
         app.Run();
+    }
+
+    private static void configureCookieAuthenticationOptions(CookieAuthenticationOptions options)
+    {
+        options.LoginPath   = "/login.html";
+        options.Cookie.Name = "auth-cookie";
+        //options.ExpireTimeSpan = TimeSpan.FromDays(15); // During HttpContext.SignIn the AuthenticationProperties needs to be set IsPersistent = true
+
+        options.Events.OnValidatePrincipal = onValidatePrincipal;
+
+        // When you are unauthorized, the server redirects you to LoginPath. However, you can prevent this by adding the following:
+        //options.Events.OnRedirectToLogin        = context => preventRedirect(context, 401);
+        //options.Events.OnRedirectToAccessDenied = context => preventRedirect(context, 403);
     }
 
     private static Task onValidatePrincipal(CookieValidatePrincipalContext ctx)
