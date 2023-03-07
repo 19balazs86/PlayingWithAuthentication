@@ -2,7 +2,9 @@
 
 An example of using [Auth0](https://auth0.com) with OpenIDConnect in a Blazor WebAssembly application.
 
-The solution was created using the default Blazor WASM template,. Both the server and client customized for OpenIDConnect using Auth0. *(It can also easily work with other provider)*
+The solution was created using the default Blazor WASM template. The client is customized for OpenIDConnect using Auth0. Server is configured for JWT token issued by Auth0.
+
+You can compare this solution with [Blazor WASM BFF architecture](../BlazorWASM.BFF.Auth0.OpenIDConnect).
 
 ###### Deviation from the default template
 

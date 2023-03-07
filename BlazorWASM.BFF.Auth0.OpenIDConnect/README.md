@@ -4,6 +4,8 @@ An example of using [Auth0](https://auth0.com) with OpenIDConnect in a Blazor We
 
 [Damien’s template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) is used to create 3 projects: Client, Server and Shared and customized for Auth0.
 
+You can compare this solution with [Blazor WASM JWT OpenIDConnect](../BlazorWASM.Auth0.JWT.OpenIDConnect).
+
 ###### Prerequisite to run the application
 
 - Auth0 account, where the SPA Application is configured
