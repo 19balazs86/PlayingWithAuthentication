@@ -9,8 +9,8 @@ namespace WebApi_EF_Identity.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("[controller]")]
-public sealed class TwoFactorAuthController : ControllerBase
+[Route("2FA-Authenticator")]
+public sealed class MFA_Authenticator_Controller : ControllerBase
 {
     private const string _authenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
     private const string _qrServerUrlFormat      = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={0}";
@@ -21,13 +21,13 @@ public sealed class TwoFactorAuthController : ControllerBase
 
     private readonly string _tokenProvider;
 
-    public TwoFactorAuthController(UserManager<MyIdentityUser> userManager, SignInManager<MyIdentityUser> signInManager, UrlEncoder urlEncoder)
+    public MFA_Authenticator_Controller(UserManager<MyIdentityUser> userManager, SignInManager<MyIdentityUser> signInManager, UrlEncoder urlEncoder)
     {
         _userManager   = userManager;
         _signInManager = signInManager;
         _urlEncoder    = urlEncoder;
 
-        _tokenProvider = _userManager.Options.Tokens.AuthenticatorTokenProvider;
+        _tokenProvider = TokenOptions.DefaultAuthenticatorProvider;
     }
 
     [AllowAnonymous]
@@ -48,27 +48,6 @@ public sealed class TwoFactorAuthController : ControllerBase
             return Ok("You are signed in");
 
         return Problem(title: "Failed to login", detail: result.ToString(), statusCode: StatusCodes.Status400BadRequest);
-    }
-
-    [AllowAnonymous]
-    [HttpPost("LoginWithRecoveryCode/{recoveryCode}")]
-    public async Task<IActionResult> LoginWithRecoveryCode(string recoveryCode)
-    {
-        var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-
-        if (user is null)
-            return Unauthorized("First you need to login with user name and password");
-
-        //IdentityResult result = await _userManager.RedeemTwoFactorRecoveryCodeAsync(user, recoveryCode);
-
-        SignInResult result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
-
-        if (!result.Succeeded)
-            return Problem(title: "Failed to login", detail: result.ToString(), statusCode: StatusCodes.Status400BadRequest);
-
-        int countRecoveryCodes = await _userManager.CountRecoveryCodesAsync(user);
-
-        return Ok($"You are signed in with recovery code. {countRecoveryCodes} number of code left.");
     }
 
     [HttpGet("setup")]
@@ -117,16 +96,6 @@ public sealed class TwoFactorAuthController : ControllerBase
         await _userManager.SetTwoFactorEnabledAsync(user, enabled: false);
 
         return Ok("Two-Factor authentication is disabled!");
-    }
-
-    [HttpGet("RecoveryCodes")]
-    public async Task<IActionResult> GetRecoveryCodes()
-    {
-        var user = await _userManager.GetUserAsync(User);
-
-        IEnumerable<string> recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 5);
-
-        return Ok(new { Message = "You can use 1 of the following codes to login and ignore Two-Factor authentication.", recoveryCodes });
     }
 
     private string get_QR_ServerUrl(string otpAuth)

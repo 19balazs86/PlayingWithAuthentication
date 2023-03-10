@@ -10,6 +10,138 @@
 			"name": "WebApi_EF_Identity",
 			"item": [
 				{
+					"name": "2FA-Authenticator",
+					"item": [
+						{
+							"name": "2FA-Setup",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5019/2FA-Authenticator/Setup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5019",
+									"path": [
+										"2FA-Authenticator",
+										"Setup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2FA-Setup",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5019/2FA-Authenticator/Setup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5019",
+									"path": [
+										"2FA-Authenticator",
+										"Setup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2FA-Setup",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5019/2FA-Authenticator/Setup/123456",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5019",
+									"path": [
+										"2FA-Authenticator",
+										"Setup",
+										"123456"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2FA-Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5019/2FA-Authenticator/Login/123456",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5019",
+									"path": [
+										"2FA-Authenticator",
+										"Login",
+										"123456"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "2FA-RecoveryCode",
+					"item": [
+						{
+							"name": "2FA-RecoveryCodes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5019/2FA-RecoveryCode",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5019",
+									"path": [
+										"2FA-RecoveryCode"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2FA-LoginWithRecoveryCode",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5019/2FA-RecoveryCode/Login/44GPG-6CWDD",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5019",
+									"path": [
+										"2FA-RecoveryCode",
+										"Login",
+										"44GPG-6CWDD"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Register",
 					"request": {
 						"method": "POST",
@@ -102,129 +234,6 @@
 							"path": [
 								"Auth",
 								"Logout"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "2FA-Setup",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5019/TwoFactorAuth/Setup",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5019",
-							"path": [
-								"TwoFactorAuth",
-								"Setup"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "2FA-Setup",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5019/TwoFactorAuth/Setup",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5019",
-							"path": [
-								"TwoFactorAuth",
-								"Setup"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "2FA-Setup",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5019/TwoFactorAuth/Setup/123456",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5019",
-							"path": [
-								"TwoFactorAuth",
-								"Setup",
-								"123456"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "2FA-Login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5019/TwoFactorAuth/Login/123456",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5019",
-							"path": [
-								"TwoFactorAuth",
-								"Login",
-								"123456"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "2FA-RecoveryCodes",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5019/TwoFactorAuth/RecoveryCodes",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5019",
-							"path": [
-								"TwoFactorAuth",
-								"RecoveryCodes"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "2FA-LoginWithRecoveryCode",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5019/TwoFactorAuth/LoginWithRecoveryCode/44GPG-6CWDD",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5019",
-							"path": [
-								"TwoFactorAuth",
-								"LoginWithRecoveryCode",
-								"44GPG-6CWDD"
 							]
 						}
 					},
