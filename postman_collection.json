@@ -97,6 +97,93 @@
 					]
 				},
 				{
+					"name": "2FA-Email",
+					"item": [
+						{
+							"name": "2FA-Email-Setup",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5019/2FA-Email/Setup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5019",
+									"path": [
+										"2FA-Email",
+										"Setup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2FA-Email-Setup",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5019/2FA-Email/Setup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5019",
+									"path": [
+										"2FA-Email",
+										"Setup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2FA-Email-Setup",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5019/2FA-Email/Setup/123456",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5019",
+									"path": [
+										"2FA-Email",
+										"Setup",
+										"123456"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2FA-Email-Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5019/2FA-Email/Login/123456",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5019",
+									"path": [
+										"2FA-Email",
+										"Login",
+										"123456"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "2FA-RecoveryCode",
 					"item": [
 						{

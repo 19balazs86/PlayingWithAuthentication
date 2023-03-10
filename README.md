@@ -50,7 +50,7 @@ Table of content
 ### Project: WebApi_EF_Identity
 
 - Take advantage of the Entity Framework Identity features, including UserManager and SignInManager.
-- Two Factor Authentication with Authenticator app
+- Two Factor Authentication with AuthenticatorApp or Email
   - Flow: Register -> Confirm email -> Get TwoFactor auth setup -> Enable TwoFactor -> Logout -> Login -> Login with TwoFactor
 - Generating a short-lived token for signing in like Slack and Medium
 - Recovery codes for 2FA can be generated. After logging in with your username and password, you can use one of these codes instead of the authenticator code.

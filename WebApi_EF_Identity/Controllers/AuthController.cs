@@ -76,7 +76,25 @@ public sealed class AuthController : ControllerBase
         if (result.Succeeded)
             return Ok("You are signed in");
 
-        return Problem(title: "Failed to login", detail: result.ToString(), statusCode: StatusCodes.Status400BadRequest);
+        string emailCode = string.Empty;
+
+        if (result is { RequiresTwoFactor: true, IsNotAllowed: false, IsLockedOut : false })
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+
+            string code = await _userManager.GenerateTwoFactorTokenAsync(user, "Email");
+
+            emailCode = $"You got an email about the Code: {code}";
+        }
+
+        var problemResponse = new
+        {
+            Title  = "Failed to login",
+            Reason = result.ToString(),
+            Detail = emailCode
+        };
+
+        return BadRequest(problemResponse);
     }
 
     [Authorize]
