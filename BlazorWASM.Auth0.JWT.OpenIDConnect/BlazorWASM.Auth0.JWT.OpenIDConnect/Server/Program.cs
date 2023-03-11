@@ -32,6 +32,8 @@ public static class Program
            .Get<OidcConfig>()
            ?? throw new NullReferenceException("OpenIdcConfig was not found in appsettings.json");
 
+        services.AddSingleton(oidcConfig);
+
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -45,7 +47,7 @@ public static class Program
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer           = true,
-                ValidIssuers             = new[] { oidcConfig.Authority },
+                ValidIssuers             = CreateValidIssuers(oidcConfig.Authority).ToArray(),
                 ValidateIssuerSigningKey = true,
                 ValidateAudience         = true,
                 ValidateLifetime         = true,
@@ -79,5 +81,12 @@ public static class Program
 
         app.MapControllers();
         app.MapFallbackToFile("index.html");
+    }
+
+    public static IEnumerable<string> CreateValidIssuers(string authority)
+    {
+        yield return authority;
+
+        yield return authority.EndsWith('/') ? authority.TrimEnd('/') : authority + '/';
     }
 }
