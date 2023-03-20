@@ -5,25 +5,8 @@ namespace BlazorBFFOpenIDConnect.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AccountController : ControllerBase
+public sealed class AccountController : ControllerBase
 {
-    private readonly IConfiguration _configuration;
-
-    public AccountController(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
-    [Authorize]
-    [HttpGet("LogoutUrl")]
-    public string GetLogoutUrl()
-    {
-        string domain   = _configuration.GetValue<string>("Authentication:Auth0:Domain")!;
-        string clientId = _configuration.GetValue<string>("Authentication:Auth0:ClientId")!;
-
-        return $"https://{domain}/v2/logout?client_id={clientId}";
-    }
-
     [HttpGet("Login")]
     public IActionResult Login(string returnUrl = "/")
     {
@@ -33,14 +16,14 @@ public class AccountController : ControllerBase
     }
 
     [Authorize]
-    [Route("Logout")]
-    [HttpPost, HttpGet]
-    public async Task<IActionResult> Logout()
+    [HttpGet("Logout")]
+    public async Task Logout()
     {
-        await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme);
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        return Redirect("/");
+        // This will redirect the call to Auth0 logout as well.
+        // OpenIdConnectEvents.OnRedirectToIdentityProviderForSignOut is defined when using the Auth0 package.
+        await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme);
     }
 
     [HttpGet("UserInfo")]

@@ -1,8 +1,5 @@
 ﻿@inherits LayoutComponentBase
 
-@inject NavigationManager _navigation
-@inject IHttpClientFactory _httpClientFactory
-
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -16,12 +13,13 @@
 
                     <strong class="m-1">Hello, @context?.User?.Identity?.Name!</strong>
 
+                    <a href="@AuthDefaults.LogOutPath">Sign out</a>
+
+                    @* In this way, the sign-out is not happening on Auth0
                     <form method="post" action="@AuthDefaults.LogOutPath">
                         <AntiForgeryTokenInput />
                         <button class="btn btn-link" type="submit">Sign out (App)</button>
-                    </form>
-
-                    <button class="btn btn-link" @onclick="signOutOnClick">Sign out (Auth0 + App)</button>
+                    </form>*@
                 </Authorized>
                 <NotAuthorized>
                     <a href="@AuthDefaults.LogInPath">Log in</a>
@@ -43,20 +41,5 @@
         Claim? claim = state?.User?.Claims.FirstOrDefault(c => c.Type == "picture");
 
         return claim is null ? _defaultAvatarUrl : claim.Value;
-    }
-
-    private async Task signOutOnClick()
-    {
-        HttpClient httpClient = _httpClientFactory.CreateClient(AuthDefaults.AuthorizedClientName);
-
-        string logoutUrl = await httpClient.GetStringAsync(AuthDefaults.LogOutUrl);
-
-        string returnUrl = _navigation.ToAbsoluteUri(AuthDefaults.LogOutPath).ToString();
-
-        // Note: <BaseAddress>/LogOutPath needs to be present as "Allowed Logout URLs" in the Auth0 application.
-
-        logoutUrl += $"&returnTo={returnUrl}";
-
-        _navigation.NavigateTo(logoutUrl);
     }
 }

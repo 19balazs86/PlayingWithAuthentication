@@ -10,7 +10,7 @@ You can compare this solution with [Blazor WASM JWT OpenIDConnect](../BlazorWASM
 
 - Auth0 account, where the SPA Application is configured
   - Allowed Callback URLs: https://localhost:5301/callback
-  - Allowed Logout URLs: https://localhost:5301, https://localhost:5301/api/Account/Logout
+  - Allowed Logout URLs: https://localhost:5301
 
 - [Social connections](https://marketplace.auth0.com/features/social-connections) can be added with the redirect URL: https://YOUR_DOMAIN/login/callback
 - appsettings.json

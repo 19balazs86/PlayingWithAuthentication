@@ -203,7 +203,13 @@ public static class Program
 
     //    options.GetClaimsFromUserInfoEndpoint = true;
 
-    //    options.Events = new OpenIdConnectEvents { OnTicketReceived = onTicketReceived };
+    //    options.Events = new OpenIdConnectEvents
+    //    {
+    //        OnTicketReceived = onTicketReceived,
+
+    //        // Optional: in order to sign-out from the Identity Provider, this needs to be defined
+    //        OnRedirectToIdentityProviderForSignOut = context => { return Task.CompletedTask; }
+    //    };
 
     //    options.TokenValidationParameters = new TokenValidationParameters
     //    {
