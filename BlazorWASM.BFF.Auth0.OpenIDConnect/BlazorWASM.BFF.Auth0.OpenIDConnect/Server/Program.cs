@@ -105,9 +105,13 @@ public static class Program
         options.OpenIdConnectEvents = new OpenIdConnectEvents { OnTicketReceived = onTicketReceived };
     }
 
+    /// <summary>
+    /// Avoid returning index.html for not found API calls in Blazor WASM
+    /// https://peterlesliemorris.com/avoid-returning-index-html-for-api-calls
+    /// </summary>
     private static void mapApiNotFound(this IEndpointRouteBuilder endpointRouteBuilder)
     {
-        endpointRouteBuilder.Map("/api/{**segment}", async context =>
+        endpointRouteBuilder.MapFallback("/api/{*path}", async context =>
         {
             context.Response.ContentType = MediaTypeNames.Application.Json;
             context.Response.StatusCode  = StatusCodes.Status404NotFound;

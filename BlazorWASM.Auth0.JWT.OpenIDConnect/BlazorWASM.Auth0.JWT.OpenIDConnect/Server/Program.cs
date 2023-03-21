@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Net.Mime;
+using System.Text.Json;
 
 namespace BlazorWASM.Auth0.JWT.OpenIDConnect;
 
@@ -80,6 +82,7 @@ public static class Program
         app.UseAuthorization();
 
         app.MapControllers();
+        app.mapApiNotFound();
         app.MapFallbackToFile("index.html");
     }
 
@@ -88,5 +91,26 @@ public static class Program
         yield return authority;
 
         yield return authority.EndsWith('/') ? authority.TrimEnd('/') : authority + '/';
+    }
+
+    /// <summary>
+    /// Avoid returning index.html for not found API calls in Blazor WASM
+    /// https://peterlesliemorris.com/avoid-returning-index-html-for-api-calls
+    /// </summary>
+    private static void mapApiNotFound(this IEndpointRouteBuilder endpointRouteBuilder)
+    {
+        endpointRouteBuilder.MapFallback("/api/{*path}", async context =>
+        {
+            context.Response.ContentType = MediaTypeNames.Application.Json;
+            context.Response.StatusCode  = StatusCodes.Status404NotFound;
+
+            var problemDetails = new
+            {
+                Title = "The requested endpoint is not found.",
+                Status = StatusCodes.Status404NotFound,
+            };
+
+            await JsonSerializer.SerializeAsync(context.Response.Body, problemDetails);
+        });
     }
 }
