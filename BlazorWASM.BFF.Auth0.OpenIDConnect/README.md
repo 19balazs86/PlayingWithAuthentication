@@ -34,5 +34,6 @@ You can compare this solution with [Blazor WASM JWT OpenIDConnect](../BlazorWASM
 - [Auth0 - Social Connections](https://marketplace.auth0.com/features/social-connections) 📓*Auth0 doc*
 - [Configure Auth0 in ASP.NET application with cookies](https://auth0.com/docs/quickstart/webapp/aspnet-core) 📓*Auth0 doc*
 - [Blazor Server app using OpenIdConnect with Auth0](https://andrewlock.net/adding-authentication-to-a-blazor-server-app-using-auth0) 📓*Andrew Lock*
+- [Securing SPAs and Blazor applications using the BFF pattern](https://youtu.be/hWJuX-8Ur2k) 📽️*1h - NDC Conferences - Dominick Baier*
 
 ![Screenshot](Screenshot.JPG)
