@@ -89,6 +89,7 @@ The following solutions have been implemented
 
 ##### Other resources
 
+- [SimpleAuthentication](https://github.com/marcominerva/SimpleAuthentication) 👤*Marco Minerva*
 - [Overview of different App security topics](https://github.com/damienbod/aspnetcore-standup-authn-authz) 👤*DamienBod*
 - [Certificate Authentication](https://damienbod.com/2019/06/13/certificate-authentication-in-asp-net-core-3-0/) 📓*DamienBod*
 - [aspnet-contrib / AspNet.Security.OAuth.Providers](https://github.com/aspnet-contrib/AspNet.Security.OAuth.Providers) 👤
