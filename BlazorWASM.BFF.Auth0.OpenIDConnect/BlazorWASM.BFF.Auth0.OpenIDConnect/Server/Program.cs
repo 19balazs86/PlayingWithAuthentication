@@ -196,6 +196,8 @@ public static class Program
 
     //private static void configureOpenIdConnect(OpenIdConnectOptions options, IConfiguration configuration)
     //{
+    //    // See an example from Tim Deschryver in the Readme.md
+
     //    options.Authority = "https://" + configuration.GetValue<string>("Authentication:Auth0:Domain");
     //    options.ClientId  = configuration.GetValue<string>("Authentication:Auth0:ClientId");
 

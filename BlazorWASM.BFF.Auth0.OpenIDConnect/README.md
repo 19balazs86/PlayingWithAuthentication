@@ -29,6 +29,7 @@ You can compare this solution with [Blazor WASM JWT OpenIDConnect](../BlazorWASM
 - [Blazor.BFF.OpenIDConnect.Template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) 👤*DamienBod* - This template is used and customized for Auth0
 - [Overview of different App security topics](https://github.com/damienbod/aspnetcore-standup-authn-authz) 👤*DamienBod*
 - [Exploring the Auth0 ASP.NET Authentication SDK](https://auth0.com/blog/exploring-auth0-aspnet-core-authentication-sdk) 📓*Auth0 blog - Andrea Chiarelli*
+- [Let's make our SPA more secure by setting up a .NET BFF with Duende and Auth0](https://timdeschryver.dev/blog/lets-make-our-spa-more-secure-by-setting-up-a-net-bff-with-duende-and-auth0) 📓*Tim Deschryver*
 - [OpenIddict](https://documentation.openiddict.com) 📓*Official doc*
 - [OpenIddict-Core](https://github.com/openiddict/openiddict-core) 👤*Official repo*
 - [Auth0 - Social Connections](https://marketplace.auth0.com/features/social-connections) 📓*Auth0 doc*
