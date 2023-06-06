@@ -139,6 +139,8 @@ public static class Program
 
     private static void addAntiforgeryServices(this IServiceCollection services)
     {
+        // Understanding SameSite cookies
+        // https://andrewlock.net/understanding-samesite-cookies
         services.AddAntiforgery(options =>
         {
             options.HeaderName          = AntiforgeryDefaults.HeaderName;
