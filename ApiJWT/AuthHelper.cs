@@ -39,7 +39,7 @@ public static class AuthHelper
             ValidateLifetime         = true,
             ValidateIssuerSigningKey = true,
 
-            ClockSkew = TimeSpan.Zero,
+            ClockSkew = TimeSpan.Zero, // Nick Chapsas explaining it -> https://youtu.be/meBxWjA_2YY
 
             ValidIssuer      = _issuer,
             ValidAudience    = _audience,
