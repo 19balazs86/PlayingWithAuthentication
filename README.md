@@ -96,6 +96,7 @@ The following solutions have been implemented
 - [Azure AD Authentication](https://www.faciletechnolab.com/blog/2021/4/13/how-to-implement-azure-ad-authentication-in-aspnet-core-50-web-application) 📓*FacileTechnolab*
 - [Combining JWT and Cookie Authentication](https://weblog.west-wind.com/posts/2022/Mar/29/Combining-Bearer-Token-and-Cookie-Auth-in-ASPNET) 📓*RickStrahl*
 - [What's New in .NET 7 for Authentication and Authorization](https://auth0.com/blog/whats-new-in-dotnet-7-for-authentication-and-authorization) 📓*auth0*
+- [Flexible authorization](https://youtu.be/TuG0yKf8RSQ) 📽️*35m - Jason Taylor - NDC Oslo 2023*
 
 ##### Password hashing
 
