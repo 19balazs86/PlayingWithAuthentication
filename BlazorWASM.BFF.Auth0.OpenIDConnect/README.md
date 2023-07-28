@@ -37,6 +37,6 @@ You can compare this solution with [Blazor WASM JWT OpenIDConnect](../BlazorWASM
 - [Blazor Server app using OpenIdConnect with Auth0](https://andrewlock.net/adding-authentication-to-a-blazor-server-app-using-auth0) 📓*Andrew Lock*
 - OWASP security headers
   - [NetEscapades.AspNetCore.SecurityHeaders](https://github.com/andrewlock/NetEscapades.AspNetCore.SecurityHeaders) 👤*Andrew Lock*
-  - [Security with OWASP headers](https://dotnetfoundation.org/news-events/detail/increasing-your-aspnet-core-app-security-with-owasp-headers) 📓.NET-Foundation
+  - [OwaspHeaders.Core](https://github.com/GaProgMan/OwaspHeaders.Core) 👤*Jamie Taylor*
 
 ![Screenshot](Screenshot.JPG)
