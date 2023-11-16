@@ -11,7 +11,7 @@ public static class AuthHelper
     private static readonly string _issuer   = "https://localhost:5000";
     private static readonly string _audience = "https://localhost:5000";
 
-    //private static SecurityKey _securityKeySymm = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+    //private static SecurityKey _securityKeySymm = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey_WhichIsEnoughLong@345"));
 
     private static readonly RSA _rsa;
 
