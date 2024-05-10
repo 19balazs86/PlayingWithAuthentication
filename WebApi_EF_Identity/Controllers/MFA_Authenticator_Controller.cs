@@ -105,6 +105,9 @@ public sealed class MFA_Authenticator_Controller : ControllerBase
 
     private static string generateQRCode(string email, string authenticatorKey)
     {
+        // You can use the QRCoder package to generate an image instead of depending on the api.qrserver
+        // Example: https://code-maze.com/aspnetcore-generate-qr-codes-with-qrcoder
+
         const string issuer = "2Factor-Auth";
 
         return string.Format(_authenticatorUriFormat, issuer, email, authenticatorKey);
