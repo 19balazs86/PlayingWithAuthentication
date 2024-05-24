@@ -103,3 +103,4 @@ The following solutions have been implemented
 - [How to store a password](https://www.meziantou.net/how-to-store-a-password-in-a-web-application.htm) 📓*meziantou*
 - [Cryptography in .NET](https://www.meziantou.net/cryptography-in-dotnet.htm) 📓*meziantou*
 - [Cryptography Implementations in .NET](https://code-maze.com/dotnet-cryptography-implementations/) 📓*Code-Maze*
+- [How does the default password hasher work](https://code-maze.com/aspnetcore-default-asp-net-core-identity-password-hasher) 📓*Code-Maze*
