@@ -38,6 +38,7 @@ Table of content
 - [Cookie invalidation and Token revocation](https://youtu.be/R6r_uSSIzvs) 📽️*13min - Raw Coding*
 - [Signing JWT with RSA](https://vmsdurano.com/-net-core-3-1-signing-jwt-with-rsa/) 📓*ProudMonkey*
 - [What's new in .NET 7 for Authentication](https://auth0.com/blog/whats-new-in-dotnet-7-for-authentication-and-authorization/) 📓*auth0* | [Setup JWT Bearer token](https://wildermuth.com/2022/12/07/changes-in-jwt-bearer-tokens-in-dotnet-7/) 📓*ShawnWildermuth* | [user-jwts](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/jwt-authn) 📚
+- [Claims transformation for flexible Authorization](https://www.milanjovanovic.tech/blog/master-claims-transformation-for-flexible-aspnetcore-authorization) 📓*Milan* | [Video](https://youtu.be/cgjifZF8ZME) 📽️*14min - Milan*
 
 ### Project: ApiCookieAuth
 

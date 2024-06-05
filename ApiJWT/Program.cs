@@ -41,6 +41,7 @@ public static class Program
 
     private static void configureAuthorizationOptions(AuthorizationOptions options)
     {
+        // "Claims transformation for flexible Authorization": See the link in the Readme
         // Add policy for Admin role.
         options.AddPolicy("AdminPolicy", new AuthorizationPolicyBuilder().RequireRole("AdminRole").Build());
 
