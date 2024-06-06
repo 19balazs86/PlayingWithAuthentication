@@ -23,7 +23,7 @@ Table of content
 
 ###### Resources
 
-- [Hashing and Salting passwords best practices](https://code-maze.com/csharp-hashing-salting-passwords-best-practices/) 📓*Code-Maze* - [PBKDF2](KeyGenRSA/Hashing_PBKDF2.cs), [BCrypt/SCrypt](https://github.com/BcryptNet/bcrypt.net), Argon2
+- [Hashing and Salting passwords best practices](https://code-maze.com/csharp-hashing-salting-passwords-best-practices/) 📓*Code-Maze* - [PBKDF2](KeyGenRSA/Hashing_PBKDF2.cs)| [BCrypt/SCrypt](https://github.com/BcryptNet/bcrypt.net) |Argon2 | [Bouncy Castle cryptography library](https://code-maze.com/csharp-bouncy-castle-cryptography)
 
 ### Project: ApiJWT
 
