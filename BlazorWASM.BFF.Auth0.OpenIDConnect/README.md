@@ -11,7 +11,6 @@ You can compare this solution with [Blazor WASM JWT OpenIDConnect](../BlazorWASM
 - Auth0 account, where the SPA Application is configured
   - Allowed Callback URLs: https://localhost:5301/callback
   - Allowed Logout URLs: https://localhost:5301
-
 - [Social connections](https://marketplace.auth0.com/features/social-connections) can be added with the redirect URL: https://YOUR_DOMAIN/login/callback
 - appsettings.json
 
@@ -35,6 +34,7 @@ You can compare this solution with [Blazor WASM JWT OpenIDConnect](../BlazorWASM
 - [Auth0 - Social Connections](https://marketplace.auth0.com/features/social-connections) 📓*Auth0 doc*
 - [Configure Auth0 in ASP.NET application with cookies](https://auth0.com/docs/quickstart/webapp/aspnet-core) 📓*Auth0 doc*
 - [Blazor Server app using OpenIdConnect with Auth0](https://andrewlock.net/adding-authentication-to-a-blazor-server-app-using-auth0) 📓*Andrew Lock*
+- [How to use OAuth - Authorization Code Flow](https://dotneteers.net/how-to-use-c-to-properly-follow-oauth-authentication-flows/) 📓*Dotneteers* - using the [IdentityModel](https://www.nuget.org/packages/IdentityModel) package
 - OWASP security headers
   - [NetEscapades.AspNetCore.SecurityHeaders](https://github.com/andrewlock/NetEscapades.AspNetCore.SecurityHeaders) 👤*Andrew Lock*
   - [OwaspHeaders.Core](https://github.com/GaProgMan/OwaspHeaders.Core) 👤*Jamie Taylor*
