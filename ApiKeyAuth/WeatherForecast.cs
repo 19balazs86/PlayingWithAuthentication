@@ -2,10 +2,10 @@ namespace ApiKeyAuth;
 
 public sealed class WeatherForecast
 {
-    private static readonly string[] _summaries = new[]
-    {
+    private static readonly string[] _summaries =
+    [
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    ];
 
     public DateOnly Date { get; set; }
 
@@ -13,7 +13,7 @@ public sealed class WeatherForecast
 
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
-    public string Summary { get; set; }
+    public string? Summary { get; set; }
 
     public static WeatherForecast[] GetRandomForecasts(int n = 5)
     {

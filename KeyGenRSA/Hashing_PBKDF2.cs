@@ -1,46 +1,45 @@
 ﻿using System.Security.Cryptography;
 
-namespace KeyGenRSA
+namespace KeyGenRSA;
+
+public static class Hashing_PBKDF2
 {
-    public static class Hashing_PBKDF2
+    private const int _keySize    = 64;
+    private const int _iterations = 350000;
+
+    private static readonly HashAlgorithmName _hashAlgorithmName = HashAlgorithmName.SHA512;
+
+    public static string HashPasword(ReadOnlySpan<char> password, out ReadOnlySpan<byte> salt)
     {
-        private const int _keySize    = 64;
-        private const int _iterations = 350000;
+        salt = RandomNumberGenerator.GetBytes(_keySize);
 
-        private static readonly HashAlgorithmName _hashAlgorithmName = HashAlgorithmName.SHA512;
+        byte[] passwordHash = Rfc2898DeriveBytes.Pbkdf2(password, salt, _iterations, _hashAlgorithmName, _keySize);
 
-        public static string HashPasword(ReadOnlySpan<char> password, out ReadOnlySpan<byte> salt)
-        {
-            salt = RandomNumberGenerator.GetBytes(_keySize);
+        return Convert.ToHexString(passwordHash);
+    }
 
-            byte[] passwordHash = Rfc2898DeriveBytes.Pbkdf2(password, salt, _iterations, _hashAlgorithmName, _keySize);
+    public static bool VerifyPassword(ReadOnlySpan<char> password, ReadOnlySpan<char> passwordHash, ReadOnlySpan<char> salt)
+    {
+        byte[] saltBytes = Convert.FromHexString(salt);
 
-            return Convert.ToHexString(passwordHash);
-        }
+        return VerifyPassword(password, passwordHash, saltBytes);
+    }
 
-        public static bool VerifyPassword(ReadOnlySpan<char> password, ReadOnlySpan<char> passwordHash, ReadOnlySpan<char> salt)
-        {
-            byte[] saltBytes = Convert.FromHexString(salt);
+    public static bool VerifyPassword(ReadOnlySpan<char> password, ReadOnlySpan<char> passwordHash, ReadOnlySpan<byte> salt)
+    {
+        byte[] hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, _iterations, _hashAlgorithmName, _keySize);
 
-            return VerifyPassword(password, passwordHash, saltBytes);
-        }
+        byte[] hashBytes = Convert.FromHexString(passwordHash);
 
-        public static bool VerifyPassword(ReadOnlySpan<char> password, ReadOnlySpan<char> passwordHash, ReadOnlySpan<byte> salt)
-        {
-            byte[] hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, _iterations, _hashAlgorithmName, _keySize);
+        return hashToCompare.SequenceEqual(hashBytes);
+    }
 
-            byte[] hashBytes = Convert.FromHexString(passwordHash);
+    public static bool TestHashing(ReadOnlySpan<char> password)
+    {
+        string passwordHash = HashPasword(password, out ReadOnlySpan<byte> saltBytes);
 
-            return hashToCompare.SequenceEqual(hashBytes);
-        }
+        //string saltYouCanStore = Convert.ToHexString(saltBytes);
 
-        public static bool TestHashing(ReadOnlySpan<char> password)
-        {
-            string passwordHash = HashPasword(password, out ReadOnlySpan<byte> saltBytes);
-
-            //string saltYouCanStore = Convert.ToHexString(saltBytes);
-
-            return VerifyPassword(password, passwordHash, saltBytes);
-        }
+        return VerifyPassword(password, passwordHash, saltBytes);
     }
 }

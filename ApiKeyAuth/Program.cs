@@ -3,7 +3,7 @@ using Microsoft.OpenApi.Models;
 
 namespace ApiKeyAuth;
 
-public sealed class Program
+public static class Program
 {
     public static void Main(string[] args)
     {
@@ -16,18 +16,18 @@ public sealed class Program
 
             services.AddSingleton<ApiKeyAuthFilter>();
 
-            // TODO: Solution 2/a - Add Authorization filter for all endpoints of the Controller
+            // TODO: Solution 2/a - Add AuthorizationFilter for all controller endpoints.
             //services.AddControllers(options => options.Filters.Add<ApiKeyAuthFilter>());
 
             services.AddControllers();
 
             services.AddEndpointsApiExplorer();
 
-            services.AddSwaggerWithApiKeyAuth();
+            services.addSwaggerWithApiKeyAuth();
 
             // TODO: Solution 4 - Add custom authentication handler (I think the most complex compare with the others)
             // Use it as usual with [Authorize] attribute
-            //services.ApiKeyAuthentication();
+            //services.AddApiKeyAuthentication();
         }
 
         WebApplication app = builder.Build();
@@ -52,11 +52,8 @@ public sealed class Program
 
         app.Run();
     }
-}
 
-public static class SwaggerExtensions
-{
-    public static IServiceCollection AddSwaggerWithApiKeyAuth(this IServiceCollection services)
+    private static IServiceCollection addSwaggerWithApiKeyAuth(this IServiceCollection services)
     {
         services.AddSwaggerGen(options =>
         {

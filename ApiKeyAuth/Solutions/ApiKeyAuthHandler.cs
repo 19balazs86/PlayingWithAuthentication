@@ -7,7 +7,7 @@ namespace ApiKeyAuth.Solutions;
 
 public static class TestAuthenticationExtensions
 {
-    public static IServiceCollection ApiKeyAuthentication(this IServiceCollection services, Action<ApiKeyAuthOptions> configureOptions = null)
+    public static IServiceCollection AddApiKeyAuthentication(this IServiceCollection services, Action<ApiKeyAuthOptions>? configureOptions = null)
     {
         services.AddAuthentication(options =>
         {
@@ -28,8 +28,7 @@ public sealed class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthOptions>
         IOptionsMonitor<ApiKeyAuthOptions> options,
         ILoggerFactory logger,
         UrlEncoder encoder,
-        ISystemClock clock,
-        IApiKeyValidator apiKeyValidator) : base(options, logger, encoder, clock)
+        IApiKeyValidator apiKeyValidator) : base(options, logger, encoder)
     {
         _apiKeyValidator = apiKeyValidator;
     }
@@ -57,7 +56,7 @@ public sealed class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthOptions>
 
 public sealed class ApiKeyAuthOptions : AuthenticationSchemeOptions { }
 
-file class Consts
+file static class Consts
 {
     public const string AuthScheme = "ApiKeyAuth";
 }

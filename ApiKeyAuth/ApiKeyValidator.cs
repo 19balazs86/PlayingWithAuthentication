@@ -16,7 +16,7 @@ public sealed class ApiKeyValidator : IApiKeyValidator
     // You can read it from Redis or Database...
     private readonly HashSet<string> _validaKeys = new(1, StringComparer.OrdinalIgnoreCase) { "3bf51fe82c6f48a9b53f813ff7a3b30c" };
 
-    public bool Validate(string apiKey)
+    public bool Validate(string? apiKey)
     {
         if (string.IsNullOrWhiteSpace(apiKey))
             return false;

@@ -8,8 +8,8 @@ namespace ApiKeyAuth.Controllers;
 public sealed class WeatherForecastController : ControllerBase
 {
     [HttpGet]
-    [ApiKeyAuth] // TODO: Solution 2/b - Apply authorization filter individually
-    //[ServiceFilter(typeof(ApiKeyAuthFilter))] // Instead of this, use the custom ApiKeyAuth attribute
+    [ApiKeyAuth] // TODO: Solution 2/b - Apply AuthorizationFilter individually with the attribute
+    //[ServiceFilter(typeof(ApiKeyAuthFilter))] // This is ugly, instead use the custom ApiKeyAuth attribute
     public IEnumerable<WeatherForecast> Get()
     {
         return WeatherForecast.GetRandomForecasts();

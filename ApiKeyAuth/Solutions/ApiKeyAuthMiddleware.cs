@@ -23,15 +23,15 @@ public sealed class ApiKeyAuthMiddleware
     {
         bool isValid = _apiKeyValidator.Validate(httpContext.Request);
 
-        if (!isValid)
+        if (isValid)
         {
-            httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-
-            await httpContext.Response.WriteAsJsonAsync(InvalidApiKeyProblemDetails.Instance);
+            await _next(httpContext);
 
             return;
         }
 
-        await _next(httpContext);
+        httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+
+        await httpContext.Response.WriteAsJsonAsync(InvalidApiKeyProblemDetails.Instance);
     }
 }
