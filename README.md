@@ -114,6 +114,7 @@ The following solutions have been implemented
 - [Combining JWT and Cookie Authentication](https://weblog.west-wind.com/posts/2022/Mar/29/Combining-Bearer-Token-and-Cookie-Auth-in-ASPNET) 📓*RickStrahl*
 - [What's New in .NET 7 for Authentication and Authorization](https://auth0.com/blog/whats-new-in-dotnet-7-for-authentication-and-authorization) 📓*auth0*
 - [Flexible authorization](https://youtu.be/TuG0yKf8RSQ) 📽️*35m - Jason Taylor - NDC Oslo 2023*
+- [Blazor Authentication and Authorization with Identity](https://youtu.be/tNzSuwV62Lw) 📽️*Patrick God*
 
 ##### Password hashing
 
