@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using WebApi_EF_Identity_BearerNET8.Data;
@@ -42,7 +44,7 @@ public static class Program
 
             app.MapGet("/", (ClaimsPrincipal user) => user.Claims.ToDictionary(k => k.Type, v => v.Value)).RequireAuthorization();
 
-            app.MapGet("/auth/fake-login", fakeLoing);
+            app.MapGet("/auth/fake-login", handleFakeLoing);
         }
 
         app.Run();
@@ -66,15 +68,26 @@ public static class Program
         optinos.Cookie.Name = "auth-cookie";
     }
 
-    private static SignInHttpResult fakeLoing()
+    private static SignInHttpResult handleFakeLoing([FromQuery] bool? useCookies)
     {
+        string authShame   = IdentityConstants.BearerScheme;
+        var authProperties = new AuthenticationProperties();
+
+        if (useCookies is true)
+        {
+            authShame = IdentityConstants.ApplicationScheme;
+
+            authProperties.IsPersistent = true;
+        }
+
         Claim[] claims = [new Claim("id", "12345"), new Claim("name", "fake-login-name")];
 
-        var claimsIdentity  = new ClaimsIdentity(claims, IdentityConstants.BearerScheme);
+        var claimsIdentity  = new ClaimsIdentity(claims, authShame);
         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-        // This will call the BearerTokenHandler.HandleSignInAsync, which generates the token response
+        // BearerScheme: This will call the BearerTokenHandler.HandleSignInAsync, which generates the token response
+        // ApplicationScheme: Call the CookieAuthenticationHandler.HandleSignInAsync
         // Note: EntityFramework is not involved in this process, because we are not calling the login endpoint added with MapIdentityApi
-        return TypedResults.SignIn(claimsPrincipal, authenticationScheme: IdentityConstants.BearerScheme);
+        return TypedResults.SignIn(claimsPrincipal, authProperties, authShame);
     }
 }

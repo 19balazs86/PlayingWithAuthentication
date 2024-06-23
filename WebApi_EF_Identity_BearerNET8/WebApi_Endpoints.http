@@ -28,4 +28,4 @@ GET {{HostAddress}}/auth/manage/info
 
 ### FakeLogin
 
-GET {{HostAddress}}/auth/fake-login
+GET {{HostAddress}}/auth/fake-login?useCookies=false

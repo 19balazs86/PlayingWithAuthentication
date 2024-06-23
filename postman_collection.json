@@ -677,7 +677,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5024/auth/fake-login",
+							"raw": "http://localhost:5024/auth/fake-login?useCookies=false",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -686,6 +686,12 @@
 							"path": [
 								"auth",
 								"fake-login"
+							],
+							"query": [
+								{
+									"key": "useCookies",
+									"value": "false"
+								}
 							]
 						}
 					},
