@@ -1,0 +1,27 @@
+@HostAddress = http://localhost:5024
+
+POST {{HostAddress}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "user@email.com",
+  "password": "userpass"
+}
+
+### Login
+
+POST {{HostAddress}}/auth/login?useCookies=true&useSessionCookies=true
+Content-Type: application/json
+
+{
+  "email": "user@email.com",
+  "password": "userpass"
+}
+
+### Get claims
+
+GET {{HostAddress}}/
+
+### ManageInfo
+
+GET {{HostAddress}}/auth/manage/info

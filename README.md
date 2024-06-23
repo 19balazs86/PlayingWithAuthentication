@@ -6,6 +6,7 @@ Table of content
 - Project: [ApiJWT](#project-apijwt)
 - Project: [ApiCookieAuth](#project-apicookieauth)
 - Project: [WebApi_EF_Identity](#project-webapi_ef_identity)
+- Project: [WebApi_EF_Identity_BearerNET8](#project-webapi_ef_identity_bearernet8)
 - Project: [ApiKeyAuth](#project-apikeyauth)
 - Project: [Blazor WASM BFF - Auth0 - OpenIDConnect](#project-blazorwasmbffauth0openidconnect)
 - Project: [Blazor WASM JWT - Auth0 - OpenIDConnect](#project-blazorwasmauth0jwtopenidconnect)
@@ -61,6 +62,21 @@ Table of content
 - [Two Factor Authentication with Web API and Angular using Google Authenticator](https://code-maze.com/dotnet-angular-two-factor-authentication-with-using-google-authenticator) 📓*Code-Maze*
 - [QR code generator](https://goqr.me/api) 📓*WebAPI*
 - [Implementing custom token provider for short-lived token](https://andrewlock.net/implementing-custom-token-providers-for-passwordless-authentication-in-asp-net-core-identity) 📓*Andrew Lock*
+
+### Project: WebApi_EF_Identity_BearerNET8
+
+NET.8 introduced a new authentication method called BearerToken with new Identity endpoints (register, login).
+Just a few lines of code, you can have user management endpoints using Entity Framework.
+However, it is not suitable for custom needs and is more appropriate for local demo purposes.
+You can learn from the code to write your custom logic.
+See the [WebApi_EF_Identity](#project-webapi_ef_identity) project.
+
+###### Resources
+
+- [Authentication made easy with Identity in .NET 8](https://youtu.be/S0RSsHKiD6Y) 📽*10min - Milan*
+- [New .NET 8 Authentication features](https://youtu.be/XBV1gZNF_S8) 📽*20min - Anton/Raw Coding*
+- [Should you use the .NET 8 Identity API endpoints?](https://andrewlock.net/should-you-use-the-dotnet-8-identity-api-endpoints) 📓*Andrew Lock*
+- [JWT vs Opaque Tokens](https://medium.com/identity-beyond-borders/jwt-vs-opaque-tokens-all-you-need-to-know-307bf19bade8) 📓*Medium*
 
 ### Project: ApiKeyAuth
 

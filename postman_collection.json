@@ -562,6 +562,116 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "WebApi_EF_Identity_BearerNET8",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"user@email.com\",\r\n  \"password\": \"userpass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5024/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5024",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"user@email.com\",\r\n  \"password\": \"userpass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5024/auth/login?useCookies=true&useSessionCookies=false",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5024",
+							"path": [
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "useCookies",
+									"value": "true"
+								},
+								{
+									"key": "useSessionCookies",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Claims",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5024",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5024"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5024/auth/manage/info",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5024",
+							"path": [
+								"auth",
+								"manage",
+								"info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
