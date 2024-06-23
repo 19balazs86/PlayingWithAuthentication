@@ -25,3 +25,7 @@ GET {{HostAddress}}/
 ### ManageInfo
 
 GET {{HostAddress}}/auth/manage/info
+
+### FakeLogin
+
+GET {{HostAddress}}/auth/fake-login

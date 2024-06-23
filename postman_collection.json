@@ -670,6 +670,26 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "FakeLogin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5024/auth/fake-login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5024",
+							"path": [
+								"auth",
+								"fake-login"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
