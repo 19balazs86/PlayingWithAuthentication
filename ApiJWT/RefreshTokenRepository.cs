@@ -3,30 +3,33 @@
 // For simplicity
 public static class RefreshTokenRepository
 {
-    private static readonly Dictionary<string, RefreshToken> _refreshToken = new Dictionary<string, RefreshToken>();
+    // Obviously you use a Database for this purpose
+    private static readonly Dictionary<string, TokenData> _tokenStorage = [];
 
     public static string CreateRefreshToken(string jwtId)
     {
-        var refreshToken = new RefreshToken
+        var refreshToken = new TokenData
         {
-            Token        = generateRefreshToken(),
+            RefreshToken = generateRefreshToken(),
             JwtId        = jwtId,
             CreationDate = DateTime.UtcNow,
             ExpiryDate   = DateTime.UtcNow.AddMonths(1)
         };
 
-        _refreshToken.Add(jwtId, refreshToken);
+        _tokenStorage.Add(jwtId, refreshToken);
 
-        return refreshToken.Token;
+        return refreshToken.RefreshToken;
     }
 
     public static bool TryInvalidateRefreshToken(string jwtId, string refreshToken)
     {
-        if (_refreshToken.TryGetValue(jwtId, out RefreshToken? rToken) &&
-            rToken.Token.Equals(refreshToken) && rToken.IsValid && !rToken.IsUsed && rToken.ExpiryDate > DateTime.UtcNow)
+        if (_tokenStorage.TryGetValue(jwtId, out TokenData? tokenData) &&
+            tokenData is { IsValid: true, IsUsed: false } &&
+            tokenData.RefreshToken.Equals(refreshToken) &&
+            tokenData.ExpiryDate > DateTime.UtcNow)
         {
-            rToken.IsValid = false;
-            rToken.IsUsed  = true;
+            tokenData.IsValid = false;
+            tokenData.IsUsed  = true;
 
             return true;
         }
@@ -36,14 +39,14 @@ public static class RefreshTokenRepository
 
     public static bool IsValidToken(string jwtId)
     {
-        return _refreshToken.TryGetValue(jwtId, out RefreshToken rToken) && rToken.IsValid && rToken.ExpiryDate > DateTime.UtcNow;
+        return _tokenStorage.TryGetValue(jwtId, out TokenData? tokenData) && tokenData.IsValid && tokenData.ExpiryDate > DateTime.UtcNow;
     }
 
     public static void InvalidateToken(string jwtId)
     {
-        if (_refreshToken.TryGetValue(jwtId, out RefreshToken rToken))
+        if (_tokenStorage.TryGetValue(jwtId, out TokenData? tokenData))
         {
-            rToken.IsValid = false;
+            tokenData.IsValid = false;
         }
     }
 
@@ -58,9 +61,9 @@ public static class RefreshTokenRepository
     }
 }
 
-public sealed class RefreshToken
+public sealed class TokenData
 {
-    public required string Token { get; set; }
+    public required string RefreshToken { get; set; }
     public required string JwtId { get; set; }
     public required DateTime CreationDate { get; set; }
     public required DateTime ExpiryDate { get; set; }

@@ -53,8 +53,6 @@ public static class AuthHelper
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                // options.Configuration = new OpenIdConnectConfiguration { SigningKeys = { _securityKey } };
-
                 options.TokenValidationParameters = _tokenValidationParameters;
                 options.Events = new JwtBearerEvents
                 {
@@ -94,6 +92,9 @@ public static class AuthHelper
         return tryValidateToken(token, _tokenValidationParameters, out claimsPrincipal, out _, out invalidReason);
     }
 
+    /// <summary>
+    /// An expired token can be validated checking only the IssuerSigningKey
+    /// </summary>
     public static bool TryValidateExpiredToken(string token, out JwtSecurityToken? jwtSecurityToken, out string? invalidReason)
     {
         var tokenValidationParameters = new TokenValidationParameters
@@ -146,7 +147,7 @@ public static class AuthHelper
 
         if (!RefreshTokenRepository.IsValidToken(jwtId))
         {
-            ctx.Response.Headers.Add("IsTokenInvalidated", "true");
+            ctx.Response.Headers.Append("Reason", "Token is invalidated");
 
             ctx.Fail("Token is not valid anymore.");
         }
@@ -158,8 +159,9 @@ public static class AuthHelper
     {
         // IServiceProvider serviceProvider = ctx.HttpContext.RequestServices;
 
+        // This is not necessary. The handler sets the header with the error description
         if (ctx.Exception.GetType() == typeof(SecurityTokenExpiredException))
-            ctx.Response.Headers.Add("IsTokenExpired", "true");
+            ctx.Response.Headers.Append("IsTokenExpired", "true");
 
         return Task.CompletedTask;
     }

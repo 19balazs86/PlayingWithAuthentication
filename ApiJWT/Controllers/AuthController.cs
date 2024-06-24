@@ -66,7 +66,7 @@ public class AuthController : ControllerBase
             //if (jwtSecurityToken.ValidTo > DateTime.UtcNow)
             //    return Problem(title: "The token is not expired yet.", detail: invalidReason, statusCode: Status400BadRequest);
 
-            var user = new UserModel(jwtSecurityToken.Claims);
+            var user = new UserModel(jwtSecurityToken!.Claims);
 
             // user.JwtId == securityToken.Id // because of wtRegisteredClaimNames.Jti
 
