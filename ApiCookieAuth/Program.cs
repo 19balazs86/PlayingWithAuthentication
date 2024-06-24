@@ -36,7 +36,7 @@ public static class Program
 
             app.MapAuthEndpoints();
 
-            app.MapGet("/", Endpoints.HandleRoot);
+            app.MapGet("/", () => TypedResults.Redirect("/home.html"));
         }
 
         app.Run();
@@ -44,7 +44,7 @@ public static class Program
 
     private static void configureCookieAuthOptions(CookieAuthenticationOptions options)
     {
-        options.LoginPath   = "/login.html";
+        options.LoginPath   = "/home.html";
         options.Cookie.Name = "auth-cookie";
         //options.ExpireTimeSpan = TimeSpan.FromDays(15); // During HttpContext.SignIn the AuthenticationProperties needs to be set IsPersistent = true
 

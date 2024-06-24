@@ -10,12 +10,13 @@ public static class Endpoints
     {
         RouteGroupBuilder routeGroup = endpoints.MapGroup("/auth");
 
+        routeGroup.MapGet("/info",       handleInfo);
         routeGroup.MapGet("/login",      handleLogin);
         routeGroup.MapGet("/logout",     handleLogout).RequireAuthorization();
         routeGroup.MapGet("/black-list", handleBlackList).RequireAuthorization();
     }
 
-    public static Ok<UserModel> HandleRoot(ClaimsPrincipal claimsPrincipal)
+    private static Ok<UserModel> handleInfo(ClaimsPrincipal claimsPrincipal)
     {
         return TypedResults.Ok(UserModel.CreateFromPrincipal(claimsPrincipal));
     }

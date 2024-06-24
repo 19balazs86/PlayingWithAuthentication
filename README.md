@@ -43,7 +43,7 @@ Table of content
 
 ### Project: ApiCookieAuth
 
-- A simple WebAPI with a single login.html file. This is not a comprehensive example, just a checking the basics of cookie authentication.
+- A simple WebAPI with a single html file. This is not a comprehensive example, just a checking the basics of cookie authentication.
 - Black-list: Implemented a solution to invalidate or reject a cookie based on the session ID.
 ###### Resources
 - [ASP.NET Core Cookie Authentication](https://youtu.be/hw2B6SZj8y8) 📽️*46min-RawCoding*
