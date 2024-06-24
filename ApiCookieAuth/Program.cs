@@ -21,6 +21,8 @@ public static class Program
                 .AddCookie(DefaultAuthScheme, configureCookieAuthOptions);
 
             services.AddAuthorization();
+
+            services.AddTransient<IClaimsTransformation, CustomClaimsTransformation>();
         }
 
         WebApplication app = builder.Build();
