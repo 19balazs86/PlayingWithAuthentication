@@ -54,7 +54,9 @@ Table of content
 
 - Take advantage of the Entity Framework Identity features, including UserManager and SignInManager.
 - Two Factor Authentication with AuthenticatorApp or Email
-  - Flow: Register -> Confirm email -> Get TwoFactor auth setup -> Enable TwoFactor -> Logout -> Login -> Login with TwoFactor
+  - First: Register -> Confirm email
+  - Flow #1: Get TwoFactor auth setup for Email -> Enable Email-TwoFactor with the given code -> Logout -> Login with user+pass -> Login with Email-TwoFactor with the given code (you got it after email+pass login)
+  - Flow #2: Get TwoFactor auth setup for AuthenticatorApp by scanning  the QR code -> Enable Authenticator-TwoFactor with a code -> Logout -> Login with user+pass -> Login with Authenticator-TwoFactor with a code
 - Generating a short-lived token for signing in like Slack and Medium
 - Recovery codes for 2FA can be generated. After logging in with your username and password, you can use one of these codes instead of the authenticator code.
 
