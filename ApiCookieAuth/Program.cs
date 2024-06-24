@@ -6,9 +6,9 @@ namespace ApiCookieAuth;
 
 public static class Program
 {
-    public const string SessionClaimName = "SessionId";
+    public const string DefaultAuthScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
-    public static List<string> CookieBlackList { get; } = new List<string>();
+    public static HashSet<string> CookieBlackList { get; } = []; // This should stored in database or redis
 
     public static void Main(string[] args)
     {
@@ -17,21 +17,10 @@ public static class Program
 
         // Add services to the container
         {
-            services.AddControllers();
-
-            services
-                .AddAuthentication()
-                .AddCookie(configureCookieAuthenticationOptions);
+            services.AddAuthentication(DefaultAuthScheme)
+                .AddCookie(DefaultAuthScheme, configureCookieAuthOptions);
 
             services.AddAuthorization();
-
-            services.AddTransient<ApiJwtClientAuthHandler>();
-
-            services.AddHttpContextAccessor();
-
-            services
-                .AddHttpClient<IApiJwtClient, ApiJwtClient>(client => client.BaseAddress = new Uri("https://localhost:5000"))
-                .AddHttpMessageHandler<ApiJwtClientAuthHandler>();
         }
 
         WebApplication app = builder.Build();
@@ -45,13 +34,15 @@ public static class Program
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapControllers();
+            app.MapAuthEndpoints();
+
+            app.MapGet("/", Endpoints.HandleRoot);
         }
 
         app.Run();
     }
 
-    private static void configureCookieAuthenticationOptions(CookieAuthenticationOptions options)
+    private static void configureCookieAuthOptions(CookieAuthenticationOptions options)
     {
         options.LoginPath   = "/login.html";
         options.Cookie.Name = "auth-cookie";
@@ -68,10 +59,8 @@ public static class Program
     {
         // IServiceProvider serviceProvider = ctx.HttpContext.RequestServices;
 
-        // To invalidate a cookie, it can can be rejected based on the session id.
-
-        if (CookieBlackList.Contains(ctx.Principal.FindFirstValue(SessionClaimName)))
-            ctx.RejectPrincipal();
+        if (CookieBlackList.Contains(ctx.Principal!.FindFirstValue(UserModel.SessionClaimName)!))
+            ctx.RejectPrincipal(); // To invalidate a cookie, it can can be rejected based on the session id.
 
         return Task.CompletedTask;
     }
