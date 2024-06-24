@@ -82,7 +82,7 @@ public sealed class AuthController : ControllerBase
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
 
-            string code = await _userManager.GenerateTwoFactorTokenAsync(user, "Email");
+            string code = await _userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultEmailProvider);
 
             emailCode = $"You got an email about the Code: {code}";
         }
