@@ -10,13 +10,13 @@ public static class Endpoints
     {
         RouteGroupBuilder routeGroup = endpoints.MapGroup("/auth");
 
-        routeGroup.MapGet("/info",       handleInfo);
+        routeGroup.MapGet("/user",       handleUser);
         routeGroup.MapGet("/login",      handleLogin);
         routeGroup.MapGet("/logout",     handleLogout).RequireAuthorization();
         routeGroup.MapGet("/black-list", handleBlackList).RequireAuthorization();
     }
 
-    private static Ok<UserModel> handleInfo(ClaimsPrincipal claimsPrincipal)
+    private static Ok<UserModel> handleUser(ClaimsPrincipal claimsPrincipal)
     {
         return TypedResults.Ok(UserModel.CreateFromPrincipal(claimsPrincipal));
     }
@@ -27,10 +27,11 @@ public static class Endpoints
         {
             //IsPersistent = true, // It keeps the cookie on the client side, otherwise it is a session cookie
             //ExpiresUtc = DateTime.UtcNow.AddDays(15), // You can use ExpiresUtc or globally set ExpireTimeSpan when you call AddCookie
-            RedirectUri = "/"
+            RedirectUri = "/auth/user"
         };
 
-        // You can add secrets to the authProperties.StoreTokens(tokens) and retrieve them with HttpContext.GetToken
+        // You can add secrets to the authProperties.StoreTokens(tokens), which are stored in the client's auth-cookie
+        // You can retrieve them via HttpContext.GetToken
 
         var claims = new UserModel(1, "DummyUser", ["UserRole"]).ToClaims();
 
@@ -43,7 +44,7 @@ public static class Endpoints
 
     private static SignOutHttpResult handleLogout()
     {
-        var authProperties = new AuthenticationProperties { RedirectUri = "/" };
+        var authProperties = new AuthenticationProperties { RedirectUri = "/auth/user" };
 
         return TypedResults.SignOut(authProperties, [Program.DefaultAuthScheme]);
     }
