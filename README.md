@@ -15,7 +15,7 @@ Table of content
 
 ---
 
-### Project: KeyGenRSA
+### `Project: KeyGenRSA`
 
 - Console application to generate private and public RSA pem files.
 - Private key is used in the ApiJWT project to sign and validate JWT.
@@ -26,7 +26,7 @@ Table of content
 
 - [Hashing and Salting passwords best practices](https://code-maze.com/csharp-hashing-salting-passwords-best-practices/) 📓*Code-Maze* - [PBKDF2](KeyGenRSA/Hashing_PBKDF2.cs)| [BCrypt/SCrypt](https://github.com/BcryptNet/bcrypt.net) |Argon2 | [Bouncy Castle cryptography library](https://code-maze.com/csharp-bouncy-castle-cryptography)
 
-### Project: ApiJWT
+### `Project: ApiJWT`
 
 - WebAPI using JWT authentication, signing the token with the RSA private key.
 - Create SigningCredentials with symmetric and asymmetric security key using RSA or X509Certificate.
@@ -40,7 +40,7 @@ Table of content
 - [Signing JWT with RSA](https://vmsdurano.com/-net-core-3-1-signing-jwt-with-rsa/) 📓*ProudMonkey*
 - [New default Authentication Scheme in .NET 7](https://auth0.com/blog/whats-new-in-dotnet-7-for-authentication-and-authorization) 📓*auth0* | [Setup JWT Bearer token](https://wildermuth.com/2022/12/07/changes-in-jwt-bearer-tokens-in-dotnet-7/) 📓*ShawnWildermuth*
 
-### Project: ApiCookieAuth
+### `Project: ApiCookieAuth`
 
 - A simple WebAPI with a single html file. This is not a comprehensive example, just a checking the basics of cookie authentication.
 - Black-list: Implemented a solution to invalidate or reject a cookie based on the session ID.
@@ -50,7 +50,7 @@ Table of content
 - [Cookie invalidation and Token revocation](https://youtu.be/R6r_uSSIzvs) 📽️*13min - Raw Coding*
 - [Claims transformation for flexible Authorization](https://www.milanjovanovic.tech/blog/master-claims-transformation-for-flexible-aspnetcore-authorization) 📓*Milan* | [Video](https://youtu.be/cgjifZF8ZME) 📽️*14min - Milan*
 
-### Project: WebApi_EF_Identity
+### `Project: WebApi_EF_Identity`
 
 - Take advantage of the Entity Framework Identity features, including UserManager and SignInManager.
 - Two Factor Authentication with AuthenticatorApp or Email
@@ -66,7 +66,7 @@ Table of content
 - [QR code generator](https://goqr.me/api) 📓*WebAPI*
 - [Implementing custom token provider for short-lived token](https://andrewlock.net/implementing-custom-token-providers-for-passwordless-authentication-in-asp-net-core-identity) 📓*Andrew Lock*
 
-### Project: WebApi_EF_Identity_BearerNET8
+### `Project: WebApi_EF_Identity_BearerNET8`
 
 NET.8 introduced a new authentication method called BearerToken with new Identity endpoints (register, login).
 Just a few lines of code, you can have user management endpoints using Entity Framework.
@@ -81,7 +81,7 @@ See the [WebApi_EF_Identity](#project-webapi_ef_identity) project.
 - [Should you use the .NET 8 Identity API endpoints?](https://andrewlock.net/should-you-use-the-dotnet-8-identity-api-endpoints) 📓*Andrew Lock*
 - [JWT vs Opaque Tokens](https://medium.com/identity-beyond-borders/jwt-vs-opaque-tokens-all-you-need-to-know-307bf19bade8) 📓*Medium*
 
-### Project: ApiKeyAuth
+### `Project: ApiKeyAuth`
 
 The following solutions have been implemented
 1. Use a custom middleware to check the API Key
@@ -96,13 +96,13 @@ The following solutions have been implemented
 - [Protect your API with API Keys](https://josefottosson.se/asp-net-core-protect-your-api-with-api-keys/) 📓*Josef Ottosson - Custom authentication handler with roles*
 - [Creating a custom authentication scheme](https://joonasw.net/view/creating-auth-scheme-in-aspnet-core-2/) 📓*JoonasW - BasicAuthentication*
 
-### Project: BlazorWASM.BFF.Auth0.OpenIDConnect
+### `Project: BlazorWASM.BFF.Auth0.OpenIDConnect`
 
 - An example of using [Auth0](https://auth0.com) with OpenIDConnect in a Blazor WebAssembly application that has a Backend For Frontend (BFF) architecture.
 - [Damien’s template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) is used to create 3 projects: Client, Server and Shared and customized for Auth0.
 - [For more information](BlazorWASM.BFF.Auth0.OpenIDConnect)
 
-### Project: BlazorWASM.Auth0.JWT.OpenIDConnect
+### `Project: BlazorWASM.Auth0.JWT.OpenIDConnect`
 
 - An example of using [Auth0](https://auth0.com) with OpenIDConnect in a Blazor WebAssembly application.
 - [For more information](BlazorWASM.Auth0.JWT.OpenIDConnect)
