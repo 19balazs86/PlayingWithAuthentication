@@ -54,6 +54,7 @@ A few changes had to be applied to make it work:
 - [OpenIddict-Core](https://github.com/openiddict/openiddict-core) 👤*Official repo*
 - [Auth0 - Social Connections](https://marketplace.auth0.com/features/social-connections) 📓*Auth0 doc*
 - [Auth0 Templates for .NET](https://github.com/auth0/auth0-dotnet-templates) 👤*Auth0*
+- [Blazor WASM with Google authorization](https://www.telerik.com/blogs/create-webassembly-app-blazor-google-authorization) 📓*Telerik-Blogs*
 - .NET MAUI
   - [Auth0 Authentication to Blazor Hybrid Apps in .NET MAUI](https://auth0.com/blog/add-authentication-to-blazor-hybrid-apps-in-dotnet-maui) 📓*Auth0 Blog - Andrea Chiarelli*
   - [Managing Tokens in .NET MAUI](https://auth0.com/blog/managing-tokens-in-dotnet-maui/) 📓*Auth0 Blog - Andrea Chiarelli*
