@@ -35,6 +35,7 @@ You can compare this solution with [Blazor WASM JWT OpenIDConnect](../BlazorWASM
 - [Configure Auth0 in ASP.NET application with cookies](https://auth0.com/docs/quickstart/webapp/aspnet-core) 📓*Auth0 doc*
 - [Blazor Server app using OpenIdConnect with Auth0](https://andrewlock.net/adding-authentication-to-a-blazor-server-app-using-auth0) 📓*Andrew Lock*
 - [How to use OAuth - Authorization Code Flow](https://dotneteers.net/how-to-use-c-to-properly-follow-oauth-authentication-flows/) 📓*Dotneteers* - using the [IdentityModel](https://www.nuget.org/packages/IdentityModel) package
+- [Blazor BFF with MS Entra ID as Identity provider](https://techcommunity.microsoft.com/t5/microsoft-developer-community/implementing-a-blazor-based-bff-in-azure-container-apps/ba-p/4111208) 📓*MS-Techcommunity*
 - OWASP security headers
   - [NetEscapades.AspNetCore.SecurityHeaders](https://github.com/andrewlock/NetEscapades.AspNetCore.SecurityHeaders) 👤*Andrew Lock*
   - [OwaspHeaders.Core](https://github.com/GaProgMan/OwaspHeaders.Core) 👤*Jamie Taylor*
