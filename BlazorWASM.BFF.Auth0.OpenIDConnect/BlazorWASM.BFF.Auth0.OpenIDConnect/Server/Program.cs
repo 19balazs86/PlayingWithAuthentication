@@ -101,6 +101,7 @@ public static class Program
 
         //options.ClientSecret = configuration.GetValue<string>("Authentication:Auth0:ClientSecret");
         //options.ResponseType = OpenIdConnectResponseType.Code;
+        //options.CallbackPath = "/callback"; // If it is not provided, the default is: '/callback'
 
         options.OpenIdConnectEvents = new OpenIdConnectEvents { OnTicketReceived = onTicketReceived };
     }

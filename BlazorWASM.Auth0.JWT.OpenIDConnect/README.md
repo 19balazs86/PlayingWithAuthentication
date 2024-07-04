@@ -21,11 +21,11 @@ A few changes had to be applied to make it work:
 
 ###### Prerequisite to run the application
 
-- Auth0 account, where the SPA Application is configured
+- Auth0 account #1: create a SPA application
   - Allowed Callback URL: https://localhost:7209/authentication/login-callback
   - Allowed Logout URL: https://localhost:7209
-
-- [Social connections](https://marketplace.auth0.com/features/social-connections) can be added with the redirect URL: https://YOUR_DOMAIN/login/callback
+- Auth0 account #2: create a custom API with an identifier *(used as the audience parameter)*
+- [Social connections](https://marketplace.auth0.com/features/social-connections) can be added with the redirect URL: https://Your-Auth0-Domain/login/callback
 - Client/wwwroot/appsettings.json
 
 ```json
