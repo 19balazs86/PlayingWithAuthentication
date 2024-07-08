@@ -68,8 +68,10 @@ public sealed class AuthController : ControllerBase
     [HttpPost("Login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
-        //var user = await _userManager.FindByEmailAsync(request.Email);
-        //SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: false);
+        // var user = await _userManager.FindByEmailAsync(request.Email);
+        // bool isLockedOut = await _userManager.IsLockedOutAsync(user);
+        // bool isValidPassword = await _userManager.CheckPasswordAsync(user, "password");
+        // SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: false);
 
         SignInResult result = await _signInManager.PasswordSignInAsync(userName: request.Email, request.Password, isPersistent: true, lockoutOnFailure: false);
 
