@@ -4,7 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <UserSecretsId>24c952f9-3460-4d00-9280-0a38ce322bd5</UserSecretsId>
+        <UserSecretsId>Auth-BlazorWASM-BFF-Auth0-OpenIDConnect</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
