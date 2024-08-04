@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 
-namespace ApiJWT
+namespace ApiJWT.Essentials
 {
     public static class AuthHelperWithCert
     {
@@ -12,7 +12,7 @@ namespace ApiJWT
         // Or: dotnet dev-certs https --password test --export-path ./certificate.p12
         private static readonly X509Certificate2 _cert = new X509Certificate2("certificate.p12", "test");
 
-        private static readonly string _issuer   = "http://localhost:5000";
+        private static readonly string _issuer = "http://localhost:5000";
         private static readonly string _audience = "http://localhost:5000";
 
         //private static SecurityKey _securityKeySymm = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
@@ -24,15 +24,15 @@ namespace ApiJWT
 
         private static readonly TokenValidationParameters _tokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer           = true,
-            ValidateAudience         = true,
-            ValidateLifetime         = true,
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
 
             ClockSkew = TimeSpan.Zero,
 
-            ValidIssuer      = _issuer,
-            ValidAudience    = _audience,
+            ValidIssuer = _issuer,
+            ValidAudience = _audience,
             IssuerSigningKey = _securityKeyX509
         };
 
@@ -60,10 +60,10 @@ namespace ApiJWT
         {
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject            = new ClaimsIdentity(claims),
-                Issuer             = _issuer,
-                Audience           = _audience,
-                Expires            = DateTime.Now.AddDays(1),
+                Subject = new ClaimsIdentity(claims),
+                Issuer = _issuer,
+                Audience = _audience,
+                Expires = DateTime.Now.AddDays(1),
                 SigningCredentials = _signingCredential
             };
 

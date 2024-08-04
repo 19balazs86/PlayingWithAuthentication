@@ -1,3 +1,4 @@
+using ApiJWT.Essentials;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 

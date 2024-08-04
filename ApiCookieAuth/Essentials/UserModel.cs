@@ -1,14 +1,14 @@
 ﻿using System.Security.Claims;
 
-namespace ApiCookieAuth;
+namespace ApiCookieAuth.Essentials;
 
 public sealed class UserModel
 {
     public const string SessionClaimName = nameof(SessionId);
 
-    public string SessionId { get; private set; }          = Guid.NewGuid().ToString();
-    public int Id { get; private set; }                    = 0;
-    public string Name { get; private set; }               = string.Empty;
+    public string SessionId { get; private set; } = Guid.NewGuid().ToString();
+    public int Id { get; private set; } = 0;
+    public string Name { get; private set; } = string.Empty;
     public IEnumerable<string> Roles { get; private set; } = [];
 
     public UserModel(int id, string name) : this(id, name, [])
@@ -17,8 +17,8 @@ public sealed class UserModel
 
     public UserModel(int id, string name, IEnumerable<string> roles)
     {
-        Id    = id;
-        Name  = name;
+        Id = id;
+        Name = name;
         Roles = roles;
     }
 

@@ -4,11 +4,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace ApiJWT;
+namespace ApiJWT.Essentials;
 
 public static class AuthHelper
 {
-    private static readonly string _issuer   = "https://localhost:5000";
+    private static readonly string _issuer = "https://localhost:5000";
     private static readonly string _audience = "https://localhost:5000";
 
     //private static SecurityKey _securityKeySymm = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey_WhichIsEnoughLong@345"));
@@ -34,15 +34,15 @@ public static class AuthHelper
 
         _tokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer           = true,
-            ValidateAudience         = true,
-            ValidateLifetime         = true,
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
 
             ClockSkew = TimeSpan.Zero, // Nick Chapsas explaining it -> https://youtu.be/meBxWjA_2YY
 
-            ValidIssuer      = _issuer,
-            ValidAudience    = _audience,
+            ValidIssuer = _issuer,
+            ValidAudience = _audience,
             IssuerSigningKey = _securityKey
         };
     }
@@ -62,7 +62,7 @@ public static class AuthHelper
                         return Task.CompletedTask;
                     },
                     OnAuthenticationFailed = onAuthenticationFailed,
-                    OnTokenValidated       = onTokenValidated
+                    OnTokenValidated = onTokenValidated
                 };
             });
 
@@ -73,10 +73,10 @@ public static class AuthHelper
     {
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject            = new ClaimsIdentity(claims),
-            Issuer             = _issuer,
-            Audience           = _audience,
-            Expires            = DateTime.UtcNow.AddDays(1),
+            Subject = new ClaimsIdentity(claims),
+            Issuer = _issuer,
+            Audience = _audience,
+            Expires = DateTime.UtcNow.AddDays(1),
             SigningCredentials = _signingCredential
         };
 
@@ -99,11 +99,11 @@ public static class AuthHelper
     {
         var tokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer           = false,
-            ValidateAudience         = false,
-            ValidateLifetime         = false,
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = false,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey         = _securityKey
+            IssuerSigningKey = _securityKey
         };
 
         return tryValidateToken(token, tokenValidationParameters, out _, out jwtSecurityToken, out invalidReason);
@@ -116,7 +116,7 @@ public static class AuthHelper
         out JwtSecurityToken? jwtSecurityToken,
         out string? invalidReason)
     {
-        invalidReason    = null;
+        invalidReason = null;
         jwtSecurityToken = null;
 
         var tokenHandler = new JwtSecurityTokenHandler();

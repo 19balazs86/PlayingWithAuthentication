@@ -2,20 +2,20 @@
 using System.Security.Claims;
 using System.Text.Json.Serialization;
 
-namespace ApiJWT;
+namespace ApiJWT.Essentials;
 
 public sealed class UserModel
 {
     [JsonIgnore]
-    public string JwtId { get; set; }                      = Guid.NewGuid().ToString();
-    public int Id { get; private set; }                    = 0;
-    public string Name { get; private set; }               = string.Empty;
+    public string JwtId { get; set; } = Guid.NewGuid().ToString();
+    public int Id { get; private set; } = 0;
+    public string Name { get; private set; } = string.Empty;
     public IEnumerable<string> Roles { get; private set; } = [];
 
     public UserModel(int id, string name, IEnumerable<string> roles)
     {
-        Id    = id;
-        Name  = name;
+        Id = id;
+        Name = name;
         Roles = roles;
     }
 

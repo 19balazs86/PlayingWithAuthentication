@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 
-namespace ApiCookieAuth;
+namespace ApiCookieAuth.Essentials;
 
 /* You can modify the ClaimsPrincipal with this transformation, triggered after the authenticaion process.
  * You can achieve it with authentication methods like Cookie or JWT via their events mechanism.

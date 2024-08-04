@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.Security.Claims;
 
-namespace ApiCookieAuth;
+namespace ApiCookieAuth.Essentials;
 
 public static class Endpoints
 {
@@ -10,9 +10,9 @@ public static class Endpoints
     {
         RouteGroupBuilder routeGroup = endpoints.MapGroup("/auth");
 
-        routeGroup.MapGet("/user",       handleUser);
-        routeGroup.MapGet("/login",      handleLogin);
-        routeGroup.MapGet("/logout",     handleLogout).RequireAuthorization();
+        routeGroup.MapGet("/user", handleUser);
+        routeGroup.MapGet("/login", handleLogin);
+        routeGroup.MapGet("/logout", handleLogout).RequireAuthorization();
         routeGroup.MapGet("/black-list", handleBlackList).RequireAuthorization();
     }
 
