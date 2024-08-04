@@ -11,9 +11,9 @@ public static class RefreshTokenRepository
         var refreshToken = new TokenData
         {
             RefreshToken = generateRefreshToken(),
-            JwtId = jwtId,
+            JwtId        = jwtId,
             CreationDate = DateTime.UtcNow,
-            ExpiryDate = DateTime.UtcNow.AddMonths(1)
+            ExpiryDate   = DateTime.UtcNow.AddMonths(1)
         };
 
         _tokenStorage.Add(jwtId, refreshToken);
@@ -29,7 +29,7 @@ public static class RefreshTokenRepository
             tokenData.ExpiryDate > DateTime.UtcNow)
         {
             tokenData.IsValid = false;
-            tokenData.IsUsed = true;
+            tokenData.IsUsed  = true;
 
             return true;
         }

@@ -17,8 +17,8 @@ public sealed class UserModel
 
     public UserModel(int id, string name, IEnumerable<string> roles)
     {
-        Id = id;
-        Name = name;
+        Id    = id;
+        Name  = name;
         Roles = roles;
     }
 

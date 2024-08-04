@@ -14,8 +14,8 @@ public sealed class UserModel
 
     public UserModel(int id, string name, IEnumerable<string> roles)
     {
-        Id = id;
-        Name = name;
+        Id    = id;
+        Name  = name;
         Roles = roles;
     }
 
@@ -48,12 +48,12 @@ public sealed class UserModel
 
     public IEnumerable<Claim> ToClaims()
     {
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, Id.ToString()), // JwtRegisteredClaimNames.Sub
-            new Claim(ClaimTypes.Name, Name),
+        List<Claim> claims =
+        [
+            new Claim(ClaimTypes.NameIdentifier,   Id.ToString()), // JwtRegisteredClaimNames.Sub
+            new Claim(ClaimTypes.Name,             Name),
             new Claim(JwtRegisteredClaimNames.Jti, JwtId)
-        };
+        ];
 
         claims.AddRange(Roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
