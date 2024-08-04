@@ -25,6 +25,7 @@ public static class Program
 
             services.AddDbContext<MyDataContext>(options => options.UseInMemoryDatabase("data"));
 
+            // This line applies the AddAuthentication -> AddBearerToken and AddIdentityCookies methods
             services.AddIdentityApiEndpoints<MyIdentityUser>(configureIdentityOptions)
                 .AddEntityFrameworkStores<MyDataContext>();
 
@@ -38,6 +39,7 @@ public static class Program
             app.UseSwagger();
             app.UseSwaggerUI();
 
+            //app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapGroup("/auth").MapIdentityApi<MyIdentityUser>();
