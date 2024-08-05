@@ -43,7 +43,10 @@ public static class AuthHelper
 
             ValidIssuer      = _issuer,
             ValidAudience    = _audience,
-            IssuerSigningKey = _securityKey
+            IssuerSigningKey = _securityKey,
+
+            NameClaimType = UserModel.NameClaimType,
+            RoleClaimType = UserModel.RoleClaimType
         };
     }
 
@@ -54,6 +57,9 @@ public static class AuthHelper
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = _tokenValidationParameters;
+
+                options.MapInboundClaims = false;
+
                 options.Events = new JwtBearerEvents
                 {
                     OnMessageReceived = context => // Retrieve the token from the cookie.
@@ -119,7 +125,7 @@ public static class AuthHelper
         invalidReason    = null;
         jwtSecurityToken = null;
 
-        var tokenHandler = new JwtSecurityTokenHandler();
+        var tokenHandler = new JwtSecurityTokenHandler { MapInboundClaims = false };
 
         try
         {

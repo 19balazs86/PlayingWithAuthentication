@@ -6,6 +6,9 @@ namespace ApiJWT.Essentials;
 
 public sealed class UserModel
 {
+    public const string NameClaimType = JwtRegisteredClaimNames.Name;
+    public const string RoleClaimType = "role";
+
     [JsonIgnore]
     public string JwtId { get; set; } = Guid.NewGuid().ToString();
     public int Id { get; private set; } = 0;
@@ -21,23 +24,22 @@ public sealed class UserModel
 
     public UserModel(IEnumerable<Claim> claims)
     {
-        var roles = new List<string>();
+        List<string> roles = [];
 
         foreach (Claim claim in claims)
         {
             switch (claim.Type)
             {
-                // During refresh token JwtSecurityToken.Claims is used and it has different claim name
-                case ClaimTypes.NameIdentifier or JwtRegisteredClaimNames.NameId:
+                case JwtRegisteredClaimNames.NameId:
                     Id = int.Parse(claim.Value);
                     break;
-                case ClaimTypes.Name or JwtRegisteredClaimNames.UniqueName:
+                case JwtRegisteredClaimNames.Name:
                     Name = claim.Value;
                     break;
                 case JwtRegisteredClaimNames.Jti:
                     JwtId = claim.Value;
                     break;
-                case ClaimTypes.Role or "role":
+                case RoleClaimType:
                     roles.Add(claim.Value);
                     break;
             }
@@ -50,12 +52,12 @@ public sealed class UserModel
     {
         List<Claim> claims =
         [
-            new Claim(ClaimTypes.NameIdentifier,   Id.ToString()), // JwtRegisteredClaimNames.Sub
-            new Claim(ClaimTypes.Name,             Name),
-            new Claim(JwtRegisteredClaimNames.Jti, JwtId)
+            new Claim(JwtRegisteredClaimNames.NameId, Id.ToString()), // JwtRegisteredClaimNames.Sub
+            new Claim(JwtRegisteredClaimNames.Name,   Name),
+            new Claim(JwtRegisteredClaimNames.Jti,    JwtId)
         ];
 
-        claims.AddRange(Roles.Select(role => new Claim(ClaimTypes.Role, role)));
+        claims.AddRange(Roles.Select(role => new Claim(RoleClaimType, role)));
 
         return claims;
     }

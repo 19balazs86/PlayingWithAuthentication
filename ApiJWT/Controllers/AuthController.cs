@@ -22,9 +22,11 @@ public class AuthController : ControllerBase
         };
 
         if (role is null)
+        {
             return Unauthorized();
+        }
 
-        var user = new UserModel(1, loginModel.Name, new string[] { role });
+        var user = new UserModel(1, loginModel.Name, [role]);
 
         string refreshTokenKey = RefreshTokenRepository.CreateRefreshToken(user.JwtId);
 
@@ -69,7 +71,7 @@ public class AuthController : ControllerBase
 
             var user = new UserModel(jwtSecurityToken!.Claims);
 
-            // user.JwtId == securityToken.Id // because of wtRegisteredClaimNames.Jti
+            // user.JwtId == jwtSecurityToken.Id // because of JwtRegisteredClaimNames.Jti
 
             if (RefreshTokenRepository.TryInvalidateRefreshToken(user.JwtId, tokenRequest.RefreshToken))
             {
