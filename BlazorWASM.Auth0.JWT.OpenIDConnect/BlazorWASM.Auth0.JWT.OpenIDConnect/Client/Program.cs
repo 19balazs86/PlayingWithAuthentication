@@ -23,7 +23,7 @@ public static class Program
         // Add services to the container
         {
             services.AddOidcAuthentication(options => configureOidcOptions(options, oidcConfig))
-                .AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
+                    .AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
 
             services.addDefaultHttpClient(baseAddress);
 
@@ -37,14 +37,24 @@ public static class Program
 
     private static void configureOidcOptions(RemoteAuthenticationOptions<OidcProviderOptions> options, OidcConfig oidcConfig)
     {
-        options.ProviderOptions.Authority    = oidcConfig.Authority;
-        options.ProviderOptions.ClientId     = oidcConfig.ClientId;
-        options.ProviderOptions.MetadataUrl  = oidcConfig.MetadataUrl;
-        options.ProviderOptions.ResponseType = "code";
+        OidcProviderOptions oidcOptions = options.ProviderOptions;
 
-        options.ProviderOptions.DefaultScopes.Add("email"); // Default values: openid, profile
+        oidcOptions.Authority    = oidcConfig.Authority;
+        oidcOptions.ClientId     = oidcConfig.ClientId;
+        oidcOptions.MetadataUrl  = oidcConfig.MetadataUrl;
+        oidcOptions.ResponseType = "code";
 
-        options.ProviderOptions.AdditionalProviderParameters.Add("audience", oidcConfig.Audience);
+        oidcOptions.DefaultScopes.Add("email"); // Default values: openid, profile
+
+        oidcOptions.AdditionalProviderParameters.Add("audience", oidcConfig.Audience);
+    }
+
+    private static void addDefaultHttpClient(this IServiceCollection services, Uri baseAddress)
+    {
+        services.AddHttpClient("ServerAPI", client => client.BaseAddress = baseAddress)
+                .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+        services.AddSingleton(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("ServerAPI"));
     }
 
     private static OidcConfig addOidcConfig(this IServiceCollection services, IConfiguration configuration)
@@ -57,13 +67,5 @@ public static class Program
         services.AddSingleton(oidcConfig);
 
         return oidcConfig;
-    }
-
-    private static void addDefaultHttpClient(this IServiceCollection services, Uri baseAddress)
-    {
-        services.AddHttpClient("ServerAPI", client => client.BaseAddress = baseAddress)
-                .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
-
-        services.AddSingleton(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("ServerAPI"));
     }
 }
