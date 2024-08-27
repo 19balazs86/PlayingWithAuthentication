@@ -40,6 +40,9 @@ public sealed class AuthController : ControllerBase
 
         string emailConfirmation = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
+        // Minimal API: You can inject the LinkGenerator and use the GetUriByName method to generate an URL for the following endpoint
+        // app.MapGet("/Auth/ConfirmEmail", ([FromRoute] string email, [FromQuery] string token) => { }).WithName("ConfirmEmail")
+        // emailConfirmation = linkGenerator.GetUriByName(httpContext, "ConfirmEmail", new { token = emailConfirmation, email = request.Email });
         emailConfirmation = Url.Action(nameof(ConfirmEmail), "Auth", new { token = emailConfirmation, email = request.Email }, Request.Scheme);
 
         return Ok(new { emailConfirmation });
