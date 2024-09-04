@@ -48,12 +48,11 @@ public static class Program
 
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuer           = true,
-                ValidIssuers             = CreateValidIssuers(oidcConfig.Authority).ToArray(),
-                ValidateIssuerSigningKey = true,
-                ValidateAudience         = true,
-                ValidateLifetime         = true,
-                ValidateTokenReplay      = true
+                ValidateIssuer      = true,
+                ValidIssuers        = CreateValidIssuers(oidcConfig.Authority).ToArray(),
+                ValidateAudience    = true,
+                ValidateLifetime    = true,
+                ValidateTokenReplay = true
             };
         });
     }

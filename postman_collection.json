@@ -398,12 +398,13 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"var jsonData = JSON.parse(responseBody);\r",
+									"var jsonData = JSON.parse(pm.response.text());\r",
 									"\r",
-									"pm.globals.set(\"JwtToken\", jsonData.token);\r",
-									"pm.globals.set(\"RefreshToken\", jsonData.refreshToken);"
+									"pm.collectionVariables.set(\"JwtToken\", jsonData.token);\r",
+									"pm.collectionVariables.set(\"RefreshToken\", jsonData.refreshToken);"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -476,6 +477,21 @@
 				},
 				{
 					"name": "Refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(pm.response.text());\r",
+									"\r",
+									"pm.collectionVariables.set(\"JwtToken\", jsonData.token);\r",
+									"pm.collectionVariables.set(\"RefreshToken\", jsonData.refreshToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -718,6 +734,16 @@
 					""
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"key": "JwtToken",
+			"value": ""
+		},
+		{
+			"key": "RefreshToken",
+			"value": ""
 		}
 	]
 }

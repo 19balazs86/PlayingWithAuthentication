@@ -34,12 +34,12 @@ public static class AuthHelper
 
         _tokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer           = true,
-            ValidateAudience         = true,
-            ValidateLifetime         = true,
-            ValidateIssuerSigningKey = true,
+            ValidateIssuer   = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            //ValidateIssuerSigningKey = true, // Only need for X509Certificate
 
-            ClockSkew = TimeSpan.Zero, // Nick Chapsas explaining it -> https://youtu.be/meBxWjA_2YY
+            ClockSkew = TimeSpan.Zero, // Nick Chapsas explained it -> https://youtu.be/meBxWjA_2YY
 
             ValidIssuer      = _issuer,
             ValidAudience    = _audience,
@@ -105,11 +105,10 @@ public static class AuthHelper
     {
         var tokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer           = false,
-            ValidateAudience         = false,
-            ValidateLifetime         = false,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey         = _securityKey
+            ValidateIssuer   = false,
+            ValidateAudience = false,
+            ValidateLifetime = false,
+            IssuerSigningKey = _securityKey
         };
 
         return tryValidateToken(token, tokenValidationParameters, out _, out jwtSecurityToken, out invalidReason);
