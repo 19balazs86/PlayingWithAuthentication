@@ -42,7 +42,7 @@ A few changes had to be applied to make it work:
 "OidcConfig": {
     "Authority": "Your SPA Domain",
     "ClientId": "Not used",
-    "MetadataUrl": "Not used",
+    "MetadataUrl": "Your SPA Domain/.well-known/openid-configuration",
     "Audience": "Your Custom API identifier"
 }
 ```

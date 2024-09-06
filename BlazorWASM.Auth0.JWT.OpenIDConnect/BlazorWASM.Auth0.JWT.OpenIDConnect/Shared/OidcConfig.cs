@@ -23,4 +23,11 @@ public sealed class OidcConfig
     /// Custom API identifier
     /// </summary>
     public required string Audience { get; init; }
+
+    public string[] ValidIssuers()
+    {
+        string authority = Authority.EndsWith('/') ? Authority.TrimEnd('/') : Authority + '/';
+
+        return [Authority, authority];
+    }
 }

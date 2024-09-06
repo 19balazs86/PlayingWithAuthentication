@@ -75,14 +75,13 @@ public sealed class ValidateTokenController : ControllerBase
 
         var validationParameters = new TokenValidationParameters
         {
-            ValidateAudience         = true,
-            ValidateIssuer           = true,
-            ValidateIssuerSigningKey = true,
-            ValidateLifetime         = true,
+            ValidateAudience = true,
+            ValidateIssuer   = true,
+            ValidateLifetime = true,
 
-            IssuerSigningKey         = jwk,
-            ValidAudience            = _oidcConfig.Audience,
-            ValidIssuers             = Program.CreateValidIssuers(_oidcConfig.Authority).ToArray(),
+            IssuerSigningKey = jwk,
+            ValidAudience    = _oidcConfig.Audience,
+            ValidIssuers     = _oidcConfig.ValidIssuers(),
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();

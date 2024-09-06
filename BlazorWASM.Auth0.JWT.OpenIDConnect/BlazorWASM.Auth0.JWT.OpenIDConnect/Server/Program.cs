@@ -43,13 +43,14 @@ public static class Program
         })
         .AddJwtBearer(options =>
         {
-            options.Authority = oidcConfig.Authority;
-            options.Audience  = oidcConfig.Audience;
+            options.Authority       = oidcConfig.Authority;
+            options.Audience        = oidcConfig.Audience;
+            options.MetadataAddress = oidcConfig.MetadataUrl; // If you do not set this value, the default will be '<Authority>/.well-known/openid-configuration,' which is a correct value
 
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer      = true,
-                ValidIssuers        = CreateValidIssuers(oidcConfig.Authority).ToArray(),
+                ValidIssuers        = oidcConfig.ValidIssuers(),
                 ValidateAudience    = true,
                 ValidateLifetime    = true,
                 ValidateTokenReplay = true
@@ -83,13 +84,6 @@ public static class Program
         app.MapControllers();
         app.mapApiNotFound();
         app.MapFallbackToFile("index.html");
-    }
-
-    public static IEnumerable<string> CreateValidIssuers(string authority)
-    {
-        yield return authority;
-
-        yield return authority.EndsWith('/') ? authority.TrimEnd('/') : authority + '/';
     }
 
     /// <summary>
