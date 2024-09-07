@@ -22,8 +22,9 @@ A few changes had to be applied to make it work:
 
 - Auth0 account #1: create a SPA application
   - Allowed Callback URL: https://localhost:7209/authentication/login-callback
+    - Swagger Oauth flow callback URL: https://localhost:7209/swagger/oauth2-redirect.html
   - Allowed Logout URL: https://localhost:7209
-- Auth0 account #2: create a custom API with an identifier *(used as the audience parameter)*
+- Auth0 account #2: create a custom API, the value of identifier will be used as the audience parameter on authorization calls
 - [Social connections](https://marketplace.auth0.com/features/social-connections) can be added with the redirect URL: https://Your-Auth0-Domain/login/callback
 - Client/wwwroot/appsettings.json
 

@@ -11,7 +11,7 @@
 <br />
 <h3>Using OpenIDConnect with Auth0</h3>
 
-<p>List of your claims, count: @_userInfo.Claims.Count()</p>
+<p>List of your claims, count: @_claimsPrincipal.Claims.Count()</p>
 
 <table class="table">
     <thead>
@@ -21,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Claim claim in _userInfo.Claims)
+        @foreach (Claim claim in _claimsPrincipal.Claims)
         {
             <tr>
                 <td>@claim.Type</td>
@@ -32,12 +32,12 @@
 </table>
 
 @code {
-    private ClaimsPrincipal _userInfo = new ClaimsPrincipal(new ClaimsIdentity());
+    private ClaimsPrincipal _claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity());
 
     protected override async Task OnInitializedAsync()
     {
         var authState = await _authStateProvider.GetAuthenticationStateAsync();
 
-        _userInfo = authState.User;
+        _claimsPrincipal = authState.User;
     }
 }
