@@ -8,7 +8,7 @@ The solution was created using the default Blazor WASM template. The client is c
 
 You can compare this solution with [Blazor WASM BFF architecture](../BlazorWASM.BFF.Auth0.OpenIDConnect).
 
-###### Deviation from the default template
+## Deviation from the default template
 
 A few changes had to be applied to make it work:
 
@@ -18,8 +18,7 @@ A few changes had to be applied to make it work:
 - Server
   - Program.cs: using AddJwtBearer instead of the IdentityServer
 
-
-###### Prerequisite to run the application
+## Prerequisite to run the application
 
 - Auth0 account #1: create a SPA application
   - Allowed Callback URL: https://localhost:7209/authentication/login-callback
@@ -46,7 +45,24 @@ A few changes had to be applied to make it work:
     "Audience": "Your Custom API identifier"
 }
 ```
-###### Resources
+
+## Auth0 - Custom Action
+
+- Add this custom action to the login flow
+
+```js
+exports.onExecutePostLogin = async (event, api) => {
+  if (event.authorization)
+  {
+    api.idToken.setCustomClaim("role", event.authorization.roles);
+    
+    api.accessToken.setCustomClaim("role", event.authorization.roles);
+    api.accessToken.setCustomClaim("email", event.user.email);
+  }
+};
+```
+
+## Resources
 
 - [Configure ASP.NET Web API for JWT](https://auth0.com/docs/quickstart/backend/aspnet-core-webapi) 📓*Auth0 Docs*
 - [Auth0 in ASP.NET + Blazor WASM](https://timmoth.com/posts/H9zMzMcBkUe_QfCAo0kx_Q) 📓*Tim*
