@@ -32,9 +32,9 @@ public sealed class UserInfo
             return new UserInfo
             {
                 IsAuthenticated = true,
-                NameClaimType = identity.NameClaimType,
-                RoleClaimType = identity.RoleClaimType,
-                Claims = claims
+                NameClaimType   = identity.NameClaimType,
+                RoleClaimType   = identity.RoleClaimType,
+                Claims          = claims
             };
         }
 

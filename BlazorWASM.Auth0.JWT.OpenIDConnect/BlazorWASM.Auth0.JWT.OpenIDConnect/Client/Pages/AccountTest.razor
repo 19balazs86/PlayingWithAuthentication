@@ -1,6 +1,6 @@
 ﻿@page "/account-test"
 
-@inject HttpClient _http
+@inject HttpClient _httpClient
 
 <PageTitle>Account test</PageTitle>
 
@@ -38,7 +38,7 @@
     {
         try
         {
-            _userInfo = await _http.GetFromJsonAsync<UserInfo>("/api/Account/UserInfo") ?? UserInfo.Anonymous;
+            _userInfo = await _httpClient.GetFromJsonAsync<UserInfo>("/api/Account/UserInfo") ?? UserInfo.Anonymous;
         }
         catch (AccessTokenNotAvailableException)
         {
@@ -50,7 +50,7 @@
     {
         try
         {
-            using HttpResponseMessage response = await _http.GetAsync("/api/Account/TestRole");
+            using HttpResponseMessage response = await _httpClient.GetAsync("/api/Account/TestRole");
 
             _checkTestRoleResponse = $"StatusCode: {response.StatusCode}";
         }

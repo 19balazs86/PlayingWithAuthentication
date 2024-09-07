@@ -1,8 +1,8 @@
-﻿@page "/fetchdata"
+﻿@page "/weather-forecast"
 
 @attribute [Authorize]
 
-@inject HttpClient _http
+@inject HttpClient _httpClient
 
 <PageTitle>Weather forecast</PageTitle>
 
@@ -46,7 +46,7 @@ else
     {
         try
         {
-            forecasts = await _http.GetFromJsonAsync<WeatherForecast[]>("api/WeatherForecast");
+            forecasts = await _httpClient.GetFromJsonAsync<WeatherForecast[]>("api/WeatherForecast");
         }
         catch (AccessTokenNotAvailableException exception)
         {

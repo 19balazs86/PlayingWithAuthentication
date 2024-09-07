@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 using System.Net.Mime;
 using System.Text.Json;
 
-namespace BlazorWASM.Auth0.JWT.OpenIDConnect;
+namespace BlazorWASM.Auth0.JWT.OpenIDConnect.Server;
 
 public static class Program
 {

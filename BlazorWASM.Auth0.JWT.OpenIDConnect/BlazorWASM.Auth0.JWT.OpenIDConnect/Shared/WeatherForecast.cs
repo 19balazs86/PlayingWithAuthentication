@@ -2,10 +2,10 @@ namespace BlazorWASM.Auth0.JWT.OpenIDConnect.Shared;
 
 public sealed class WeatherForecast
 {
-    private static readonly string[] _summaries = new[]
-    {
+    private static readonly string[] _summaries =
+    [
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    ];
 
     public DateOnly Date { get; set; }
 
@@ -27,9 +27,9 @@ public sealed class WeatherForecast
     {
         return new WeatherForecast
         {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(futureDay)),
+            Date         = DateOnly.FromDateTime(DateTime.Now.AddDays(futureDay)),
             TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = _summaries[Random.Shared.Next(_summaries.Length)]
+            Summary      = _summaries[Random.Shared.Next(_summaries.Length)]
         };
     }
 }
