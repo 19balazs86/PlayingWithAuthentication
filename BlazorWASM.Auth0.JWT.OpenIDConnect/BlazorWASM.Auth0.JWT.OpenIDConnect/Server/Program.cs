@@ -21,6 +21,8 @@ public static class Program
 
         // Add services to the container
         {
+            services.AddSingleton(oidcConfig);
+
             services.AddControllers();
 
             services.addJwtAuthentication(oidcConfig);
@@ -67,8 +69,6 @@ public static class Program
 
     private static void addJwtAuthentication(this IServiceCollection services, OidcConfig oidcConfig)
     {
-        services.AddSingleton(oidcConfig);
-
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -117,6 +117,7 @@ public static class Program
         });
     }
 
+    // Swagger is not required, but it serves as an example for integrating with Auth0
     private static void addSwaggerWithOAuth(this IServiceCollection services, OidcConfig oidcConfig)
     {
         var authorizationUrlBuilder = new UriBuilder(oidcConfig.Authority)
