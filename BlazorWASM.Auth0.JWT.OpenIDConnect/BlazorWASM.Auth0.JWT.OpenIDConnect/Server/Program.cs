@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Net.Mime;
 using System.Text.Json;
 
@@ -13,27 +14,59 @@ public static class Program
         IServiceCollection services   = builder.Services;
         IConfiguration configuration  = builder.Configuration;
 
+        OidcConfig? oidcConfig = configuration
+           .GetSection(nameof(OidcConfig))
+           .Get<OidcConfig>()
+           ?? throw new NullReferenceException("OidcConfig was not found in appsettings.json");
+
         // Add services to the container
         {
             services.AddControllers();
 
-            services.addJwtAuthentication(configuration);
+            services.addJwtAuthentication(oidcConfig);
+
+            services.addSwaggerWithOAuth(oidcConfig);
         }
 
         WebApplication app = builder.Build();
 
-        app.configureRequestPipeline();
+        // Configure the HTTP request pipeline
+        {
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseWebAssemblyDebugging();
+
+                // https://localhost:7209/swagger/index.html
+                app.UseSwagger();
+                app.UseSwaggerUI(options => options.OAuthClientId(oidcConfig.ClientId));
+            }
+            else
+            {
+                app.UseExceptionHandler();
+            }
+
+            app.UseHsts();
+            app.UseHttpsRedirection();
+
+            app.UseBlazorFrameworkFiles();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.MapControllers();
+            app.mapApiNotFound();
+            app.MapFallbackToFile("index.html");
+        }
 
         app.Run();
     }
 
-    private static void addJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+    private static void addJwtAuthentication(this IServiceCollection services, OidcConfig oidcConfig)
     {
-        OidcConfig? oidcConfig = configuration
-           .GetSection(nameof(OidcConfig))
-           .Get<OidcConfig>()
-           ?? throw new NullReferenceException("OpenIdcConfig was not found in appsettings.json");
-
         services.AddSingleton(oidcConfig);
 
         services.AddAuthentication(options =>
@@ -47,43 +80,20 @@ public static class Program
             options.Audience        = oidcConfig.Audience;
             options.MetadataAddress = oidcConfig.MetadataUrl; // If you do not set this value, the default will be '<Authority>/.well-known/openid-configuration,' which is a correct value
 
+            options.MapInboundClaims = false;
+
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer      = true,
                 ValidIssuers        = oidcConfig.ValidIssuers(),
                 ValidateAudience    = true,
                 ValidateLifetime    = true,
-                ValidateTokenReplay = true
+                ValidateTokenReplay = true,
+
+                NameClaimType = "sub",
+                RoleClaimType = "role"
             };
         });
-    }
-
-    private static void configureRequestPipeline(this WebApplication app)
-    {
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-            app.UseWebAssemblyDebugging();
-        }
-        else
-        {
-            app.UseExceptionHandler();
-        }
-
-        app.UseHsts();
-        app.UseHttpsRedirection();
-
-        app.UseBlazorFrameworkFiles();
-        app.UseStaticFiles();
-
-        app.UseRouting();
-
-        app.UseAuthentication();
-        app.UseAuthorization();
-
-        app.MapControllers();
-        app.mapApiNotFound();
-        app.MapFallbackToFile("index.html");
     }
 
     /// <summary>
@@ -104,6 +114,59 @@ public static class Program
             };
 
             await JsonSerializer.SerializeAsync(context.Response.Body, problemDetails);
+        });
+    }
+
+    private static void addSwaggerWithOAuth(this IServiceCollection services, OidcConfig oidcConfig)
+    {
+        var authorizationUrlBuilder = new UriBuilder(oidcConfig.Authority)
+        {
+            Path  = "authorize",
+            Query = $"audience={oidcConfig.Audience}"
+        };
+
+        const string schemeName = "OAuth2";
+
+        services.AddSwaggerGen(options =>
+        {
+            var scheme = new OpenApiSecurityScheme
+            {
+                Type  = SecuritySchemeType.OAuth2,
+                Flows = new OpenApiOAuthFlows
+                {
+                    Implicit = new OpenApiOAuthFlow
+                    {
+                        AuthorizationUrl = authorizationUrlBuilder.Uri,
+                        Scopes           = new Dictionary<string, string>
+                        {
+                            ["openid"]  = "openid",
+                            ["profile"] = "profile",
+                            ["email"]   = "email"
+                        }
+                    }
+                }
+            };
+
+            options.AddSecurityDefinition(schemeName, scheme);
+
+            var key = new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id   = schemeName
+                },
+                In     = ParameterLocation.Header,
+                Name   = "Bearer",
+                Scheme = "Bearer"
+            };
+
+            var requirement = new OpenApiSecurityRequirement
+            {
+                { key, [] }
+            };
+
+            options.AddSecurityRequirement(requirement);
         });
     }
 }

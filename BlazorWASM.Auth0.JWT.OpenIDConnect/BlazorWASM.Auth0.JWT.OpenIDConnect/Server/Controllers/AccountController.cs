@@ -1,6 +1,4 @@
-﻿using BlazorWASM.Auth0.JWT.OpenIDConnect.Shared;
-
-namespace BlazorWASM.Auth0.JWT.OpenIDConnect.Server.Controllers;
+﻿namespace BlazorWASM.Auth0.JWT.OpenIDConnect.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
