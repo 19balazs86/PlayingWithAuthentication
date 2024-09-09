@@ -21,8 +21,11 @@ public sealed class AccountController : ControllerBase
     [HttpGet("Auth0UserInfo")]
     public void GetAuth0UserInfo()
     {
-        // string accessToken = Request.Headers.Authorization!;
-        // You can use the Access Token from the Authorization header to call the Auth0 endpoint
+        // string AccessToken = Request.Headers.Authorization!;
+
+        // You can use the Access Token to call the user-info endpoint for more details
+        // Or better to use a custom action to add the information to the token as a claim
+
         // curl -X 'GET' 'https://<Auth0-Domain>/userinfo' -H 'Authorization: Bearer TOKEN'
     }
 }
