@@ -16,4 +16,13 @@ public sealed class AccountController : ControllerBase
     {
         return "You have TestRole";
     }
+
+    [Authorize]
+    [HttpGet("Auth0UserInfo")]
+    public void GetAuth0UserInfo()
+    {
+        // string accessToken = Request.Headers.Authorization!;
+        // You can use the Access Token from the Authorization header to call the Auth0 endpoint
+        // curl -X 'GET' 'https://<Auth0-Domain>/userinfo' -H 'Authorization: Bearer TOKEN'
+    }
 }

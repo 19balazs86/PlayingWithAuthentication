@@ -55,8 +55,15 @@ A few changes had to be applied to make it work:
 exports.onExecutePostLogin = async (event, api) => {
   if (event.authorization)
   {
+    // Difference between ID Token and Access Token
+    // - Blog:  https://auth0.com/blog/id-token-access-token-what-is-the-difference
+    // - Video: https://youtu.be/vVM1Tpu9QB4
+
+    // ID Token is used by the Blazor frontend
     api.idToken.setCustomClaim("role", event.authorization.roles);
     
+    // Access Token is passed to the API server by the Blazor frontend
+    // Permissions are included in the token by default
     api.accessToken.setCustomClaim("role", event.authorization.roles);
     api.accessToken.setCustomClaim("email", event.user.email);
   }

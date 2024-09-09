@@ -6,7 +6,7 @@
 
 <AuthorizeView>
     <Authorized>
-        <img class="rounded m-1" src="@getAvatarUrl(context)" />
+        <img class="rounded m-1" style="max-width: 50px; max-height: 50px;" src="@getAvatarUrl(context)" />
         <b>Hello, @context.User.Identity?.Name!</b>
         <button class="nav-link btn btn-link" @onclick="BeginLogOut">Log out</button>
     </Authorized>
