@@ -19,7 +19,7 @@ public sealed class UserInfo
 
     public string RoleClaimType { get; init; } = string.Empty;
 
-    public IEnumerable<ClaimValue> Claims { get; init; } = Enumerable.Empty<ClaimValue>();
+    public IEnumerable<ClaimValue> Claims { get; init; } = [];
 
     public static UserInfo FromClaimsPrincipal(ClaimsPrincipal principal)
     {

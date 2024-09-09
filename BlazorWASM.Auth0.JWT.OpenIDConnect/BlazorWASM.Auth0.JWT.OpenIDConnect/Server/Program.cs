@@ -84,11 +84,11 @@ public static class Program
 
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuer      = true,
-                ValidIssuers        = oidcConfig.ValidIssuers(),
-                ValidateAudience    = true,
-                ValidateLifetime    = true,
-                ValidateTokenReplay = true,
+                ValidateIssuer   = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+
+                ValidIssuers = oidcConfig.ValidIssuers(),
 
                 NameClaimType = "sub",
                 RoleClaimType = "role"
