@@ -11,7 +11,7 @@ public static class AuthHelper
     private static readonly string _issuer   = "https://localhost:5000";
     private static readonly string _audience = "https://localhost:5000";
 
-    //private static SecurityKey _securityKeySymm = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey_WhichIsEnoughLong@345"));
+    // private static SecurityKey _securityKeySymm = new SymmetricSecurityKey("superSecretKey_WhichIsEnoughLong@345"u8.ToArray());
 
     private static readonly RSA _rsa;
 
@@ -29,8 +29,8 @@ public static class AuthHelper
 
         _securityKey = new RsaSecurityKey(_rsa);
 
-        // For simplicity, the SymmetricSecurityKey can be used with HmacSha256, but the symmetric key is not that safe.
-        _signingCredential = new SigningCredentials(_securityKey, SecurityAlgorithms.RsaSha256);
+        // For simplicity, the SymmetricSecurityKey can be used with HmacSha256Signature, but the symmetric key is not that safe.
+        _signingCredential = new SigningCredentials(_securityKey, SecurityAlgorithms.RsaSha256Signature);
 
         _tokenValidationParameters = new TokenValidationParameters
         {
@@ -56,6 +56,8 @@ public static class AuthHelper
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
+                options.IncludeErrorDetails = true;
+
                 options.TokenValidationParameters = _tokenValidationParameters;
 
                 options.MapInboundClaims = false;
