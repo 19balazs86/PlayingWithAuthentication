@@ -39,6 +39,7 @@ Table of content
 - [JWT Authentication](https://youtu.be/8FvN5bhVYxY) 📽️*33min* | [Raw Coding](https://www.youtube.com/@RawCoding/videos) YouTube channel contains deep dive videos into authentication topic
 - [Signing JWT with RSA](https://vmsdurano.com/-net-core-3-1-signing-jwt-with-rsa/) 📓*ProudMonkey*
 - [New default Authentication Scheme in .NET 7](https://auth0.com/blog/whats-new-in-dotnet-7-for-authentication-and-authorization) 📓*auth0* | [Setup JWT Bearer token](https://wildermuth.com/2022/12/07/changes-in-jwt-bearer-tokens-in-dotnet-7/) 📓*ShawnWildermuth*
+- [Implement multiple JWTs for multi-token authentication](https://youtu.be/EcozgfDOq4g) 📽️*17 min - Milan*
 
 ### `Project: ApiCookieAuth`
 
