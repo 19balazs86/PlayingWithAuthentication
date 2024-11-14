@@ -8,12 +8,10 @@ namespace ApiJWT.Essentials;
 
 public static class AuthHelper
 {
-    private static readonly string _issuer   = "https://localhost:5000";
-    private static readonly string _audience = "https://localhost:5000";
+    private const string _issuer   = "https://localhost:5000";
+    private const string _audience = "https://localhost:5000";
 
     // private static SecurityKey _securityKeySymm = new SymmetricSecurityKey("superSecretKey_WhichIsEnoughLong@345"u8.ToArray());
-
-    private static readonly RSA _rsa;
 
     private static readonly RsaSecurityKey _securityKey;
     private static readonly SigningCredentials _signingCredential;
@@ -22,12 +20,12 @@ public static class AuthHelper
 
     static AuthHelper()
     {
-        _rsa = RSA.Create();
+        var rsa = RSA.Create();
 
         // You can import the public RSA key as well, and the authentication will work. However, the token can only be generated using the private key.
-        _rsa.ImportFromPem(File.ReadAllText("Key-RSA-Private.pem"));
+        rsa.ImportFromPem(File.ReadAllText("Key-RSA-Private.pem"));
 
-        _securityKey = new RsaSecurityKey(_rsa);
+        _securityKey = new RsaSecurityKey(rsa);
 
         // For simplicity, the SymmetricSecurityKey can be used with HmacSha256Signature, but the symmetric key is not that safe.
         _signingCredential = new SigningCredentials(_securityKey, SecurityAlgorithms.RsaSha256Signature);

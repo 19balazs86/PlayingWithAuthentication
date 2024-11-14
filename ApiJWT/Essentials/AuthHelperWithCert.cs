@@ -10,10 +10,10 @@ public static class AuthHelperWithCert
 {
     // Generate a Self-Signed Certificate with openssl
     // Or: dotnet dev-certs https --password test --export-path ./certificate.p12
-    private static readonly X509Certificate2 _cert = new X509Certificate2("certificate.p12", "test");
+    private static readonly X509Certificate2 _cert = X509CertificateLoader.LoadPkcs12FromFile("certificate.p12", "test");
 
-    private static readonly string _issuer   = "http://localhost:5000";
-    private static readonly string _audience = "http://localhost:5000";
+    private const string _issuer   = "http://localhost:5000";
+    private const string _audience = "http://localhost:5000";
 
     //private static SecurityKey _securityKeySymm = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
 
