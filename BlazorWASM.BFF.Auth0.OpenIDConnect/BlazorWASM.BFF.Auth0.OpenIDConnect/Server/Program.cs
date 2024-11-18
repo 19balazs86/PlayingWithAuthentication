@@ -22,7 +22,7 @@ public static class Program
         {
             // Use IDbContextFactory with AddDbContextFactory instead of AddDbContext.
             // Dependency Injection scopes in Blazor: https://www.thinktecture.com/en/blazor/dependency-injection-scopes-in-blazor
-
+            // Do NOT Use DbContext in Interactive Server: https://youtu.be/CalH0TJrhp8
 
             services.addAntiforgeryServices();
 
