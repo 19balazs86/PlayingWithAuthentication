@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorOidc", "BlazorOidc\BlazorOidc.csproj", "{CC77D8EB-EC60-474B-8A6D-56B7670C5B62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorOidc.Client", "BlazorOidc.Client\BlazorOidc.Client.csproj", "{52BF87D6-A45C-4A6D-BED4-4F71C63DC425}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLib", "SharedLib\SharedLib.csproj", "{21B66FB2-F04A-4761-98FC-8630716E5C52}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC77D8EB-EC60-474B-8A6D-56B7670C5B62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC77D8EB-EC60-474B-8A6D-56B7670C5B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC77D8EB-EC60-474B-8A6D-56B7670C5B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC77D8EB-EC60-474B-8A6D-56B7670C5B62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52BF87D6-A45C-4A6D-BED4-4F71C63DC425}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52BF87D6-A45C-4A6D-BED4-4F71C63DC425}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52BF87D6-A45C-4A6D-BED4-4F71C63DC425}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52BF87D6-A45C-4A6D-BED4-4F71C63DC425}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21B66FB2-F04A-4761-98FC-8630716E5C52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21B66FB2-F04A-4761-98FC-8630716E5C52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21B66FB2-F04A-4761-98FC-8630716E5C52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21B66FB2-F04A-4761-98FC-8630716E5C52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

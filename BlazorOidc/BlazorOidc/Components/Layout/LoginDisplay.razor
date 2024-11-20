@@ -1,0 +1,31 @@
+﻿@using System.Security.Claims
+@inject NavigationManager _navigation
+
+<AuthorizeView>
+    <Authorized>
+        <img class="rounded m-1" style="max-width: 50px; max-height: 50px;" src="@getAvatarUrl(context)"/>
+        <span>Hello @context.User.Identity?.Name</span>
+        <form action="/api/auth/logout" method="post">
+            <AntiforgeryToken/>
+            <input type="hidden" name="ReturnUrl" value="/ThisValueGetsIgnored"/>
+            <button type="submit" class="btn btn-link">
+                Logout
+            </button>
+        </form>
+    </Authorized>
+    <NotAuthorized>
+        <a href="/api/auth/login?returnUrl=@_navigation.Uri">Login</a>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private const string _defaultAvatarUrl = "https://www.gravatar.com/avatar/nopicture?d=monsterid&s=50";
+
+    private string getAvatarUrl(AuthenticationState state)
+    {
+        Claim? claim = state?.User?.Claims.FirstOrDefault(c => c.Type == "picture");
+
+        return claim is null ? _defaultAvatarUrl : claim.Value;
+    }
+
+}

@@ -1,0 +1,12 @@
+@inject NavigationManager _navigation
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        string returnUrl = Uri.EscapeDataString(_navigation.Uri);
+
+        _navigation.NavigateTo($"/api/auth/login?returnUrl={returnUrl}", forceLoad: true);
+    }
+
+}

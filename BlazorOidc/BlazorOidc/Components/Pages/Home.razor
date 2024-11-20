@@ -1,0 +1,16 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>OpenIDConnect with Auth0</h1>
+
+<ClaimsDisplay/>
+<hr/>
+
+<b>If you set SerializeAllClaims to false in the AddAuthenticationStateSerialization method,
+    you will notice that the WebAssembly render mode displays fewer claims compared to the Server and Static render modes</b>
+
+<ClaimsDisplay @rendermode="InteractiveWebAssembly"/>
+
+<hr/>
+<ClaimsDisplay @rendermode="InteractiveServer"/>

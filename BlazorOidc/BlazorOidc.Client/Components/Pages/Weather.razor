@@ -1,0 +1,77 @@
+﻿@page "/weather"
+@implements IDisposable
+
+@* @attribute [StreamRendering] *@
+@rendermode InteractiveWebAssembly
+@* @rendermode InteractiveServer *@
+
+@inject PersistentComponentState _persistentComponentState
+@inject IWeatherForecaster       _weatherForecaster
+
+<PageTitle>Weather</PageTitle>
+
+<p>Render mode: @RendererInfo.Name</p>
+
+@if (_forecasts is null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>City</th>
+            <th>Date</th>
+            <th>Temperature</th>
+            <th>Summary</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (WeatherForecast forecast in _forecasts)
+        {
+            <tr>
+                <td>@forecast.City</td>
+                <td>@forecast.Date.ToShortDateString()</td>
+                <td>@forecast.Temperature</td>
+                <td>@forecast.Summary</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private WeatherForecast[]? _forecasts;
+
+    private PersistingComponentStateSubscription _persistingSubscription;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _persistingSubscription = _persistentComponentState.RegisterOnPersisting(persistData);
+
+        if (_persistentComponentState.TryTakeFromJson<WeatherForecast[]?>(nameof(_forecasts), out WeatherForecast[]? restoredData))
+        {
+            _forecasts = restoredData!;
+        }
+        else
+        {
+            _forecasts = await _weatherForecaster.GetWeatherForecasts(7);
+        }
+    }
+
+    private Task persistData()
+    {
+        _persistentComponentState.PersistAsJson(nameof(_forecasts), _forecasts);
+
+        return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        _persistingSubscription.Dispose();
+    }
+
+}

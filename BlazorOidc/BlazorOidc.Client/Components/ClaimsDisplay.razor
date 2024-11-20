@@ -1,0 +1,41 @@
+﻿@using System.Security.Claims
+<p>Render mode: @RendererInfo.Name</p>
+
+<p>List of claims | Count: @_claimsPrincipal.Claims.Count()</p>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (Claim claim in _claimsPrincipal.Claims)
+    {
+        <tr>
+            <td>@claim.Type</td>
+            <td>@claim.Value</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    private ClaimsPrincipal _claimsPrincipal = new(new ClaimsIdentity());
+
+    [CascadingParameter] private Task<AuthenticationState>? _authState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (_authState == null)
+        {
+            return;
+        }
+
+        AuthenticationState authState = await _authState;
+
+        _claimsPrincipal = authState.User;
+    }
+
+}

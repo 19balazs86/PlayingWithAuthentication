@@ -10,6 +10,7 @@ Table of content
 - Project: [ApiKeyAuth](#project-apikeyauth)
 - Project: [Blazor WASM BFF - Auth0 - OpenIDConnect](#project-blazorwasmbffauth0openidconnect)
 - Project: [Blazor WASM JWT - Auth0 - OpenIDConnect](#project-blazorwasmauth0jwtopenidconnect)
+- Project: [Blazor OIDC](#project-blazor-oidc)
 - [Other resources](#other-resources)
 - [Password hashing](#password-hashing)
 
@@ -108,7 +109,14 @@ The following solutions have been implemented
 - An example of using [Auth0](https://auth0.com) with OpenIDConnect in a Blazor WebAssembly application.
 - [For more information](BlazorWASM.Auth0.JWT.OpenIDConnect)
 
-##### Other resources
+### `Project: Blazor OIDC`
+
+- Blazor web application tailored for Auth0 OIDC
+- Experiment with the new .NET 9 built-in authentication state serialization between the server and client
+- Utilizes various types of interactivity
+- [For more information](BlazorOidc)
+
+## Other resources
 
 - [SimpleAuthentication](https://github.com/marcominerva/SimpleAuthentication) 👤*Marco Minerva*
 - [Overview of different App security topics](https://github.com/damienbod/aspnetcore-standup-authn-authz) 👤*DamienBod*
@@ -120,7 +128,7 @@ The following solutions have been implemented
 - [Flexible authorization](https://youtu.be/TuG0yKf8RSQ) 📽️*35m - Jason Taylor - NDC Oslo 2023*
 - [Blazor Authentication and Authorization with Identity](https://youtu.be/tNzSuwV62Lw) 📽️*Patrick God*
 
-##### Password hashing
+## Password hashing
 
 - [How to store a password](https://www.meziantou.net/how-to-store-a-password-in-a-web-application.htm) 📓*meziantou*
 - [Cryptography in .NET](https://www.meziantou.net/cryptography-in-dotnet.htm) 📓*meziantou*

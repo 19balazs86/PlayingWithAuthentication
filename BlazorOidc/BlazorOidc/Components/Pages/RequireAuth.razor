@@ -1,0 +1,31 @@
+@page "/require-auth"
+
+@attribute [Authorize]
+
+<PageTitle>Require Auth</PageTitle>
+
+<h3>Require Auth</h3>
+
+<p>Render mode: @RendererInfo.Name</p>
+
+<p>This page is visible in the navigation menu to verify if an anonymous user attempting to access,
+    the page is redirected to the authentication process (the Auth0 login page)</p>
+
+<AuthorizeView>
+    <Authorized>
+        <p>Hello @context.User.Identity?.Name</p>
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="TestRole">
+    <Authorized>
+        <p>You have 'TestRole' privileges.</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>You are NOT authorized to view 'TestRole' contents.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+}
