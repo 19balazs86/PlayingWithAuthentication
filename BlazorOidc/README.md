@@ -25,5 +25,6 @@
 
 ## Resources
 
-- [Blazor Web App with OIDC](https://learn.microsoft.com/en-us/aspnet/core/blazor/security/blazor-web-app-with-oidc) | [Sample code](https://github.com/dotnet/blazor-samples/tree/main/9.0/BlazorWebAppOidc) 📚*MS-learn - with and without the BFF pattern*
+- [Blazor Web App with OIDC](https://learn.microsoft.com/en-us/aspnet/core/blazor/security/blazor-web-app-with-oidc) *(with and without the BFF pattern)* | [Sample code](https://github.com/dotnet/blazor-samples/tree/main/9.0/BlazorWebAppOidc) 📚*MS-learn*
 - [Secure server-side Blazor](https://learn.microsoft.com/en-us/aspnet/core/blazor/security/server) | [Secure WASM Blazor](https://learn.microsoft.com/en-us/aspnet/core/blazor/security/webassembly) 📚*MS-learn*
+- [Accessing UserIdentity on Blazor 8](https://blog.lhotka.net/2024/10/13/Accessing-User-Identity-on-a-Blazor-Wasm-Client) *(Server and WASM)*📓*Rockford Lhotka*
